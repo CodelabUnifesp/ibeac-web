@@ -1,9 +1,16 @@
 import React from 'react';
-
-// import { Container } from './styles';
+import {BodyContainer} from '../../Components/Body';
+import Header from '../../Components/Header';
 
 function Home(props) {
-  return <div>Tela inicial</div>;
+  return (
+    <>
+      <Header />
+      <BodyContainer>
+        <p>Tela inicial</p>
+      </BodyContainer>
+    </>
+  )
 }
 
 export default Home;
