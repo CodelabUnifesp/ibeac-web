@@ -1,10 +1,10 @@
 import React from 'react';
-import { BodyContainer } from '../../Components/Body';
-import Header from '../../Components/Header';
-import {} from './styles';
+import BodyContainer from '../../components/Body';
+import Header from '../../components/Header';
+import { } from './styles';
 
 const Form = () => {
-    return(
+    return (
         <>
             <Header />
             <BodyContainer>
