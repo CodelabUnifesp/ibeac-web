@@ -28,3 +28,12 @@ O projeto CodeLab-Unifesp desenvolve uma plataforma de comunicação e interaç�
 [travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
 [wiki]: https://github.com/seunome/seuprojeto/wiki
+
+## Troubleshooting
+Ao utilizar a abordagem de criação de bifurcações (forks), eventualmente você irá se deparar com uma situação em que a sua estará desatualizada em relação ao projeto original. Para isso você pode seguir o passo a passo presente nesses tutoriais abaixo:
+
+1. Configurando remote:  
+<https://docs.github.com/pt/github/collaborating-with-issues-and-pull-requests/configuring-a-remote-for-a-fork>
+
+2. Sincronizando uma bifurcação:  
+<https://docs.github.com/pt/github/collaborating-with-issues-and-pull-requests/syncing-a-fork>
