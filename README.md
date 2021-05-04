@@ -16,12 +16,6 @@ O projeto CodeLab-Unifesp desenvolve uma plataforma de comunicação e interaç�
 
 ## Instruções para contribuições
 
-1. Faça o _fork_ do projeto (<https://github.com/CodelabUnifesp/ibeac-web/fork>)
-2. Crie uma _branch_ para sua modificação (`git checkout -b issue<id>_nome`)
-3. Faça o _commit_ (`git commit -am 'Add some fooBar'`)
-4. _Push_ (`git push origin feature/fooBar`)
-5. Crie um novo _Pull Request_
-
 [npm-image]: https://img.shields.io/npm/v/datadog-metrics.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/datadog-metrics
 [npm-downloads]: https://img.shields.io/npm/dm/datadog-metrics.svg?style=flat-square
