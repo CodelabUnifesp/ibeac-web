@@ -68,7 +68,9 @@ Manter todas as funções que realizam chamadas à api devem ficar centralizadas
 
 ### Consistência e Qualidade de Código
 
-As regras para consistência e qualidade de código do projeto são aplicadas pelo eslint/prettier. Essas regras são baseadas no style guide da Airbnb, com alterações presentes no arquivo de configuração ".eslintrc.js"
+As regras para consistência e qualidade de código do projeto são aplicadas pelo eslint/prettier. Essas regras são baseadas no style guide da Airbnb, com alterações presentes no arquivo de configuração ".eslintrc.js".
+
+Pelo **Visual Studio Code**, o código pode ser automaticamente formatado ao salvar qualquer documento. Para isso é necessário instalar as extensões: **ESLint** e **Prettier - Code formatter**
 
 ### Convenções de nome para branches/commits
 
