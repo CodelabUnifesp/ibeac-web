@@ -11,27 +11,32 @@ O projeto CodeLab-Unifesp desenvolve uma plataforma de comunicação e interaç�
 
 ## Configuração para Desenvolvimento
 
-* Instalando dependências:` yarn install`
+* Instalar Nodejs: https://nodejs.org/en/download/
+* Instalar Yarn: `npm install --global yarn` (no terminal)
+* Instalar o git: https://git-scm.com/downloads
+
+* Baixando o repositorio: (todos os comandos são executados no terminal) 
+    `git clone https://github.com/CodelabUnifesp/ibeac-web` (o código sera baixado na pasta ibeac-web)
+    entre no diretório: `cd ibeac-web`
+* Instalando depencias:
+    `yarn` - instala as dependencias
+
+* Criando uma nova branch de desenvolvimento:
+    No terminal, no diretorio raiz do código, rode o comando: `git checkout -b issue-XXXX` (XXXX = numero da issue)
+    Depois adicione essa branch ao repositório: `git push --set-upstream origin issue-XXXX` 
+
+* Aplicando alterações: (todos os comandos são executados no terminal) 
+    `git add .`
+    `git commit -m "meus comentarios resumindo as mudanças"`
+    `git push`
+
+* Abrindo o pull request:
+    No repositorio do git, vá em pull requests > new pull request,
+    defina o base como "master" e compare como a branch "issue-XXXX" (sua branch atual)
+    clique em Create Pull Request
+
+* Instalando dependências: `yarn install`
 * Iniciando aplicação: `yarn start`
-
-## Instruções para contribuições
-
-[npm-image]: https://img.shields.io/npm/v/datadog-metrics.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/datadog-metrics
-[npm-downloads]: https://img.shields.io/npm/dm/datadog-metrics.svg?style=flat-square
-[travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
-[wiki]: https://github.com/seunome/seuprojeto/wiki
-
-## Troubleshooting
-Ao utilizar a abordagem de criação de bifurcações (forks), eventualmente você irá se deparar com uma situação em que a sua estará desatualizada em relação ao projeto original. Para isso você pode seguir o passo a passo presente nesses tutoriais abaixo:
-
-1. Configurando remote:  
-<https://docs.github.com/pt/github/collaborating-with-issues-and-pull-requests/configuring-a-remote-for-a-fork>
-
-2. Sincronizando uma bifurcação:  
-<https://docs.github.com/pt/github/collaborating-with-issues-and-pull-requests/syncing-a-fork>
-
 
 ## Organização do Código
 
