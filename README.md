@@ -11,29 +11,29 @@ O projeto CodeLab-Unifesp desenvolve uma plataforma de comunicação e interaç�
 
 ## Configuração para Desenvolvimento
 
-# Preparando Ambiente:
+### Preparando Ambiente:
 * Instalar Nodejs: https://nodejs.org/en/download/
 * Instalar Yarn: `npm install --global yarn` (no terminal)
 * Instalar o git: https://git-scm.com/downloads
 
-# Baixando o repositorio: (todos os comandos são executados no terminal) 
+### Baixando o repositorio: (todos os comandos são executados no terminal) 
 * `git clone https://github.com/CodelabUnifesp/ibeac-web` (o código sera baixado na pasta ibeac-web)
 * Entrando no diretório do código: `cd ibeac-web`
 * Instalando depencias: `yarn install`
 
-# Rodando a aplicação Localmente:
+### Rodando a aplicação Localmente:
 * No terminal, no diretorio raiz do código, rode o comando: `yarn start`
 
-# Criando uma nova branch de desenvolvimento:
+### Criando uma nova branch de desenvolvimento:
 * No terminal, no diretorio raiz do código, rode o comando: `git checkout -b issue-XXXX` (XXXX = numero da issue)
 * Depois adicione essa branch ao repositório: `git push --set-upstream origin issue-XXXX` 
 
-# Aplicando alterações: (todos os comandos são executados no terminal) 
+### Aplicando alterações: (todos os comandos são executados no terminal) 
 * Adiciona todas as modificações feitas: `git add .`
 * Comentar as mudanças implementadas: `git commit -m "meus comentarios resumindo as mudanças"`
 * Envia as mudanças ao repositório: `git push`
 
-# Abrindo o pull request:
+### Abrindo o pull request:
 * No repositorio do git, vá em pull requests > new pull request, defina o base como "master" e compare como a branch "issue-XXXX" (sua branch atual)
 clique em Create Pull Request
 
