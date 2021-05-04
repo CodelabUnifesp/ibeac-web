@@ -37,3 +37,82 @@ Ao utilizar a abordagem de criação de bifurcações (forks), eventualmente voc
 
 2. Sincronizando uma bifurcação:  
 <https://docs.github.com/pt/github/collaborating-with-issues-and-pull-requests/syncing-a-fork>
+
+
+## Organização do Código
+
+Sugestões de diretrizes para organização do código.
+
+
+### Gerenciador de Pacotes do Node.js
+
+Ao adicionar, remover ou manipular pacotes para o projeto, utilizar o gerenciador de pacotes **yarn**.
+(Ao invés de *npm install*, utilizar o *yarn install*)
+
+### Responsividade
+
+Ao implementar as páginas, ter cuidado com a responsividade dos componentes e do comportamento geral em telas de diferentes resoluções.
+
+### Convenções de nome para variáveis, constantes e funções
+
+Dar preferência ao inglês, mas mantendo em português palavras com relação direta às regras de negócio:
+
+- Postagem
+- Comentário
+- Bairro
+- Categoria
+
+### Estrutura de pastas/responsabilidade de código
+
+Manter todas as funções que realizam chamadas à api devem ficar centralizadas dentro da pasta "/domain".
+
+### Consistência e Qualidade de Código
+
+As regras para consistência e qualidade de código do projeto são aplicadas pelo eslint/prettier. Essas regras são baseadas no style guide da Airbnb, com alterações presentes no arquivo de configuração ".eslintrc.js"
+
+### Convenções de nome para branches/commits
+
+*tbd*
+
+### Estilos, temas e cores
+
+*tbd*
+
+## Diagramas
+
+### Banco de Dados
+
+![Banco de Dados](/docs/db.png)
+
+### Funcionalidades
+
+![Cadastro de Novos Usuários](/docs/diagram_cadastro_novos_usuarios.png)
+Cadastro de Novos Usuários
+
+![Cadastro de Novo Bairro](/docs/diagram_novo_bairro.png)
+Cadastro de Novo Bairro
+
+![Complemento de Dados](/docs/diagram_complemento_de_dados.png)
+Complemento de Dados
+
+![Criar Postagem](/docs/diagram_criar_postagem.png)
+Criar Postagem
+
+![Comentar Postagem](/docs/diagram_comentar_postagem.png)
+Comentar Postagem
+
+![Complemento de Dados](/docs/diagram_complemento_de_dados.png)
+Complemento de Dados
+
+![Formulário Socioeconômico](/docs/diagram_formulario_socioeconomico.png)
+Formulário Socioeconômico
+
+![Verificar Postagem](/docs/diagram_verificar_postagem.png)
+Verificar Postagem
+
+### Hipotéticos
+
+Diagramas-sugestão para algumas funcionalidades, não necessáriamente reflete como a funcionalidade vai/foi implementada.
+
+![Esqueci minha Senha](/docs/diagram_esqueci_minha_senha.png)
+Esqueci minha Senha
