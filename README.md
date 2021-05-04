@@ -11,32 +11,31 @@ O projeto CodeLab-Unifesp desenvolve uma plataforma de comunicação e interaç�
 
 ## Configuração para Desenvolvimento
 
+# Preparando Ambiente:
 * Instalar Nodejs: https://nodejs.org/en/download/
 * Instalar Yarn: `npm install --global yarn` (no terminal)
 * Instalar o git: https://git-scm.com/downloads
 
-* Baixando o repositorio: (todos os comandos são executados no terminal) 
-    `git clone https://github.com/CodelabUnifesp/ibeac-web` (o código sera baixado na pasta ibeac-web)
-    entre no diretório: `cd ibeac-web`
-* Instalando depencias:
-    `yarn` - instala as dependencias
+# Baixando o repositorio: (todos os comandos são executados no terminal) 
+* `git clone https://github.com/CodelabUnifesp/ibeac-web` (o código sera baixado na pasta ibeac-web)
+* Entrando no diretório do código: `cd ibeac-web`
+* Instalando depencias: `yarn install`
 
-* Criando uma nova branch de desenvolvimento:
-    No terminal, no diretorio raiz do código, rode o comando: `git checkout -b issue-XXXX` (XXXX = numero da issue)
-    Depois adicione essa branch ao repositório: `git push --set-upstream origin issue-XXXX` 
+# Rodando a aplicação Localmente:
+* No terminal, no diretorio raiz do código, rode o comando: `yarn start`
 
-* Aplicando alterações: (todos os comandos são executados no terminal) 
-    `git add .`
-    `git commit -m "meus comentarios resumindo as mudanças"`
-    `git push`
+# Criando uma nova branch de desenvolvimento:
+* No terminal, no diretorio raiz do código, rode o comando: `git checkout -b issue-XXXX` (XXXX = numero da issue)
+* Depois adicione essa branch ao repositório: `git push --set-upstream origin issue-XXXX` 
 
-* Abrindo o pull request:
-    No repositorio do git, vá em pull requests > new pull request,
-    defina o base como "master" e compare como a branch "issue-XXXX" (sua branch atual)
-    clique em Create Pull Request
+# Aplicando alterações: (todos os comandos são executados no terminal) 
+* Adiciona todas as modificações feitas: `git add .`
+* Comentar as mudanças implementadas: `git commit -m "meus comentarios resumindo as mudanças"`
+* Envia as mudanças ao repositório: `git push`
 
-* Instalando dependências: `yarn install`
-* Iniciando aplicação: `yarn start`
+# Abrindo o pull request:
+* No repositorio do git, vá em pull requests > new pull request, defina o base como "master" e compare como a branch "issue-XXXX" (sua branch atual)
+clique em Create Pull Request
 
 ## Organização do Código
 
