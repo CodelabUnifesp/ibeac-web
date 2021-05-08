@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const CustomDiv = styled.div`
   align-items: center;
@@ -8,7 +8,7 @@ export const CustomDiv = styled.div`
   justify-content: center;
   padding: 5px;
   position: relative;
-  width: ${props => props.width ? props.width : '100%'};
+  width: ${(props) => (props.width ? props.width : '100%')};
 `;
 
 export const CustomLabel = styled.label`
@@ -21,32 +21,31 @@ export const CustomLabel = styled.label`
     border: 2px solid gray;
     border-radius: 50%;
     content: '';
-    height: 16px;  
+    height: 16px;
     left: 0;
     margin: 0;
     position: absolute;
     top: 0;
-    transition: .28s ease;
+    transition: 0.28s ease;
     width: 16px;
     z-index: 0;
-  }  
+  }
 
   &:after {
     background-color: white;
     border: 1px solid white;
     border-radius: 50%;
     content: '';
-    height: 16px;  
+    height: 16px;
     left: 0;
     margin: 0;
     position: absolute;
     top: 0;
     transform: scale(0.5);
-    transition: .28s ease;
+    transition: 0.28s ease;
     width: 16px;
     z-index: 0;
-  }  
-
+  }
 `;
 
 export const RadioButton = styled.input`
@@ -55,11 +54,11 @@ export const RadioButton = styled.input`
   pointer-events: none;
   position: absolute;
 
-  &:checked+label:before {
+  &:checked + label:before {
     border: 2px solid #2a778b;
   }
 
-  &:checked+label:after {
+  &:checked + label:after {
     background-color: #2a778b;
     border: 2px solid #2a778b;
   }

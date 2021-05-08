@@ -5,8 +5,7 @@ import RadioButton from './index.js';
 export default {
   title: 'RadioButton',
   component: RadioButton,
-  argTypes: {
-  },
+  argTypes: {},
 };
 
 const Template = (args) => <RadioButton {...args} />;

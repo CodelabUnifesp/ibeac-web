@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { ToastContainer } from "react-toastify";
-import { darken } from "polished";
+import styled from 'styled-components';
+import {ToastContainer} from 'react-toastify';
+import {darken} from 'polished';
 
 export const Container = styled.div`
   display: flex;
@@ -66,7 +66,7 @@ export const Content = styled.div`
       font-size: 16px;
       transition: background 0.2s;
       &:hover {
-        background: ${darken(0.03, "#31788A")};
+        background: ${darken(0.03, '#31788A')};
       }
     }
     a {

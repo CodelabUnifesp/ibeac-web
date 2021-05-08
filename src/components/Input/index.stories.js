@@ -5,13 +5,12 @@ import Input from './index.js';
 export default {
   title: 'Input',
   component: Input,
-  argTypes: {
-  },
+  argTypes: {},
 };
 
 const Template = (args) => <Input {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  placeholder: "Informe um valor..."
+  placeholder: 'Informe um valor...',
 };

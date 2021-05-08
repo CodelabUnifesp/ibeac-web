@@ -5,8 +5,7 @@ import Body from './index.js';
 export default {
   title: 'Body',
   component: Body,
-  argTypes: {
-  },
+  argTypes: {},
 };
 
 const Template = (args) => <Body {...args} />;
