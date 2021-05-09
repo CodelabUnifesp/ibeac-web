@@ -1,10 +1,6 @@
 import React from 'react';
-import { BodyContainer } from './styles';
+import BodyContainer from './styles';
 
-const Body = () => {
-    return(
-        <BodyContainer />
-    )
-}
+const Body = () => <BodyContainer />;
 
-export default Body
+export default Body;

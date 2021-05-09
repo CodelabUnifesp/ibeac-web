@@ -13,6 +13,7 @@ module.exports = {
   ],
   parserOptions: {
     ecmaFeatures: {
+      experimentalObjectRestSpread: true,
       jsx: true,
     },
     ecmaVersion: 2020,
@@ -26,5 +27,13 @@ module.exports = {
     'import/extensions': 'off',
     'react/prop-types': 'warn',
     'react/jsx-filename-extension': 'off',
+    'react/jsx-props-no-spreading': [
+      'error',
+      {
+        html: 'ignore',
+        custom: 'ignore',
+        exceptions: [''],
+      },
+    ],
   },
 };

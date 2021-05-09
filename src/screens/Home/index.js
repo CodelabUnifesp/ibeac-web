@@ -10,7 +10,7 @@ function Home(props) {
         <p>Tela inicial</p>
       </BodyContainer>
     </>
-  )
+  );
 }
 
 export default Home;
