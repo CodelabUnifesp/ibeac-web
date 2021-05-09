@@ -19,7 +19,7 @@ const Header = ({children, open, onMenu} = {}) => (
         IBEApp
       </Text>
 
-      <Box display={{base: 'block', md: 'none'}}>
+      <Box display={{base: 'block', xs: 'none'}}>
         <IconButton
           onClick={onMenu}
           colorScheme="white"

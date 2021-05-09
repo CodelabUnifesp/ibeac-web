@@ -23,12 +23,12 @@ const Default = ({children} = {}) => {
               pt="78px"
               zIndex={9}
               boxShadow="0px 0px 0.5rem 0px rgba(0, 0, 0, 0.25)">
-              <Box pb={6} flexBasis={{base: '100%', md: 'none'}}>
+              <Box pb={6} flexBasis={{base: '100%', xs: 'none'}}>
                 <Stack
                   spacing={8}
                   align="center"
-                  justify={['center', 'space-between', 'flex-end', 'flex-end']}
-                  direction={['column', 'row', 'row', 'row']}>
+                  justify="center"
+                  direction="column">
                   <Menu>
                     <MenuItem justifyContent="center" to="/">
                       Início
@@ -55,7 +55,7 @@ const Default = ({children} = {}) => {
                       justifyContent="center"
                       to="/signup"
                       isLast
-                      color="primary.200"
+                      color="primary.100"
                       bg="primary.700">
                       Sair
                     </MenuItem>
