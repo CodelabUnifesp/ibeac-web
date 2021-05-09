@@ -1,14 +1,16 @@
 import React from 'react';
 import BodyContainer from '../../components/Body';
-import Header from '../../components/Header';
+
+import Default from '../../layouts/default';
 
 function Home(props) {
   return (
     <>
-      <Header />
-      <BodyContainer>
-        <p>Tela inicial</p>
-      </BodyContainer>
+      <Default>
+        <BodyContainer>
+          <p>Tela inicial</p>
+        </BodyContainer>
+      </Default>
     </>
   );
 }
