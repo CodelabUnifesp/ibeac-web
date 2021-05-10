@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 
-import {Box, Button, Collapse, Menu, MenuItem, Stack} from '@chakra-ui/react';
+import {Box, Collapse, Stack} from '@chakra-ui/react';
 
 import Header from '../../components/Header';
 
-import {Container} from './styles.js';
-import NavBar from '../../components/Navbar';
+import {Container, Content} from './styles.js';
+import Navigation from '../../components/Navigation';
+import Sidebar from '../../components/Sidebar';
 
 const Default = ({children} = {}) => {
   const [menu, setMenu] = useState(false);
@@ -18,54 +19,30 @@ const Default = ({children} = {}) => {
         <Header open={menu} onMenu={() => setMenu(!menu)}>
           <Collapse in={menu} animateOpacity>
             <Box
-              bg="primary.600"
-              color="white"
-              pt="78px"
+              bg={{base: 'primary.600', lg: 'white'}}
+              color={{base: 'white', lg: 'primary.600'}}
               zIndex={9}
-              boxShadow="0px 0px 0.5rem 0px rgba(0, 0, 0, 0.25)">
-              <Box pb={6} flexBasis={{base: '100%', xs: 'none'}}>
+              boxShadow="0px 0.25rem 0.25rem 0px rgba(0, 0, 0, 0.25)">
+              <Box pb={6} flexBasis={{base: '100%', lg: 'none'}}>
                 <Stack
                   spacing={8}
                   align="center"
                   justify="center"
                   direction="column">
-                  <Menu>
-                    <MenuItem justifyContent="center" to="/">
-                      Início
-                    </MenuItem>
-                    <br />
-                    <MenuItem justifyContent="center" to="/how">
-                      Saúde
-                    </MenuItem>
-                    <MenuItem justifyContent="center" to="/faetures">
-                      Trocas
-                    </MenuItem>
-                    <MenuItem justifyContent="center" to="/pricing">
-                      Cultura e Lazer
-                    </MenuItem>
-                    <br />
-                    <MenuItem justifyContent="center" to="/faetures">
-                      Complemento de Dados
-                    </MenuItem>
-                    <MenuItem justifyContent="center" to="/pricing">
-                      Formulário Socioeconômico
-                    </MenuItem>
-                    <br />
-                    <MenuItem
-                      justifyContent="center"
-                      to="/signup"
-                      isLast
-                      color="primary.100"
-                      bg="primary.700">
-                      Sair
-                    </MenuItem>
-                  </Menu>
+                  <Navigation />
                 </Stack>
               </Box>
             </Box>
           </Collapse>
         </Header>
-        <div className="content">{children}</div>
+        <Content mt={2} p={4}>
+          <Box display={{base: 'none', lg: 'flex'}}>
+            <Sidebar>
+              <Navigation />
+            </Sidebar>
+          </Box>
+          <Box>{children}</Box>
+        </Content>
       </Container>
     </>
   );

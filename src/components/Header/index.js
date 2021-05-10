@@ -6,28 +6,29 @@ import {MdMenu, MdClose} from 'react-icons/md';
 
 import Icon from '@chakra-ui/icon';
 import {IconButton} from '@chakra-ui/button';
-import {Container} from './styles';
+import {Wrapper, Container} from './styles';
 
 const Header = ({children, open, onMenu} = {}) => (
   <>
-    <Container
-      p={6}
-      bg="primary.600"
-      color="white"
+    <Wrapper
+      bg={{base: 'primary.600', lg: 'white'}}
+      color={{base: 'white', lg: 'primary.600'}}
       style={open ? {boxShadow: 'none'} : {}}>
-      <Text fontWeight="regular" fontSize="xl">
-        IBEApp
-      </Text>
+      <Container p={{base: 6, lg: 4}}>
+        <Text fontWeight="bold" fontSize="xl">
+          IBEApp
+        </Text>
 
-      <Box display={{base: 'block', xs: 'none'}}>
-        <IconButton
-          onClick={onMenu}
-          colorScheme="white"
-          variant="link"
-          icon={<Icon fontSize="2xl" as={open ? MdClose : MdMenu} />}
-        />
-      </Box>
-    </Container>
+        <Box display={{base: 'block', lg: 'none'}}>
+          <IconButton
+            onClick={onMenu}
+            colorScheme="white"
+            variant="link"
+            icon={<Icon fontSize="2xl" as={open ? MdClose : MdMenu} />}
+          />
+        </Box>
+      </Container>
+    </Wrapper>
     {children}
   </>
 );
