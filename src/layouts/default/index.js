@@ -25,7 +25,7 @@ const Default = ({children} = {}) => {
               boxShadow="0px 0.25rem 0.25rem 0px rgba(0, 0, 0, 0.25)">
               <Box pb={6} flexBasis={{base: '100%', lg: 'none'}}>
                 <Stack
-                  spacing={8}
+                  spacing={1}
                   align="center"
                   justify="center"
                   direction="column">
