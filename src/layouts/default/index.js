@@ -26,7 +26,7 @@ const Default = ({children} = {}) => {
               <Box pb={6} flexBasis={{base: '100%', lg: 'none'}}>
                 <Stack
                   spacing={1}
-                  align="center"
+                  align="flex-start"
                   justify="center"
                   direction="column">
                   <Navigation />
