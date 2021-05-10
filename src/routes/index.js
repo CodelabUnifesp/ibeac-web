@@ -1,18 +1,24 @@
 import React from 'react';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 
+import Default from '../layouts/default';
+
 import Login from '../screens/Login';
 import Home from '../screens/Home';
 import Form from '../screens/Form';
+import CreatePostagem from '../screens/Postagem/Create';
 
 function Routes() {
   return (
     <BrowserRouter>
-      <Switch>
-        <Route path="/" component={Home} />
-        <Route path="/login" component={Login} />
-        <Route path="/form" component={Form} />
-      </Switch>
+      <Default>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/login" component={Login} />
+          <Route path="/form" component={Form} />
+          <Route path="/postagem/criar" component={CreatePostagem} />
+        </Switch>
+      </Default>
     </BrowserRouter>
   );
 }
