@@ -10,6 +10,8 @@
     "@chakra-ui/react": "^1.6.1",
     "@emotion/react": "11",
     "@emotion/styled": "11",
+    "@mdi/js": "^5.9.55",
+    "@mdi/react": "^1.5.0",
     "@rocketseat/unform": "^1.6.2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",

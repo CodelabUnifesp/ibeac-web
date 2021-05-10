@@ -1,26 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {Stack, Box, Button, Heading, Flex} from '@chakra-ui/layout';
+import {Stack, Box, Button, Text, Flex} from '@chakra-ui/layout';
 import {Avatar} from '@chakra-ui/avatar';
 
+import Container from '../Container';
+
 const Sidebar = ({children} = {}) => (
-  <Stack>
+  <Stack width="100%">
     <Flex
       flexDirection="row"
       align="center"
       bg="primary.600"
       p={6}
+      mb={2}
       borderRadius="10px"
       shadow="md">
       <Box mr={4}>
         <Avatar name="Usuário" src="https://bit.ly/dan-abramov" />
       </Box>
-      <Heading size="sm" color="whiteAlpha.900">
+      <Text fontWeight="600" size="sm" color="whiteAlpha.900">
         Olá, Usuário!
-      </Heading>
+      </Text>
     </Flex>
-    <Box>{children}</Box>
+    <Container pt={4} pb={4}>
+      {children}
+    </Container>
   </Stack>
 );
 

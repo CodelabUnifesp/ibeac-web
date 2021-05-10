@@ -8,7 +8,7 @@ import theme from './theme';
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <Box className="appContainer" bg={{base: 'white', lg: '#F0F6F8'}}>
+      <Box className="appContainer" bg={{base: 'white', lg: 'light.50'}}>
         <Routes />
       </Box>
     </ChakraProvider>

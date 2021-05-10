@@ -36,7 +36,7 @@ const Default = ({children} = {}) => {
           </Collapse>
         </Header>
         <Content mt={2} p={4}>
-          <Box display={{base: 'none', lg: 'flex'}}>
+          <Box width="100%" display={{base: 'none', lg: 'flex'}}>
             <Sidebar>
               <Navigation />
             </Sidebar>
