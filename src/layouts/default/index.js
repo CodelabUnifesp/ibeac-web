@@ -35,13 +35,13 @@ const Default = ({children} = {}) => {
             </Box>
           </Collapse>
         </Header>
-        <Content mt={2} p={4}>
+        <Content mt={{base: 0, lg: 2}} p={{base: 0, lg: 4}}>
           <Box width="100%" display={{base: 'none', lg: 'flex'}}>
             <Sidebar>
               <Navigation />
             </Sidebar>
           </Box>
-          <Box>{children}</Box>
+          <Box width="100%">{children}</Box>
         </Content>
       </Container>
     </>
