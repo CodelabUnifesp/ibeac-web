@@ -12,4 +12,8 @@ html, body, #root, .appContainer{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-  
+
+
+section[id*='chakra-modal-'] {
+  opacity: 1 !important;
+}
