@@ -35,5 +35,6 @@ module.exports = {
         exceptions: [''],
       },
     ],
+    'jsx-a11y/control-has-associated-label': 'off',
   },
 };

@@ -14,7 +14,7 @@ const Header = ({children, open, onMenu} = {}) => (
       bg={{base: 'primary.600', lg: 'white'}}
       color={{base: 'white', lg: 'primary.600'}}
       style={open ? {boxShadow: 'none'} : {}}>
-      <Container p={{base: 6, lg: 4}}>
+      <Container py={4} px={{base: 6, lg: 4}}>
         <Text fontWeight="bold" fontSize="xl">
           IBEApp
         </Text>
