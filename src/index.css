@@ -16,4 +16,14 @@ html, body, #root, .appContainer{
 
 section[id*='chakra-modal-'] {
   opacity: 1 !important;
+  transform: none !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+
+}
+
+@media screen and (max-width: 61rem) {
+  section[id*='chakra-modal-'] {
+    border-radius: 0 !important;
+  }
 }
