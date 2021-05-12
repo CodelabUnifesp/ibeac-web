@@ -7,7 +7,7 @@ import {get} from 'lodash';
 const Feed = ({value} = {}) => (
   <>
     {value.map((postagem) => (
-      <Box my={4} p={4} bg="lightgrey">
+      <Box mb={4} p={4} bg="lightgrey">
         {get(postagem, 'title', '???')}
       </Box>
     ))}

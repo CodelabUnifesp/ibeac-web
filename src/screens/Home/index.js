@@ -133,7 +133,8 @@ function Home(props) {
 
         <Box className="input" my={{base: 4, lg: 0}} p={4} bg="lightgrey">
           <Button onClick={onOpen}>
-            No que você está pensando? (CRIAR POSTAGEM)
+            No que você está pensando?{' '}
+            <span style={{fontSize: 9}}>(CRIAR POSTAGEM)</span>
           </Button>
         </Box>
 
