@@ -8,7 +8,7 @@ export const Container = styled(Box)`
 export const Content = styled(Box)`
   display: flex;
 
-  @media screen and (min-width: 68rem) {
+  @media screen and (min-width: 62rem) {
     display: grid;
     grid-template-columns: 300px auto;
     grid-template-rows: auto;
