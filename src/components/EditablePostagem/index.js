@@ -42,9 +42,9 @@ const EditablePostagem = ({value, onChange} = {}) => (
         value={get(value, 'category')}
         onChange={(event) => onChange('category', event.target.value)}>
         <option hidden selected />
-        <option value="Saúde">Saúde</option>
-        <option value="Rrocas">Trocas</option>
-        <option value="Cultura e Lazer">Cultura e Lazer</option>
+        <option value={1}>Saúde</option>
+        <option value={2}>Trocas</option>
+        <option value={3}>Cultura e Lazer</option>
       </Select>
       {/* <FormHelperText>Título da sua postagem.</FormHelperText> */}
     </FormControl>

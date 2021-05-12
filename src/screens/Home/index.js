@@ -1,6 +1,11 @@
-import React, {useReducer, useState} from 'react';
-
+import React, {useReducer, useMemo, useState, useEffect} from 'react';
 import {
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Box,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -10,24 +15,133 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from '@chakra-ui/react';
+
 import {Button} from '@chakra-ui/button';
 
 import {set} from 'lodash/fp';
 import {get} from 'lodash';
-import BodyContainer from '../../components/Body';
 import EditablePostagem from '../../components/EditablePostagem';
+import Feed from '../../components/Feed';
+
+import {Wrapper} from './styles';
 
 function Home(props) {
+  const [tabs, setTabs] = useState([]);
+  const [tab, setTab] = useState(0);
   const {isOpen, onOpen, onClose} = useDisclosure();
 
   const [newPostagem, setNewPostagem] = useState({});
 
+  const tabPanel = useMemo(() => {
+    if (tab === 0)
+      return (
+        <Feed
+          value={[
+            {
+              title: 'Postagem #1',
+              description:
+                'Sit voluptate veniam laborum quis Lorem nostrud. Duis esse aute veniam anim aliquip est cupidatat pariatur Lorem elit proident nisi minim. Ex occaecat voluptate irure occaecat eu occaecat minim velit amet voluptate deserunt. Duis elit nostrud ut irure ad et magna elit cupidatat non aliquip. Exercitation irure reprehenderit sit duis sint magna elit eiusmod tempor. Ex magna fugiat consectetur consequat in tempor et irure elit.',
+              category: {
+                id: 1,
+                name: 'Saúde',
+              },
+            },
+            {
+              title: 'Postagem #2',
+              description:
+                'Sit voluptate veniam laborum quis Lorem nostrud. Duis esse aute veniam anim aliquip est cupidatat pariatur Lorem elit proident nisi minim. Ex occaecat voluptate irure occaecat eu occaecat minim velit amet voluptate deserunt. Duis elit nostrud ut irure ad et magna elit cupidatat non aliquip. Exercitation irure reprehenderit sit duis sint magna elit eiusmod tempor. Ex magna fugiat consectetur consequat in tempor et irure elit.',
+              category: {
+                id: 2,
+                name: 'Trocas',
+              },
+            },
+          ]}
+        />
+      );
+    if (tab === 1)
+      return (
+        <Feed
+          value={[
+            {
+              title: 'Postagem Recomendada #1',
+              description:
+                'Sit voluptate veniam laborum quis Lorem nostrud. Duis esse aute veniam anim aliquip est cupidatat pariatur Lorem elit proident nisi minim. Ex occaecat voluptate irure occaecat eu occaecat minim velit amet voluptate deserunt. Duis elit nostrud ut irure ad et magna elit cupidatat non aliquip. Exercitation irure reprehenderit sit duis sint magna elit eiusmod tempor. Ex magna fugiat consectetur consequat in tempor et irure elit.',
+              category: {
+                id: 3,
+                name: 'Cultura e Lazer',
+              },
+            },
+            {
+              title: 'Postagem Recomendada #2',
+              description:
+                'Sit voluptate veniam laborum quis Lorem nostrud. Duis esse aute veniam anim aliquip est cupidatat pariatur Lorem elit proident nisi minim. Ex occaecat voluptate irure occaecat eu occaecat minim velit amet voluptate deserunt. Duis elit nostrud ut irure ad et magna elit cupidatat non aliquip. Exercitation irure reprehenderit sit duis sint magna elit eiusmod tempor. Ex magna fugiat consectetur consequat in tempor et irure elit.',
+              category: {
+                id: 3,
+                name: 'Cultura e Lazer',
+              },
+            },
+          ]}
+        />
+      );
+
+    return null;
+  }, [tab]);
+
+  useEffect(() => {
+    setTabs(['Feed', 'Recomendados']);
+  }, []);
+
   return (
     <>
-      <p>Tela inicial</p>
-      <br />
-      <Button onClick={onOpen}>Criar Postagem</Button>
-      <br />
+      <Wrapper px={{base: 0, lg: 6}}>
+        <Tabs
+          className="tabs"
+          isManual
+          variant="unstyled"
+          index={tab}
+          onChange={(value) => setTab(value)}
+          gridRow={{base: 1, lg: 2}}
+          my={{base: 0, lg: 4}}>
+          <TabList
+            color={{base: 'light.300', lg: '#333'}}
+            bg={{base: 'primary.600', lg: 'transparent'}}>
+            {tabs.map((tabName, index) => (
+              <Tab
+                key={index}
+                flex={{base: 1, lg: 0}}
+                borderBottom={{
+                  base: '5px solid var(--chakra-colors-primary-600)',
+                  lg: 'none',
+                }}
+                borderRadius={{base: 0, lg: 10}}
+                shadow={{base: 'none', lg: 'sm'}}
+                mr={{base: 0, lg: 4}}
+                bg={{base: 'none', lg: 'light.200'}}
+                color={{base: 'none', lg: 'primary.700'}}
+                fontWeight={{base: 400, lg: 600}}
+                _selected={{
+                  color: 'white',
+                  bg: 'primary.600',
+                  fontWeight: 600,
+                  borderBottomColor: 'rgba(255, 255, 255, 0.9)',
+                }}>
+                {tabName}
+              </Tab>
+            ))}
+          </TabList>
+        </Tabs>
+
+        <Box className="input" my={{base: 4, lg: 0}} p={4} bg="lightgrey">
+          <Button onClick={onOpen}>
+            No que você está pensando?{' '}
+            <span style={{fontSize: 9}}>(CRIAR POSTAGEM)</span>
+          </Button>
+        </Box>
+
+        {tabPanel}
+      </Wrapper>
+
+      {/* Modal de Criar Postagem */}
       <Modal
         isOpen={isOpen}
         onClose={onClose}
