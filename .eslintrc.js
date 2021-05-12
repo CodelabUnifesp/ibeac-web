@@ -35,5 +35,7 @@ module.exports = {
         exceptions: [''],
       },
     ],
+    'jsx-a11y/control-has-associated-label': 'off',
+    'react/no-array-index-key': 'off',
   },
 };

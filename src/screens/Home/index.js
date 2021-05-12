@@ -1,13 +1,36 @@
-import React, {useMemo, useState} from 'react';
-import {Tabs, TabList, TabPanels, Tab, TabPanel, Box} from '@chakra-ui/react';
+import React, {useReducer, useMemo, useState, useEffect} from 'react';
+import {
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Box,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+} from '@chakra-ui/react';
 
-import Default from '../../layouts/default';
+import {Button} from '@chakra-ui/button';
+
+import {set} from 'lodash/fp';
+import {get} from 'lodash';
+import EditablePostagem from '../../components/EditablePostagem';
 import Feed from '../../components/Feed';
 
 import {Wrapper} from './styles';
 
 function Home(props) {
+  const [tabs, setTabs] = useState([]);
   const [tab, setTab] = useState(0);
+  const {isOpen, onOpen, onClose} = useDisclosure();
+
+  const [newPostagem, setNewPostagem] = useState({});
 
   const tabPanel = useMemo(() => {
     if (tab === 0)
@@ -64,61 +87,100 @@ function Home(props) {
     return null;
   }, [tab]);
 
+  useEffect(() => {
+    setTabs(['Feed', 'Recomendados']);
+  }, []);
+
   return (
     <>
-      <Default>
-        <Wrapper px={{base: 0, lg: 6}}>
-          <Tabs
-            className="tabs"
-            isManual
-            variant="unstyled"
-            index={tab}
-            onChange={(value) => setTab(value)}
-            gridRow={{base: 1, lg: 2}}
-            my={{base: 0, lg: 4}}>
-            <TabList
-              color={{base: 'light.300', lg: '#333'}}
-              bg={{base: 'primary.600', lg: 'transparent'}}>
+      <Wrapper px={{base: 0, lg: 6}}>
+        <Tabs
+          className="tabs"
+          isManual
+          variant="unstyled"
+          index={tab}
+          onChange={(value) => setTab(value)}
+          gridRow={{base: 1, lg: 2}}
+          my={{base: 0, lg: 4}}>
+          <TabList
+            color={{base: 'light.300', lg: '#333'}}
+            bg={{base: 'primary.600', lg: 'transparent'}}>
+            {tabs.map((tabName, index) => (
               <Tab
+                key={index}
                 flex={{base: 1, lg: 0}}
                 borderBottom={{
                   base: '5px solid var(--chakra-colors-primary-600)',
                   lg: 'none',
                 }}
                 borderRadius={{base: 0, lg: 10}}
+                shadow={{base: 'none', lg: 'sm'}}
+                mr={{base: 0, lg: 4}}
+                bg={{base: 'none', lg: 'light.200'}}
+                color={{base: 'none', lg: 'primary.700'}}
+                fontWeight={{base: 400, lg: 600}}
                 _selected={{
                   color: 'white',
                   bg: 'primary.600',
                   fontWeight: 600,
                   borderBottomColor: 'rgba(255, 255, 255, 0.9)',
                 }}>
-                Feed
+                {tabName}
               </Tab>
-              <Tab
-                flex={{base: 1, lg: 0}}
-                borderBottom={{
-                  base: '5px solid var(--chakra-colors-primary-600)',
-                  lg: 'none',
-                }}
-                borderRadius={{base: 0, lg: 10}}
-                _selected={{
-                  color: 'white',
-                  bg: 'primary.600',
-                  fontWeight: 600,
-                  borderBottomColor: 'rgba(255, 255, 255, 0.9)',
-                }}>
-                Recomendados
-              </Tab>
-            </TabList>
-          </Tabs>
+            ))}
+          </TabList>
+        </Tabs>
 
-          <Box className="input" my={{base: 4, lg: 0}} p={4} bg="lightgrey">
-            No que você está pensando?
-          </Box>
+        <Box className="input" my={{base: 4, lg: 0}} p={4} bg="lightgrey">
+          <Button onClick={onOpen}>
+            No que você está pensando? (CRIAR POSTAGEM)
+          </Button>
+        </Box>
 
-          {tabPanel}
-        </Wrapper>
-      </Default>
+        {tabPanel}
+      </Wrapper>
+
+      {/* Modal de Criar Postagem */}
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        isCentered
+        motionPreset="slideInBottom"
+        size="md">
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Criar Postagem</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <EditablePostagem
+              value={newPostagem}
+              onChange={(key, value) =>
+                setNewPostagem(set(key, value, newPostagem))
+              }
+            />
+          </ModalBody>
+
+          <ModalFooter>
+            <Button
+              colorScheme="primary"
+              mr={3}
+              onClick={() =>
+                alert(
+                  `Nova Postagem\ntitle: ${get(
+                    newPostagem,
+                    'title',
+                  )}\ndescription: ${get(
+                    newPostagem,
+                    'description',
+                  )}\ncategory: ${get(newPostagem, 'category')}`,
+                )
+              }>
+              Criar
+            </Button>
+            <Button onClick={onClose}>Cancelar</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 }

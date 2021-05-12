@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
 
-import {Text, Menu, Box} from '@chakra-ui/react';
+import {Text, Box} from '@chakra-ui/react';
 
 import {Icon} from '@mdi/react';
 import {
@@ -12,7 +12,7 @@ import {
   mdiAccountBoxMultipleOutline,
   mdiLogout,
 } from '@mdi/js';
-import {MenuItem} from './styles';
+import {Menu, MenuItem, Divider} from './styles';
 
 const Navigation = () => {
   const ok = useRef();
@@ -25,7 +25,7 @@ const Navigation = () => {
         </Text>
         Início
       </MenuItem>
-      <br />
+      <Divider />
       <MenuItem to="/how">
         <Text className="icon" mr={2}>
           <Icon size={1} path={mdiHeart} />
@@ -44,7 +44,7 @@ const Navigation = () => {
         </Text>
         Cultura e Lazer
       </MenuItem>
-      <br />
+      <Divider />
       <MenuItem to="/faetures">
         <Text className="icon" mr={2}>
           <Icon size={1} path={mdiAccountBoxMultipleOutline} />
@@ -57,13 +57,14 @@ const Navigation = () => {
         </Text>
         Formulário Socioeconômico
       </MenuItem>
-      <br />
+      <Divider />
       <MenuItem
+        className="compact"
         to="/signup"
         isLast
-        color={{base: 'primary.100', lg: 'black'}}
+        color={{base: 'primary.700', lg: 'black'}}
         bg={{base: 'primary.700', lg: 'none'}}>
-        <Text mr={2}>
+        <Text className="icon" mr={2}>
           <Icon size={1} path={mdiLogout} />
         </Text>
         Sair
