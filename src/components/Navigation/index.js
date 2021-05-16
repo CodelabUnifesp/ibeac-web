@@ -1,8 +1,4 @@
-import React, {useRef} from 'react';
-
-import {Text, Box} from '@chakra-ui/react';
-
-import {Icon} from '@mdi/react';
+import React from 'react';
 import {
   mdiHome,
   mdiHeart,
@@ -12,65 +8,69 @@ import {
   mdiAccountBoxMultipleOutline,
   mdiLogout,
 } from '@mdi/js';
-import {Menu, MenuItem, Divider} from './styles';
+import {Menu, Divider} from './styles';
+import SidebarItem from '../SidebarItem';
 
 const Navigation = () => {
-  const ok = useRef();
+  const essentialsSection = [
+    {
+      title: 'Início',
+      icon: mdiHome,
+      to: '/',
+    },
+  ];
 
-  return (
-    <Menu>
-      <MenuItem className="selected" to="/">
-        <Text className="icon" mr={2}>
-          <Icon size={1} path={mdiHome} />
-        </Text>
-        Início
-      </MenuItem>
+  const categoriesSection = [
+    {
+      title: 'Saúde',
+      icon: mdiHeart,
+      to: '/login',
+    },
+    {
+      title: 'Trocas',
+      icon: mdiAutorenew,
+    },
+    {
+      title: 'Cultura e lazer',
+      icon: mdiDramaMasks,
+    },
+  ];
+
+  const informationSection = [
+    {
+      title: 'Complemento de Dados',
+      icon: mdiAccountBoxMultipleOutline,
+    },
+    {
+      title: 'Formulário Socioeconômico',
+      icon: mdiFormatListChecks,
+    },
+  ];
+
+  const logoutSection = [
+    {
+      title: 'Sair',
+      icon: mdiLogout,
+    },
+  ];
+
+  const sidebarSections = [
+    essentialsSection,
+    categoriesSection,
+    informationSection,
+    logoutSection,
+  ];
+
+  const sidebarList = sidebarSections.map((sectionItems) => (
+    <>
+      {sectionItems.map((item) => (
+        <SidebarItem title={item.title} icon={item.icon} />
+      ))}
       <Divider />
-      <MenuItem to="/how">
-        <Text className="icon" mr={2}>
-          <Icon size={1} path={mdiHeart} />
-        </Text>
-        Saúde
-      </MenuItem>
-      <MenuItem to="/faetures">
-        <Text className="icon" mr={2}>
-          <Icon size={1} path={mdiAutorenew} />
-        </Text>
-        Trocas
-      </MenuItem>
-      <MenuItem to="/pricing">
-        <Text className="icon" mr={2}>
-          <Icon size={1} path={mdiDramaMasks} />
-        </Text>
-        Cultura e Lazer
-      </MenuItem>
-      <Divider />
-      <MenuItem to="/faetures">
-        <Text className="icon" mr={2}>
-          <Icon size={1} path={mdiAccountBoxMultipleOutline} />
-        </Text>
-        Complemento de Dados
-      </MenuItem>
-      <MenuItem to="/pricing">
-        <Text className="icon" mr={2}>
-          <Icon size={1} path={mdiFormatListChecks} />
-        </Text>
-        Formulário Socioeconômico
-      </MenuItem>
-      <Divider />
-      <MenuItem
-        className="compact"
-        to="/signup"
-        isLast
-        color={{base: 'primary.700', lg: 'black'}}
-        bg={{base: 'primary.700', lg: 'none'}}>
-        <Text className="icon" mr={2}>
-          <Icon size={1} path={mdiLogout} />
-        </Text>
-        Sair
-      </MenuItem>
-    </Menu>
-  );
+    </>
+  ));
+
+  return <Menu>{sidebarList}</Menu>;
 };
 
 Navigation.displayName = 'Navigation';
