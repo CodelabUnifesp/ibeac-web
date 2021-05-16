@@ -1,15 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Box} from '@chakra-ui/layout';
-
-import {get} from 'lodash';
+import Postagem from '../Postagem/index.js';
 
 const Feed = ({value} = {}) => (
   <>
     {value.map((postagem) => (
-      <Box mb={4} p={4} bg="lightgrey">
-        {get(postagem, 'title', '???')}
-      </Box>
+      <Postagem item={postagem} />
     ))}
   </>
 );
@@ -27,6 +23,8 @@ Feed.propTypes = {
         id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
       },
+      userName: PropTypes.string.isRequired,
+      dateTime: PropTypes.string.isRequired,
     }),
   ),
 };
