@@ -8,6 +8,7 @@ import {
   mdiAccountBoxMultipleOutline,
   mdiLogout,
 } from '@mdi/js';
+import {Box} from '@chakra-ui/layout';
 import {Menu, Divider} from './styles';
 import SidebarItem from '../SidebarItem';
 
@@ -61,13 +62,13 @@ const Navigation = () => {
     logoutSection,
   ];
 
-  const sidebarList = sidebarSections.map((sectionItems) => (
-    <>
+  const sidebarList = sidebarSections.map((sectionItems, index) => (
+    <Box key={index}>
       {sectionItems.map((item) => (
         <SidebarItem key={item.title} title={item.title} icon={item.icon} />
       ))}
-      <Divider />
-    </>
+      {index < sidebarSections.length - 1 && <Divider />}
+    </Box>
   ));
 
   return <Menu>{sidebarList}</Menu>;
