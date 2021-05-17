@@ -64,7 +64,7 @@ const Navigation = () => {
   const sidebarList = sidebarSections.map((sectionItems) => (
     <>
       {sectionItems.map((item) => (
-        <SidebarItem title={item.title} icon={item.icon} />
+        <SidebarItem key={item.title} title={item.title} icon={item.icon} />
       ))}
       <Divider />
     </>
