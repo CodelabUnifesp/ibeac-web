@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import {Stack, Box, Text, Flex} from '@chakra-ui/layout';
 import {Avatar} from '@chakra-ui/avatar';
+import {Comments} from './styles';
 
 const Postagem = ({item} = {}) => (
   <Box p={6} mb={6} borderRadius="10px" shadow="md" bgColor="white">
@@ -29,6 +30,12 @@ const Postagem = ({item} = {}) => (
         </Text>
       </Stack>
     </Stack>
+    <Comments
+      onClick={() => {
+        console.log(item);
+      }}>
+      Comentários
+    </Comments>
   </Box>
 );
 
