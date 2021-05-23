@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   Box,
@@ -6,20 +6,65 @@ import {
   FormControl,
   FormLabel,
   Input,
-  FormHelperText,
+  Radio,
+  RadioGroup,
+  Select,
+  Button,
 } from '@chakra-ui/react';
 import * as S from './styles';
+import questions from './questions';
 
-const Form = () => {
-  function validateName(value) {
-    let error;
-    if (!value) {
-      error = 'Name is required';
-    } else if (value.toLowerCase() !== 'naruto') {
-      error = "Jeez! You're not a fan 😱";
-    }
-    return error;
-  }
+const Form = (...props) => {
+  const buildQuestions = () => {
+    const buildInput = (question) => {
+      switch (question.type) {
+        case 'text':
+          return (
+            <Input
+              type={question.type}
+              placeholder={question.placeholder ? question.placeholder : null}
+            />
+          );
+        case 'radio':
+          return (
+            <RadioGroup>
+              <Stack color="#000" spacing={4} direction="row">
+                {question.alternatives
+                  ? question.alternatives.map((alternative) => (
+                      <Radio value={alternative.value}>
+                        {alternative.value}
+                      </Radio>
+                    ))
+                  : null}
+              </Stack>
+            </RadioGroup>
+          );
+        case 'select':
+          return (
+            <Select color="#000" spacing={4} direction="row">
+              {question.alternatives
+                ? question.alternatives.map((alternative) => (
+                    <option value={alternative.value}>
+                      {alternative.value}
+                    </option>
+                  ))
+                : null}
+            </Select>
+          );
+        default:
+          return <></>;
+      }
+    };
+
+    const buildedQuestions = questions.map((question) => (
+      <FormControl id={question.name}>
+        <FormLabel color="#000">{question.name}</FormLabel>
+        {buildInput(question)}
+      </FormControl>
+    ));
+
+    return buildedQuestions;
+  };
   return (
     <S.Wrapper px={{base: 0, lg: 6}}>
       <Text color="#2f7384" fontSize="2xl">
@@ -35,12 +80,14 @@ const Form = () => {
           align="flex-start"
           justify="center"
           direction="column">
-          <FormControl id="email">
-            <FormLabel color="#000">
-              Nome completo da representante da família (sem abreviações)
-            </FormLabel>
-            <Input type="email" placeholder="Nome completo" />
-          </FormControl>
+          {questions ? buildQuestions() : null}
+          <Button
+            mt={4}
+            colorScheme="teal"
+            isLoading={props.isSubmitting}
+            type="submit">
+            Enviar
+          </Button>
         </Stack>
       </Box>
     </S.Wrapper>
