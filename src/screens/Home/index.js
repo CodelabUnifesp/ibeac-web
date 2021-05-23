@@ -45,6 +45,8 @@ function Home(props) {
                 id: 1,
                 name: 'Saúde',
               },
+              userName: 'Usuário teste',
+              dateTime: '18 de Abril às 21:00',
             },
             {
               title: 'Postagem #2',
@@ -54,6 +56,8 @@ function Home(props) {
                 id: 2,
                 name: 'Trocas',
               },
+              userName: 'Usuário teste 2',
+              dateTime: '20 de Abril às 21:00',
             },
           ]}
         />
@@ -70,6 +74,8 @@ function Home(props) {
                 id: 3,
                 name: 'Cultura e Lazer',
               },
+              userName: 'Usuário teste 3',
+              dateTime: '22 de Abril às 18:00',
             },
             {
               title: 'Postagem Recomendada #2',
@@ -79,6 +85,8 @@ function Home(props) {
                 id: 3,
                 name: 'Cultura e Lazer',
               },
+              userName: 'Usuário teste 4',
+              dateTime: '24 de Abril às 15:00',
             },
           ]}
         />
