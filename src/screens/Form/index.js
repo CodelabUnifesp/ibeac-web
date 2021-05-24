@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import PropTypes from 'prop-types';
 import {
   Text,
   Box,
@@ -65,25 +66,27 @@ const Form = (...props) => {
 
     return buildedQuestions;
   };
+
   return (
     <S.Wrapper px={{base: 0, lg: 6}}>
-      <Text color="#2f7384" fontSize="2xl">
+      <Text color="#2f7384" fontSize="2xl" fontWeight={600} marginBottom={4}>
         Formulário Socioeconômico
       </Text>
       <Box
+        borderRadius={10}
         bg={{base: 'white', lg: 'white'}}
         color={{base: 'white', lg: 'white'}}
         boxShadow="0px 0.25rem 0.25rem 0px rgba(0, 0, 0, 0.25)">
         <Stack
-          margin="20px 10%"
-          spacing={2}
+          mx={12}
+          my={10}
+          spacing={4}
           align="flex-start"
           justify="center"
           direction="column">
           {questions ? buildQuestions() : null}
           <Button
-            mt={4}
-            colorScheme="teal"
+            colorScheme="primary"
             isLoading={props.isSubmitting}
             type="submit">
             Enviar
@@ -92,6 +95,10 @@ const Form = (...props) => {
       </Box>
     </S.Wrapper>
   );
+};
+
+Form.propTypes = {
+  isSubmitting: PropTypes.bool.isRequired,
 };
 
 export default Form;
