@@ -16,14 +16,25 @@ import * as S from './styles';
 import questions from './questions';
 
 const Form = (...props) => {
+  const [inputValue, setInputValue] = useState({});
+
   const buildQuestions = () => {
     const buildInput = (question) => {
       switch (question.type) {
         case 'text':
           return (
             <Input
+              color="black"
               type={question.type}
-              placeholder={question.placeholder ? question.placeholder : null}
+              placeholder={question.placeholder && question.placeholder}
+              value={inputValue[question.id]}
+              onInput={(event) =>
+                setInputValue({
+                  [question.id]: question.mask
+                    ? event.target.value.replace(question.mask, '')
+                    : event.target.value,
+                })
+              }
             />
           );
         case 'radio':
