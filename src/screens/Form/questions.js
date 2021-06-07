@@ -1,5 +1,6 @@
 const questions = [
   {
+    id: 1,
     name: 'Nome completo da representante da família (sem abreviações)',
     placeholder: 'Nome Completo',
     type: 'text',
@@ -7,13 +8,15 @@ const questions = [
     alternatives: null,
   },
   {
+    id: 2,
     name: 'Quantas pessoas tem na família?',
-    placeholder: 'Ex 3',
+    placeholder: 'Ex: 3',
     type: 'text',
-    mask: null,
+    mask: /\D/,
     alternatives: null,
   },
   {
+    id: 3,
     name: 'Gestante?',
     placeholder: null,
     type: 'radio',
@@ -24,6 +27,7 @@ const questions = [
     ],
   },
   {
+    id: 4,
     name: 'Sexo?',
     placeholder: null,
     type: 'select',
