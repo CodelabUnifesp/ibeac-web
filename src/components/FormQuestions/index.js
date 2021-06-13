@@ -12,7 +12,7 @@ import {
   Button,
 } from '@chakra-ui/react';
 
-const FormQuestions = ({questions}) => {
+const FormQuestions = ({buttonName, questions}) => {
   const [inputValue, setInputValue] = useState({});
   const [isLoading, setisLoading] = useState(false);
 
@@ -20,6 +20,7 @@ const FormQuestions = ({questions}) => {
     const buildInput = (question) => {
       switch (question.type) {
         case 'text':
+        case 'date':
           return (
             <Input
               color="black"
@@ -91,7 +92,7 @@ const FormQuestions = ({questions}) => {
         direction="column">
         {questions ? buildQuestions() : null}
         <Button colorScheme="primary" isLoading={isLoading} type="submit">
-          Enviar
+          {buttonName}
         </Button>
       </Stack>
     </Box>
@@ -100,10 +101,12 @@ const FormQuestions = ({questions}) => {
 
 FormQuestions.displayName = 'FormQuestions';
 FormQuestions.defaultProps = {
+  buttonName: 'Enviar',
   questions: [],
 };
 
 FormQuestions.propTypes = {
+  buttonName: PropTypes.string,
   questions: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
