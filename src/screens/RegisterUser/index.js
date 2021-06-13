@@ -99,7 +99,7 @@ const RegisterUser = (...props) => {
   return (
     <S.Wrapper px={{base: 0, lg: 6}}>
       <Text color="#2f7384" fontSize="2xl" fontWeight={600} marginBottom={4}>
-        Formulário Socioeconômico
+        Adicionar usuário
       </Text>
       <Box
         borderRadius={10}
