@@ -15,6 +15,11 @@ import * as S from './styles';
 const RegisterUser = (...props) => {
   const [neighborhoodData, setNeighborhoodData] = useState(null);
   const [userTypeData, setUserTypeData] = useState(null);
+  const [formName, setFormName] = useState(null);
+  const [formEmail, setFormEmail] = useState(null);
+  const [formNeighborhood, setFormNeighborhood] = useState(null);
+  const [formUserType, setFormUserType] = useState(null);
+  let formPassword = null;
 
   useEffect(() => {
     // Constante deverá vir da Api
@@ -54,23 +59,40 @@ const RegisterUser = (...props) => {
   const buildForm = () => {
     const min = 1;
     const randomPassword = toInteger(min + Math.random() * 1000000);
+    formPassword = randomPassword;
     return (
       <>
         <FormControl id="name">
           <FormLabel color="#000">Nome</FormLabel>
-          <Input placeholder="nome.sobrenome" />
+          <Input
+            color="#000"
+            placeholder="nome.sobrenome"
+            onChange={(e) => setFormName(e.target.value)}
+          />
         </FormControl>
         <FormControl id="email">
           <FormLabel color="#000">Email</FormLabel>
-          <Input placeholder="email" />
+          <Input
+            color="#000"
+            placeholder="email"
+            onChange={(e) => setFormEmail(e.target.value)}
+          />
         </FormControl>
         <FormControl id="password">
           <FormLabel color="#000">Senha</FormLabel>
-          <Input placeholder={randomPassword} isDisabled />
+          <Input color="#000" placeholder={randomPassword} isDisabled />
         </FormControl>
         <FormControl>
           <FormLabel color="#000">Bairro</FormLabel>
-          <Select color="#000" spacing={4} direction="row">
+          <Select
+            defaultValue="DEFAULT"
+            color="#000"
+            spacing={4}
+            direction="row"
+            onChange={(e) => setFormNeighborhood(e.target.value)}>
+            <option value="DEFAULT" disabled>
+              Selecione uma opção
+            </option>
             {neighborhoodData
               ? neighborhoodData.map((item) => (
                   <option key={item.id} value={item.text}>
@@ -82,7 +104,15 @@ const RegisterUser = (...props) => {
         </FormControl>
         <FormControl>
           <FormLabel color="#000">Tipo</FormLabel>
-          <Select color="#000" spacing={4} direction="row">
+          <Select
+            defaultValue="DEFAULT"
+            color="#000"
+            spacing={4}
+            direction="row"
+            onChange={(e) => setFormUserType(e.target.value)}>
+            <option value="DEFAULT" disabled>
+              Selecione uma opção
+            </option>
             {userTypeData
               ? userTypeData.map((item) => (
                   <option key={item.id} value={item.type}>
@@ -93,6 +123,12 @@ const RegisterUser = (...props) => {
           </Select>
         </FormControl>
       </>
+    );
+  };
+
+  const submitForm = () => {
+    alert(
+      `${formName} \n ${formEmail} \n ${formPassword} \n ${formNeighborhood} \n ${formUserType}`,
     );
   };
 
@@ -118,7 +154,12 @@ const RegisterUser = (...props) => {
           ) : (
             <p>Ocorreu um erro ao buscar dados na api</p>
           )}
-          <Button colorScheme="primary" type="submit">
+          <Button
+            colorScheme="primary"
+            type="submit"
+            onClick={() => {
+              submitForm();
+            }}>
             Adicionar
           </Button>
         </Stack>
