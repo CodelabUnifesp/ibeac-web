@@ -8,6 +8,8 @@ import Default from '../layouts/default';
 import Login from '../screens/Login';
 import Home from '../screens/Home';
 import Form from '../screens/Form';
+import AdditionalData from '../screens/AdditionalData';
+import RegisterUser from '../screens/RegisterUser';
 
 const PrivateRoute = ({component: Component, ...rest}) => (
   <Route {...rest}>
@@ -33,6 +35,8 @@ function Routes() {
         <PrivateRoute exact path="/" component={Home} />
         <PrivateRoute path="/form" component={Form} />
         <PrivateRoute path="/:category" />
+        <PrivateRoute path="/complemento-de-dados" component={AdditionalData} />
+        <PrivateRoute path="/register" component={RegisterUser} />
       </Switch>
     </BrowserRouter>
   );
