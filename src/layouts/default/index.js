@@ -14,7 +14,7 @@ const Default = ({children} = {}) => {
 
   return (
     <>
-      <Container>
+      <Container bg="#F0F6F8">
         {/* <NavBar /> */}
         <Header open={menu} onMenu={() => setMenu(!menu)}>
           <Collapse in={menu} animateOpacity>

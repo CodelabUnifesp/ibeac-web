@@ -5,13 +5,18 @@ import {Stack, Box, Text, Flex} from '@chakra-ui/layout';
 import {Avatar} from '@chakra-ui/avatar';
 
 const Postagem = ({item} = {}) => (
-  <Box p={6} mb={6} borderRadius="10px" shadow="md" bgColor="white">
+  <Box
+    p={6}
+    mb={6}
+    borderRadius={{base: '0px', lg: '10px'}}
+    shadow="md"
+    bgColor="white">
     <Stack width="100%">
       <Flex mb={4} flexDirection="row" align="center">
         <Box mr={4}>
           <Avatar name="Usuário" src="https://bit.ly/dan-abramov" />
         </Box>
-        <Stack>
+        <Stack spacing={{base: 0, lg: 1}}>
           <Text fontWeight="bold" fontSize="xs" color="black">
             {item.userName}
           </Text>
