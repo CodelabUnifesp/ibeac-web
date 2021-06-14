@@ -7,6 +7,7 @@ import Login from '../screens/Login';
 import Home from '../screens/Home';
 import Form from '../screens/Form';
 import AdditionalData from '../screens/AdditionalData';
+import RegisterUser from '../screens/RegisterUser';
 
 function Routes() {
   return (
@@ -17,6 +18,7 @@ function Routes() {
           <Route path="/login" component={Login} />
           <Route path="/form" component={Form} />
           <Route path="/complemento-de-dados" component={AdditionalData} />
+          <Route path="/register" component={RegisterUser} />
         </Switch>
       </Default>
     </BrowserRouter>
