@@ -14,7 +14,10 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
+  Flex,
 } from '@chakra-ui/react';
+
+import {Avatar} from '@chakra-ui/avatar';
 
 import {Button} from '@chakra-ui/button';
 
@@ -139,11 +142,31 @@ function Home(props) {
           </TabList>
         </Tabs>
 
-        <Box className="input" my={{base: 4, lg: 0}} p={4} bg="lightgrey">
-          <Button onClick={onOpen}>
-            No que você está pensando?{' '}
-            <span style={{fontSize: 9}}>(CRIAR POSTAGEM)</span>
-          </Button>
+        <Box
+          p={6}
+          mb={6}
+          borderRadius={{base: '0px', lg: '10px'}}
+          shadow="md"
+          bgColor="white">
+          <Flex flexDirection="row" align="center">
+            <Box mr={4}>
+              <Avatar name="Usuário" src="https://bit.ly/dan-abramov" />
+            </Box>
+            <Button
+              color="#606060"
+              fontFamily="Nunito Sans"
+              fontWeight="500"
+              borderRadius="50px"
+              w="100%"
+              h="auto"
+              display="inline-block"
+              textAlign="left"
+              p={3}
+              pl={6}
+              onClick={onOpen}>
+              No que você está pensando?{' '}
+            </Button>
+          </Flex>
         </Box>
 
         {tabPanel}
