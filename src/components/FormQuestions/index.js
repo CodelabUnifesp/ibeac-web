@@ -11,6 +11,8 @@ import {
   Select,
   Button,
 } from '@chakra-ui/react';
+import InputMask from 'react-input-mask';
+import {isNil} from 'lodash';
 
 const FormQuestions = ({buttonName, questions}) => {
   const [inputValue, setInputValue] = useState({});
@@ -25,12 +27,18 @@ const FormQuestions = ({buttonName, questions}) => {
             <Input
               color="black"
               type={question.type}
+              as={!isNil(question.mask) ? InputMask : undefined}
+              mask={question.mask}
+              maskChar={null}
               placeholder={question.placeholder && question.placeholder}
               value={inputValue[question.id]}
               onInput={(event) =>
                 setInputValue({
-                  [question.id]: question.mask
-                    ? event.target.value.replace(question.mask, '')
+                  [question.id]: question.forbiddenCharacters
+                    ? event.target.value.replace(
+                        question.forbiddenCharacters,
+                        '',
+                      )
                     : event.target.value,
                 })
               }

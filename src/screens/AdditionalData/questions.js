@@ -21,9 +21,10 @@ const questions = [
   {
     id: 3,
     name: 'Telefone (De preferência Whatsapp)',
-    placeholder: '(XX)XXXXX-XXXX',
+    placeholder: '(XX) XXXXX-XXXX',
     type: 'text',
-    mask: null,
+    mask: '(99) 99999-9999',
+    // forbiddenCharacters: /[^0-9() -]/gm,
     alternatives: null,
   },
   {
@@ -53,7 +54,8 @@ const questions = [
     name: 'Número',
     placeholder: 'Número da casa',
     type: 'text',
-    mask: /\D/,
+    mask: null,
+    forbiddenCharacters: /\D/,
     alternatives: null,
   },
 ];
