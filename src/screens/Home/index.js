@@ -99,7 +99,9 @@ function Home(props) {
   }, [tab]);
 
   useEffect(() => {
-    setTabs(['Feed', 'Recomendados']);
+    window.innerWidth >= 1024
+      ? setTabs(['Feed', 'Recomendados', 'Saúde', 'Trocas', 'Cultura e lazer'])
+      : setTabs(['Feed', 'Recomendados']);
   }, []);
 
   return (
@@ -119,7 +121,8 @@ function Home(props) {
             {tabs.map((tabName, index) => (
               <Tab
                 key={index}
-                flex={{base: 1, lg: 0}}
+                flex={{base: 1, lg: 1}}
+                align="start"
                 borderBottom={{
                   base: '5px solid var(--chakra-colors-primary-600)',
                   lg: 'none',
