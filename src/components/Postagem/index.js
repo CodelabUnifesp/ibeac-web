@@ -21,7 +21,7 @@ const Postagem = ({item} = {}) => {
 
   return (
     <Box
-      p={6}
+      p={{base: 4, lg: 6}}
       mb={6}
       borderRadius={{base: '0px', lg: '10px'}}
       shadow="md"
@@ -62,9 +62,9 @@ const Postagem = ({item} = {}) => {
               : 'Comentar'}
           </Text>
           {openComments > 0 && (
-            <Box p={4}>
+            <Box p={4} px={{base: 0, lg: 4}}>
               <Flex flexDirection="row" align="center" mb={8}>
-                <Box mr={4}>
+                <Box mr={{base: 2, lg: 4}}>
                   <Avatar name="Usuário" src="https://bit.ly/dan-abramov" />
                 </Box>
 
@@ -88,10 +88,13 @@ const Postagem = ({item} = {}) => {
               <Stack spacing={4}>
                 {get(item, 'comments', []).map((comment, index) => (
                   <Flex key={index} flexDirection="row" align="flex-start">
-                    <Box mr={4}>
+                    <Box mr={{base: 2, lg: 4}}>
                       <Avatar name="Usuário" src="https://bit.ly/dan-abramov" />
                     </Box>
-                    <Box p={4} background="#ddd" borderRadius="10px">
+                    <Box
+                      p={{base: 3, lg: 4}}
+                      background="#ddd"
+                      borderRadius="10px">
                       <Stack direction="row" justifyContent="space-between">
                         <Text
                           mb={4}
