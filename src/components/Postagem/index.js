@@ -1,18 +1,19 @@
-import React, {useMemo, useState} from 'react';
+import React, {useMemo, useState, useCallback} from 'react';
 import PropTypes from 'prop-types';
 
 import {Stack, Box, Text, Flex} from '@chakra-ui/layout';
 import {Avatar} from '@chakra-ui/avatar';
 import {Button} from '@chakra-ui/button';
-import {IconButton} from '@chakra-ui/react';
+import {IconButton, Input} from '@chakra-ui/react';
 import {MdSend} from 'react-icons/md';
 
 import Icon from '@chakra-ui/icon';
 
-import {get} from 'lodash';
+import {get, isEmpty, isNull} from 'lodash';
 
 const Postagem = ({item} = {}) => {
   const [openComments, setOpenComments] = useState(false);
+  const [newComment, setNewComment] = useState('');
 
   const numberOfComments = useMemo(() => get(item, 'comments.length', 0), [
     item,
@@ -46,49 +47,71 @@ const Postagem = ({item} = {}) => {
           <Text size="sm" color="black" align="justify">
             {item.description}
           </Text>
-          {numberOfComments > 0 && (
-            <Text
-              cursor="pointer"
-              fontStyle={openComments ? 'italic' : ''}
-              size="xs"
-              color="gray"
-              align="right"
-              py={2}
-              borderTop="1px solid #eee"
-              borderBottom={openComments ? '1px solid #eee' : ''}
-              onClick={() => setOpenComments(!openComments)}>
-              {`${numberOfComments} Comentários`}
-            </Text>
-          )}
+          <Text
+            cursor="pointer"
+            fontStyle={openComments ? 'italic' : ''}
+            fontSize="sm"
+            color="gray"
+            align="right"
+            py={2}
+            borderTop="1px solid #eee"
+            borderBottom={openComments ? '1px solid #eee' : ''}
+            onClick={() => setOpenComments(!openComments)}>
+            {numberOfComments > 0
+              ? `${numberOfComments} Comentários`
+              : 'Comentar'}
+          </Text>
           {openComments > 0 && (
             <Box p={4}>
-              <Flex flexDirection="row" align="center">
+              <Flex flexDirection="row" align="center" mb={8}>
                 <Box mr={4}>
                   <Avatar name="Usuário" src="https://bit.ly/dan-abramov" />
                 </Box>
-                <Button
-                  color="#606060"
-                  fontFamily="Nunito Sans"
-                  fontWeight="500"
+
+                <Input
+                  value={newComment}
+                  onChange={(event) => setNewComment(event.target.value)}
                   borderRadius="50px"
-                  w="100%"
-                  h="auto"
-                  display="inline-block"
-                  textAlign="left"
-                  background="white"
-                  border="1px solid #eee"
-                  p={2}
-                  pl={4}>
-                  Envie um comentário
-                </Button>
+                  placeholder="Envie um comentário"
+                  size="md"
+                />
                 <mdiSend />
                 <IconButton
+                  disabled={isEmpty(newComment) || isNull(newComment)}
                   ml={4}
                   colorScheme="primary"
                   icon={<Icon fontSize="2xl" as={MdSend} />}
                   isRound
+                  onClick={() => alert(`CRIAR NOVO COMENTÁRIO\n ${newComment}`)}
                 />
               </Flex>
+              <Stack spacing={4}>
+                {get(item, 'comments', []).map((comment, index) => (
+                  <Flex key={index} flexDirection="row" align="flex-start">
+                    <Box mr={4}>
+                      <Avatar name="Usuário" src="https://bit.ly/dan-abramov" />
+                    </Box>
+                    <Box p={4} background="#ddd" borderRadius="10px">
+                      <Stack direction="row" justifyContent="space-between">
+                        <Text
+                          mb={4}
+                          fontWeight="bold"
+                          fontSize="xs"
+                          color="black">
+                          {comment.author}
+                        </Text>
+                        <Text fontSize="xs" color="gray">
+                          {comment.dateTime}
+                        </Text>
+                      </Stack>
+
+                      <Text fontSize="sm" color="black" align="justify">
+                        {comment.body}
+                      </Text>
+                    </Box>
+                  </Flex>
+                ))}
+              </Stack>
             </Box>
           )}
         </Stack>
