@@ -9,6 +9,30 @@ Ação do projeto de extensão CodeLab-Unifesp - IBEAC
 
 O projeto CodeLab-Unifesp desenvolve uma plataforma de comunicação e interação social para que a organização social IBEAC - Instituto Brasileiro de Estudos e Apoio Comunitário Queiróz Filho dissemine informações de saúde a gestantes e puérperas das comunidades da região de Parelheiros em São Paulo. A ideia, formatada a partir de várias reuniões com representantes da ONG, é desenvolver um aplicativo de fórum de discussão que criará uma ponte entre especialistas em primeira infância do CEPI (Centro de Estudos em Primeira Infância) e as mães e puérperas. Entre os tópicos do aplicativo estão os cuidados com as mães, o parto e os bebês, além de trocas solidárias e indicações de cultura e lazer. O projeto tem potencial de atingir um grande número de pessoas da comunidade, visto que a ONG trabalha com toda a região de Parelheiros e tem atuação e reconhecimento nacionais. O software a ser desenvolvido será de licença livre e poderá ser usado também por outras comunidades. 
 
+## Ambientes
+
+### Desenvolvimento
+
+**WEB**
+https://plasmedis-web-dev.herokuapp.com/
+
+**API**
+http://plasmedis-api-dev.herokuapp.com/
+
+**BANCO DE DADOS**
+
+*Host* ec2-52-45-179-101.compute-1.amazonaws.com
+
+*Port* 5432
+
+*Database* d5bi00ifg35edj
+
+*Username* jkpaprazxcpojo
+
+*Password* 2a135108dda110cdf26d9ef31fff1c6b9f94cd92993f25a90c3df353c685626d
+
+*URI* postgres://jkpaprazxcpojo:2a135108dda110cdf26d9ef31fff1c6b9f94cd92993f25a90c3df353c685626d@ec2-52-45-179-101.compute-1.amazonaws.com:5432/d5bi00ifg35edj
+
 ## Configuração para Desenvolvimento
 
 ### Preparando Ambiente:
