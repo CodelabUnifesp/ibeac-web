@@ -34,9 +34,9 @@ function Routes() {
         <Route path="/login" component={Login} />
         <PrivateRoute exact path="/" component={Home} />
         <PrivateRoute path="/form" component={Form} />
-        <PrivateRoute path="/:category" />
         <PrivateRoute path="/complemento-de-dados" component={AdditionalData} />
         <PrivateRoute path="/register" component={RegisterUser} />
+        <PrivateRoute path="/:category" />
       </Switch>
     </BrowserRouter>
   );

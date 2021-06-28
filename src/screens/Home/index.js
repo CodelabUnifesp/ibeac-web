@@ -50,11 +50,31 @@ function Home(props) {
               },
               userName: 'Usuário teste',
               dateTime: '18 de Abril às 21:00',
+              comments: [
+                {
+                  body:
+                    'Sunt quis aliqua ut cillum pariatur eiusmod eiusmod commodo nisi labore officia duis incididunt ea. Amet eu nostrud excepteur cillum minim id mollit anim labore in. Esse culpa laboris sit consequat occaecat occaecat officia sunt labore.',
+                  author: 'John Doe',
+                  dateTime: '23 de Maio às 14:32',
+                },
+                {
+                  body:
+                    'Cillum minim laboris consequat sit proident amet magna labore culpa esse eiusmod. Culpa in cillum culpa ea aliquip reprehenderit fugiat nostrud elit nisi occaecat in. Ipsum et nisi culpa ad laborum sint irure laborum et. Veniam ipsum ut eu adipisicing ullamco aute cupidatat ea ipsum consectetur nostrud irure minim veniam.',
+                  author: 'Jane Doe',
+                  dateTime: '23 de Maio às 14:32',
+                },
+                {
+                  body:
+                    'Sunt quis aliqua ut cillum pariatur eiusmod eiusmod commodo nisi labore officia duis incididunt ea.',
+                  author: 'John Doe',
+                  dateTime: '23 de Maio às 14:32',
+                },
+              ],
             },
             {
               title: 'Postagem #2',
               description:
-                'Sit voluptate veniam laborum quis Lorem nostrud. Duis esse aute veniam anim aliquip est cupidatat pariatur Lorem elit proident nisi minim. Ex occaecat voluptate irure occaecat eu occaecat minim velit amet voluptate deserunt. Duis elit nostrud ut irure ad et magna elit cupidatat non aliquip. Exercitation irure reprehenderit sit duis sint magna elit eiusmod tempor. Ex magna fugiat consectetur consequat in tempor et irure elit.',
+                'Sit voluptate veniam laborum quis Lorem nostrud. ercitation irure reprehenderit sit duis sint magna elit eiusmod tempor. Ex magna fugiat consectetur consequat in tempor et irure elit.',
               category: {
                 id: 2,
                 name: 'Trocas',
@@ -79,6 +99,26 @@ function Home(props) {
               },
               userName: 'Usuário teste 3',
               dateTime: '22 de Abril às 18:00',
+              comments: [
+                {
+                  body:
+                    'Sunt quis aliqua ut cillum pariatur eiusmod eiusmod commodo nisi labore officia duis incididunt ea. Amet eu nostrud excepteur cillum minim id mollit anim labore in. Esse culpa laboris sit consequat occaecat occaecat officia sunt labore.',
+                  author: 'John Doe',
+                  dateTime: '23 de Maio às 14:32',
+                },
+                {
+                  body:
+                    'Cillum minim laboris consequat sit proident amet magna labore culpa esse eiusmod. Culpa in cillum culpa ea aliquip reprehenderit fugiat nostrud elit nisi occaecat in. Ipsum et nisi culpa ad laborum sint irure laborum et. Veniam ipsum ut eu adipisicing ullamco aute cupidatat ea ipsum consectetur nostrud irure minim veniam.',
+                  author: 'Jane Doe',
+                  dateTime: '23 de Maio às 14:32',
+                },
+                {
+                  body:
+                    'Sunt quis aliqua ut cillum pariatur eiusmod eiusmod commodo nisi labore officia duis incididunt ea. ',
+                  author: 'John Doe',
+                  dateTime: '23 de Maio às 14:32',
+                },
+              ],
             },
             {
               title: 'Postagem Recomendada #2',
