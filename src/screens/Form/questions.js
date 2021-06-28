@@ -12,7 +12,8 @@ const questions = [
     name: 'Quantas pessoas tem na família?',
     placeholder: 'Ex: 3',
     type: 'text',
-    mask: /\D/,
+    mask: null,
+    forbiddenCharacters: /\D/,
     alternatives: null,
   },
   {
