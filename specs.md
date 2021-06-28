@@ -110,3 +110,15 @@ ADMINISTRADOR pode alterar as informações de um usuário
 
 (não existe no figma)
 USUÁRIO pode determinar de quais tipos de postagens ele quer receber notificações
+
+# Conexões
+
+## Contas do Google
+
+## Heroku
+
+### Banco de Dados
+
+### API
+
+### Web
