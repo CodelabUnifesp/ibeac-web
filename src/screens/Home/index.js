@@ -23,8 +23,8 @@ import {Button} from '@chakra-ui/button';
 
 import {set} from 'lodash/fp';
 import {get} from 'lodash';
-import EditablePostagem from '../../components/EditablePostagem';
-import Feed from '../../components/Feed';
+import EditablePostagem from '../../components/elements/EditablePostagem';
+import Feed from '../../components/elements/Feed';
 
 import {Wrapper} from './styles';
 

@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 import {Box, Collapse, Stack} from '@chakra-ui/react';
 
-import Header from '../../components/Header';
+import Header from '../../elements/Header';
 
 import {Container, Content} from './styles.js';
-import Navigation from '../../components/Navigation';
-import Sidebar from '../../components/Sidebar';
+import Navigation from '../../elements/Navigation';
+import Sidebar from '../../elements/Sidebar';
 
 const Default = ({children} = {}) => {
   const [menu, setMenu] = useState(false);
