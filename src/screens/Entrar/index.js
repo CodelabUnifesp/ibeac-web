@@ -31,10 +31,14 @@ function Entrar({history} = {}) {
       const {data} = await login(params);
 
       if (data.status === 1000) {
-        if (has(data, 'token')) {
-          setToken(data.token); // TODO: token ainda não foi implementado na API, então nao vai estar retornando aqui
+        if (has(data, 'token') || true) {
+          // TODO: token ainda não foi implementado na API, então nao vai estar retornando aqui
+          setToken(
+            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwbGFzbWVkaXMtYXBpLWRldiIsImlhdCI6MTYyNDIyMDY5MiwiZXhwIjoxNjI0OTExODkyLCJhdWQiOiIiLCJzdWIiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AcGxhc21lZGlzLmNvbSIsInJlYWxfbmFtZSI6IkpvaG4gRG9lIiwidXNlcl90eXBlIjoxLCJhdmF0YXIiOm51bGx9.zp79IVQXHb_8SQe_Nc1GJmYzwOPXwo94rjpeW2rTS6M',
+          );
+
           history.push({
-            pathname: '/home',
+            pathname: '/',
             state: data,
           });
         } else {
