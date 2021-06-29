@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {Form, Input} from '@rocketseat/unform';
 import * as Yup from 'yup';
 import 'react-toastify/dist/ReactToastify.css';
@@ -6,7 +6,9 @@ import {toast} from 'react-toastify';
 import {Box} from '@chakra-ui/layout';
 import {FormLabel, Button, Link} from '@chakra-ui/react';
 
+import {has} from 'lodash';
 import {Container, Content, Logo, FormField} from './styles';
+import {Context as AuthContext} from '../../components/store/Auth';
 
 import login from '../../domain/login';
 
@@ -17,25 +19,34 @@ const schema = Yup.object().shape({
   password: Yup.string().required('A senha é obrigatória'),
 });
 
-function Login({history} = {}) {
+function Entrar({history} = {}) {
   const [loading, setLoading] = useState(false);
+  const {
+    token: [, setToken],
+  } = useContext(AuthContext);
 
   async function handleLogin(params) {
     try {
       setLoading(true);
       const {data} = await login(params);
+
       if (data.status === 1000) {
-        setLoading(false);
-        history.push({
-          pathname: '/home',
-          state: data,
-        });
+        if (has(data, 'token')) {
+          setToken(data.token); // TODO: token ainda não foi implementado na API, então nao vai estar retornando aqui
+          history.push({
+            pathname: '/home',
+            state: data,
+          });
+        } else {
+          toast.error('Login não retornou token!');
+        }
       } else {
-        toast.error('usuário ou senha incorretos!');
-        setLoading(false);
+        toast.error('Usuário ou senha incorretos!');
       }
     } catch (error) {
-      toast.error('erro interno!');
+      toast.error('Erro interno!');
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -93,4 +104,4 @@ function Login({history} = {}) {
   );
 }
 
-export default Login;
+export default Entrar;
