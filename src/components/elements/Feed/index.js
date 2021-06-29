@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Postagem from '../Postagem/index.js';
 
-const Feed = ({value} = {}) => (
+const Feed = ({value, username, avatar} = {}) => (
   <>
     {value.map((postagem) => (
-      <Postagem item={postagem} />
+      <Postagem item={postagem} username={username} avatar={avatar} />
     ))}
   </>
 );
@@ -13,6 +13,8 @@ const Feed = ({value} = {}) => (
 Feed.displayName = 'Feed';
 Feed.defaultProps = {
   value: [],
+  username: 'Unknown',
+  avatar: 'https://bit.ly/dan-abramov',
 };
 Feed.propTypes = {
   value: PropTypes.arrayOf(
@@ -27,6 +29,8 @@ Feed.propTypes = {
       dateTime: PropTypes.string.isRequired,
     }),
   ),
+  username: PropTypes.string,
+  avatar: PropTypes.string,
 };
 
 export default Feed;
