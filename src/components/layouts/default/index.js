@@ -10,7 +10,7 @@ import {Container, Content} from './styles.js';
 import Navigation from '../../elements/Navigation';
 import Sidebar from '../../elements/Sidebar';
 
-import {Context as AuthContext} from '../../store/Auth';
+import {Context as AuthContext} from '../../stores/Auth';
 
 const Default = ({children} = {}) => {
   const [menu, setMenu] = useState(false);

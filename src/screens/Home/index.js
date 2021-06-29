@@ -32,7 +32,7 @@ import {get} from 'lodash';
 import EditablePostagem from '../../components/elements/EditablePostagem';
 import Feed from '../../components/elements/Feed';
 
-import {Context as AuthContext} from '../../components/store/Auth';
+import {Context as AuthContext} from '../../components/stores/Auth';
 
 import {Wrapper} from './styles';
 

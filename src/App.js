@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Box, ChakraProvider} from '@chakra-ui/react';
 import Routes from './routes';
-import {Provider as AuthProvider} from './components/store/Auth';
+import {Provider as AuthProvider} from './components/stores/Auth';
 
 import theme from './theme';
 

@@ -8,7 +8,7 @@ import {FormLabel, Button, Link} from '@chakra-ui/react';
 
 import {has} from 'lodash';
 import {Container, Content, Logo, FormField} from './styles';
-import {Context as AuthContext} from '../../components/store/Auth';
+import {Context as AuthContext} from '../../components/stores/Auth';
 
 import login from '../../domain/login';
 

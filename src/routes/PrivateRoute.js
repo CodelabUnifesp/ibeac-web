@@ -4,7 +4,7 @@ import {Switch, Route, BrowserRouter, Redirect} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Default from '../components/layouts/default';
-import {Context as AuthContext} from '../components/store/Auth';
+import {Context as AuthContext} from '../components/stores/Auth';
 
 const PrivateRoute = ({component: Component, ...rest}) => {
   const {
