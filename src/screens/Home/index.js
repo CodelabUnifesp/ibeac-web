@@ -85,7 +85,7 @@ function Home(props) {
       if (tab === 0 || tab === 1)
         result = await getAll({recommended: tab === 1});
       else {
-        // FUTURE: como qualquer discussão de adição de novos bairros é pra próxima "sprint", no momento vai ficar meio hardcoded assim
+        // FUTURE: como qualquer discussão de adição de novas categorias é pra próxima "sprint", no momento vai ficar meio hardcoded assim
         result = await getByCategory(
           (await categories.current).find((c) => c.name === tabs[tab])?.id ??
             null,
