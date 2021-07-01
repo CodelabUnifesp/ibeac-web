@@ -81,6 +81,7 @@ function Home(props) {
      */
 
     const fetchPosts = async () => {
+      setPosts(null);
       let result = [];
       if (tab === 0 || tab === 1)
         result = await getAll({recommended: tab === 1});
