@@ -38,7 +38,7 @@ import {Context as AuthContext} from '../../components/stores/Auth';
 
 import {Wrapper} from './styles';
 
-import {getAll} from '../../domain/postagens';
+import {getAll, getByCategory} from '../../domain/postagens';
 import * as Categorias from '../../domain/categorias';
 import * as Bairros from '../../domain/bairros';
 import * as Comentarios from '../../domain/comentarios';
@@ -47,7 +47,7 @@ function Home(props) {
   const tabs = useBreakpointValue(
     {
       base: ['Feed', 'Recomendados'],
-      lg: ['Feed', 'Recomendados', 'Saúde', 'Trocas', 'Cultura e lazer'],
+      lg: ['Feed', 'Recomendados', 'Saúde', 'Trocas', 'Cultura e Lazer'],
     },
     'base',
   );
@@ -64,8 +64,12 @@ function Home(props) {
   const [newPostagem, setNewPostagem] = useState({});
 
   useEffect(() => {
-    // HACK: a api nao envia nome de categoria/bairro, comentários vinculados à uma postagem OU avatar do autor, então isso é um workaround
+    // recuperando lista de categorias para tabs
     categories.current = Categorias.getAll();
+  }, []);
+
+  useEffect(() => {
+    // HACK: a api nao envia nome de categoria/bairro, comentários vinculados à uma postagem OU avatar do autor, então isso é um workaround
     neighborhoods.current = Bairros.getAll();
     comments.current = Comentarios.getAll();
   }, []);
@@ -77,7 +81,16 @@ function Home(props) {
      */
 
     const fetchPosts = async () => {
-      const result = await getAll({recommended: tab === 1});
+      let result = [];
+      if (tab === 0 || tab === 1)
+        result = await getAll({recommended: tab === 1});
+      else {
+        // FUTURE: como qualquer discussão de adição de novos bairros é pra próxima "sprint", no momento vai ficar meio hardcoded assim
+        result = await getByCategory(
+          (await categories.current).find((c) => c.name === tabs[tab])?.id ??
+            null,
+        );
+      }
 
       if (isNull(result)) return;
 
