@@ -1,9 +1,20 @@
-import {get, has} from 'lodash';
+import {flatten, get, has, isNil, isNull} from 'lodash';
+import {stringify} from 'querystring';
 
 import api from '../../services/api';
 
-export default async function getAll({recommended = false} = {}) {
-  const posts = await api.get(recommended ? 'recomendados' : 'postagens');
+export default async function getAll({
+  recommended = false,
+  category = null,
+  neighborhood = null,
+} = {}) {
+  const posts = await api.get(
+    (recommended ? '/recomendados' : '/postagens') +
+      stringify({
+        categoria: isNil(category) ? '' : flatten([category]).join(','),
+        bairro: isNil(neighborhood) ? '' : flatten([neighborhood]).join(','),
+      }),
+  );
 
   if (!has(posts, 'data')) return null;
 

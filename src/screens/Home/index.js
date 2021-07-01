@@ -38,7 +38,7 @@ import {Context as AuthContext} from '../../components/stores/Auth';
 
 import {Wrapper} from './styles';
 
-import {getAll, getByCategory} from '../../domain/postagens';
+import {getAll} from '../../domain/postagens';
 import * as Categorias from '../../domain/categorias';
 import * as Bairros from '../../domain/bairros';
 import * as Comentarios from '../../domain/comentarios';
@@ -87,10 +87,11 @@ function Home(props) {
         result = await getAll({recommended: tab === 1});
       else {
         // FUTURE: como qualquer discussão de adição de novas categorias é pra próxima "sprint", no momento vai ficar meio hardcoded assim
-        result = await getByCategory(
-          (await categories.current).find((c) => c.name === tabs[tab])?.id ??
+        result = await getAll({
+          category:
+            (await categories.current).find((c) => c.name === tabs[tab])?.id ??
             null,
-        );
+        });
       }
 
       if (isNull(result)) return;
