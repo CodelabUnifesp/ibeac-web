@@ -1,4 +1,5 @@
 import React, {
+  useRef,
   useReducer,
   useMemo,
   useState,
@@ -28,7 +29,7 @@ import {Avatar} from '@chakra-ui/avatar';
 import {Button} from '@chakra-ui/button';
 
 import {set} from 'lodash/fp';
-import {get} from 'lodash';
+import {get, isNull} from 'lodash';
 import EditablePostagem from '../../components/elements/EditablePostagem';
 import Feed from '../../components/elements/Feed';
 
@@ -36,120 +37,74 @@ import {Context as AuthContext} from '../../components/stores/Auth';
 
 import {Wrapper} from './styles';
 
+import {getAll} from '../../domain/postagens';
+import * as Categorias from '../../domain/categorias';
+import * as Bairros from '../../domain/bairros';
+import * as Comentarios from '../../domain/comentarios';
+
 function Home(props) {
   const [tabs, setTabs] = useState([]);
   const [tab, setTab] = useState(0);
   const {isOpen, onOpen, onClose} = useDisclosure();
   const {user} = useContext(AuthContext);
 
+  const categories = useRef(null);
+  const neighborhoods = useRef(null);
+  const comments = useRef(null);
+
+  const [posts, setPosts] = useState(null);
   const [newPostagem, setNewPostagem] = useState({});
 
-  const tabPanel = useMemo(() => {
-    if (tab === 0)
-      return (
-        <Feed
-          username={get(user, 'real_name', '???')}
-          avatar={get(user, 'avatar', null)}
-          value={[
-            {
-              title: 'Postagem #1',
-              description:
-                'Sit voluptate veniam laborum quis Lorem nostrud. Duis esse aute veniam anim aliquip est cupidatat pariatur Lorem elit proident nisi minim. Ex occaecat voluptate irure occaecat eu occaecat minim velit amet voluptate deserunt. Duis elit nostrud ut irure ad et magna elit cupidatat non aliquip. Exercitation irure reprehenderit sit duis sint magna elit eiusmod tempor. Ex magna fugiat consectetur consequat in tempor et irure elit.',
-              category: {
-                id: 1,
-                name: 'Saúde',
-              },
-              userName: 'Usuário teste',
-              dateTime: '18 de Abril às 21:00',
-              comments: [
-                {
-                  body:
-                    'Sunt quis aliqua ut cillum pariatur eiusmod eiusmod commodo nisi labore officia duis incididunt ea. Amet eu nostrud excepteur cillum minim id mollit anim labore in. Esse culpa laboris sit consequat occaecat occaecat officia sunt labore.',
-                  author: 'John Doe',
-                  dateTime: '23 de Maio às 14:32',
-                },
-                {
-                  body:
-                    'Cillum minim laboris consequat sit proident amet magna labore culpa esse eiusmod. Culpa in cillum culpa ea aliquip reprehenderit fugiat nostrud elit nisi occaecat in. Ipsum et nisi culpa ad laborum sint irure laborum et. Veniam ipsum ut eu adipisicing ullamco aute cupidatat ea ipsum consectetur nostrud irure minim veniam.',
-                  author: 'Jane Doe',
-                  dateTime: '23 de Maio às 14:32',
-                },
-                {
-                  body:
-                    'Sunt quis aliqua ut cillum pariatur eiusmod eiusmod commodo nisi labore officia duis incididunt ea.',
-                  author: 'John Doe',
-                  dateTime: '23 de Maio às 14:32',
-                },
-              ],
-            },
-            {
-              title: 'Postagem #2',
-              description:
-                'Sit voluptate veniam laborum quis Lorem nostrud. ercitation irure reprehenderit sit duis sint magna elit eiusmod tempor. Ex magna fugiat consectetur consequat in tempor et irure elit.',
-              category: {
-                id: 2,
-                name: 'Trocas',
-              },
-              userName: 'Usuário teste 2',
-              dateTime: '20 de Abril às 21:00',
-            },
-          ]}
-        />
-      );
-    if (tab === 1)
-      return (
-        <Feed
-          username={get(user, 'real_name', '???')}
-          avatar={get(user, 'avatar', null)}
-          value={[
-            {
-              title: 'Postagem Recomendada #1',
-              description:
-                'Sit voluptate veniam laborum quis Lorem nostrud. Duis esse aute veniam anim aliquip est cupidatat pariatur Lorem elit proident nisi minim. Ex occaecat voluptate irure occaecat eu occaecat minim velit amet voluptate deserunt. Duis elit nostrud ut irure ad et magna elit cupidatat non aliquip. Exercitation irure reprehenderit sit duis sint magna elit eiusmod tempor. Ex magna fugiat consectetur consequat in tempor et irure elit.',
-              category: {
-                id: 3,
-                name: 'Cultura e Lazer',
-              },
-              userName: 'Usuário teste 3',
-              dateTime: '22 de Abril às 18:00',
-              comments: [
-                {
-                  body:
-                    'Sunt quis aliqua ut cillum pariatur eiusmod eiusmod commodo nisi labore officia duis incididunt ea. Amet eu nostrud excepteur cillum minim id mollit anim labore in. Esse culpa laboris sit consequat occaecat occaecat officia sunt labore.',
-                  author: 'John Doe',
-                  dateTime: '23 de Maio às 14:32',
-                },
-                {
-                  body:
-                    'Cillum minim laboris consequat sit proident amet magna labore culpa esse eiusmod. Culpa in cillum culpa ea aliquip reprehenderit fugiat nostrud elit nisi occaecat in. Ipsum et nisi culpa ad laborum sint irure laborum et. Veniam ipsum ut eu adipisicing ullamco aute cupidatat ea ipsum consectetur nostrud irure minim veniam.',
-                  author: 'Jane Doe',
-                  dateTime: '23 de Maio às 14:32',
-                },
-                {
-                  body:
-                    'Sunt quis aliqua ut cillum pariatur eiusmod eiusmod commodo nisi labore officia duis incididunt ea. ',
-                  author: 'John Doe',
-                  dateTime: '23 de Maio às 14:32',
-                },
-              ],
-            },
-            {
-              title: 'Postagem Recomendada #2',
-              description:
-                'Sit voluptate veniam laborum quis Lorem nostrud. Duis esse aute veniam anim aliquip est cupidatat pariatur Lorem elit proident nisi minim. Ex occaecat voluptate irure occaecat eu occaecat minim velit amet voluptate deserunt. Duis elit nostrud ut irure ad et magna elit cupidatat non aliquip. Exercitation irure reprehenderit sit duis sint magna elit eiusmod tempor. Ex magna fugiat consectetur consequat in tempor et irure elit.',
-              category: {
-                id: 3,
-                name: 'Cultura e Lazer',
-              },
-              userName: 'Usuário teste 4',
-              dateTime: '24 de Abril às 15:00',
-            },
-          ]}
-        />
-      );
+  useEffect(() => {
+    // HACK: a api nao envia nome de categoria/bairro, comentários vinculados à uma postagem OU avatar do autor, então isso é um workaround
+    categories.current = Categorias.getAll();
+    neighborhoods.current = Bairros.getAll();
+    comments.current = Comentarios.getAll();
+  }, []);
 
-    return null;
-  }, [tab, user]);
+  useEffect(() => {
+    /**
+     * tab  0 -> FEED
+     *      1 -> RECOMENDADOS
+     */
+
+    const fetchPosts = async () => {
+      const result = await getAll({recommended: tab === 1});
+
+      if (isNull(result)) return;
+
+      const [allCategories, allNeighborhoods, allComments] = await Promise.all([
+        categories.current,
+        neighborhoods.current,
+        comments.current,
+      ]);
+
+      setPosts(
+        result.map((post) => {
+          // HACK: a api nao envia nome de categoria/bairro ou avatar do autor, então isso é um workaround
+          // HACK: a api também não envia o dateTime de postagens OU comentarios
+          // BUGFIX: o endpoint da api (/users), que poderia ser usado no workaround, não funciona
+          // TODO: ASDASD
+
+          const category = allCategories.find((c) => c.id === post.category.id);
+          post.category.name = get(category, 'name', '—');
+
+          const neighborhood = allNeighborhoods.find(
+            (b) => b.id === post.neighborhood.id,
+          );
+          post.neighborhood.name = get(neighborhood, 'name', '—');
+
+          post.comments = allComments.filter((c) => c.post === post.id);
+
+          post.author.avatar = null;
+
+          return post;
+        }),
+      );
+    };
+
+    fetchPosts();
+  }, [tab]);
 
   useEffect(() => {
     window.innerWidth >= 1024
@@ -228,7 +183,11 @@ function Home(props) {
           </Flex>
         </Box>
 
-        {tabPanel}
+        <Feed
+          username={get(user, 'real_name', '???')}
+          avatar={get(user, 'avatar', null)}
+          value={posts}
+        />
       </Wrapper>
 
       {/* Modal de Criar Postagem */}
