@@ -103,8 +103,8 @@ function Home(props) {
 
       setPosts(
         result.map((post) => {
-          // HACK: a api nao envia nome de categoria/bairro ou avatar do autor, então isso é um workaround
-          // HACK: a api também não envia o dateTime de postagens OU comentarios
+          // HACK: a api nao envia nome de categoria/bairro, avatar ou id do autor, então isso é um workaround
+          // BUGFIX: a api também não envia o dateTime de postagens OU comentarios
           // BUGFIX: o endpoint da api (/users), que poderia ser usado no workaround, não funciona
 
           const category = allCategories.find((c) => c.id === post.category.id);
