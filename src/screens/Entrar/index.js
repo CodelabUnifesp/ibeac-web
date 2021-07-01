@@ -34,10 +34,10 @@ function Entrar({history} = {}) {
         if (has(data, 'token') || true) {
           // TODO: token ainda não foi implementado na API, então nao vai estar retornando aqui
           // token EXPIRADO: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwbGFzbWVkaXMtYXBpLWRldiIsImlhdCI6MTYyNDIyMDY5MiwiZXhwIjoxNjI0OTExODkyLCJhdWQiOiIiLCJzdWIiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AcGxhc21lZGlzLmNvbSIsInJlYWxfbmFtZSI6IkpvaG4gRG9lIiwidXNlcl90eXBlIjoxLCJhdmF0YXIiOm51bGx9.zp79IVQXHb_8SQe_Nc1GJmYzwOPXwo94rjpeW2rTS6M
-          // token valido até 2022 (para teste): eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwbGFzbWVkaXMtYXBpLWRldiIsImlhdCI6MTYyNDIyMDY5MiwiZXhwIjo3OTY3Nzk1MDkyLCJhdWQiOiIiLCJzdWIiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AcGxhc21lZGlzLmNvbSIsInJlYWxfbmFtZSI6IkpvaG4gRG9lIiwidXNlcl90eXBlIjoiMSIsImF2YXRhciI6Im51bGwifQ.SJZkk_13zZfX2v6AgZmCSd0hSjgNpbaoHfcAzwMEC6w
+          // token valido até 2022 (para teste, tem id do usuario = 1): eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwbGFzbWVkaXMtYXBpLWRldiIsImlhdCI6MTYyNDIyMDY5MiwiZXhwIjo3OTY3Nzk1MDkyLCJhdWQiOiIiLCJzdWIiOiJhZG1pbiIsImlkIjoxLCJlbWFpbCI6ImFkbWluQHBsYXNtZWRpcy5jb20iLCJyZWFsX25hbWUiOiJKb2huIERvZSIsInVzZXJfdHlwZSI6IjEiLCJhdmF0YXIiOiJudWxsIn0.SWNNmcuP0WhfqVOvq2d1XjRa76zGYQw18MbZaEYtICY
 
           setToken(
-            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwbGFzbWVkaXMtYXBpLWRldiIsImlhdCI6MTYyNDIyMDY5MiwiZXhwIjo3OTY3Nzk1MDkyLCJhdWQiOiIiLCJzdWIiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AcGxhc21lZGlzLmNvbSIsInJlYWxfbmFtZSI6IkpvaG4gRG9lIiwidXNlcl90eXBlIjoiMSIsImF2YXRhciI6Im51bGwifQ.SJZkk_13zZfX2v6AgZmCSd0hSjgNpbaoHfcAzwMEC6w',
+            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwbGFzbWVkaXMtYXBpLWRldiIsImlhdCI6MTYyNDIyMDY5MiwiZXhwIjo3OTY3Nzk1MDkyLCJhdWQiOiIiLCJzdWIiOiJhZG1pbiIsImlkIjoxLCJlbWFpbCI6ImFkbWluQHBsYXNtZWRpcy5jb20iLCJyZWFsX25hbWUiOiJKb2huIERvZSIsInVzZXJfdHlwZSI6IjEiLCJhdmF0YXIiOiJudWxsIn0.SWNNmcuP0WhfqVOvq2d1XjRa76zGYQw18MbZaEYtICY',
           );
 
           history.push({

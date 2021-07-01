@@ -15,9 +15,7 @@ const Postagem = ({item, username, avatar} = {}) => {
   const [openComments, setOpenComments] = useState(false);
   const [newComment, setNewComment] = useState('');
 
-  const numberOfComments = useMemo(() => get(item, 'comments.length', 0), [
-    item,
-  ]);
+  const numberOfComments = useMemo(() => item?.comments?.length ?? 0, [item]);
 
   return (
     <Box
