@@ -22,6 +22,7 @@ import {
   ModalCloseButton,
   useDisclosure,
   Flex,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 
 import {Avatar} from '@chakra-ui/avatar';
@@ -43,7 +44,14 @@ import * as Bairros from '../../domain/bairros';
 import * as Comentarios from '../../domain/comentarios';
 
 function Home(props) {
-  const [tabs, setTabs] = useState([]);
+  const tabs = useBreakpointValue(
+    {
+      base: ['Feed', 'Recomendados'],
+      lg: ['Feed', 'Recomendados', 'Saúde', 'Trocas', 'Cultura e lazer'],
+    },
+    'base',
+  );
+
   const [tab, setTab] = useState(0);
   const {isOpen, onOpen, onClose} = useDisclosure();
   const {user} = useContext(AuthContext);
@@ -105,12 +113,6 @@ function Home(props) {
 
     fetchPosts();
   }, [tab]);
-
-  useEffect(() => {
-    window.innerWidth >= 1024
-      ? setTabs(['Feed', 'Recomendados', 'Saúde', 'Trocas', 'Cultura e lazer'])
-      : setTabs(['Feed', 'Recomendados']);
-  }, []);
 
   return (
     <>
