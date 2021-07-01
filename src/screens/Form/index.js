@@ -2,7 +2,7 @@ import React from 'react';
 import {Text} from '@chakra-ui/react';
 import * as S from './styles';
 import questions from './questions';
-import FormQuestions from '../../components/FormQuestions';
+import FormQuestions from '../../components/elements/FormQuestions';
 
 const Form = (...props) => (
   <S.Wrapper px={{base: 0, lg: 6}}>

@@ -1,16 +1,20 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import PropTypes from 'prop-types';
 
 import {Box, Collapse, Stack} from '@chakra-ui/react';
 
-import Header from '../../components/Header';
+import {get} from 'lodash';
+import Header from '../../elements/Header';
 
 import {Container, Content} from './styles.js';
-import Navigation from '../../components/Navigation';
-import Sidebar from '../../components/Sidebar';
+import Navigation from '../../elements/Navigation';
+import Sidebar from '../../elements/Sidebar';
+
+import {Context as AuthContext} from '../../stores/Auth';
 
 const Default = ({children} = {}) => {
   const [menu, setMenu] = useState(false);
+  const {user} = useContext(AuthContext);
 
   return (
     <>
@@ -37,7 +41,9 @@ const Default = ({children} = {}) => {
         </Header>
         <Content mt={{base: 0, lg: 2}} p={{base: 0, lg: 4}}>
           <Box width="100%" display={{base: 'none', lg: 'flex'}}>
-            <Sidebar>
+            <Sidebar
+              name={get(user, 'real_name', '???')}
+              avatar={get(user, 'avatar', 'https://bit.ly/dan-abramov')}>
               <Navigation />
             </Sidebar>
           </Box>

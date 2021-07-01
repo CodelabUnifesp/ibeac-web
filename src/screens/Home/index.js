@@ -1,4 +1,10 @@
-import React, {useReducer, useMemo, useState, useEffect} from 'react';
+import React, {
+  useReducer,
+  useMemo,
+  useState,
+  useEffect,
+  useContext,
+} from 'react';
 import {
   Tabs,
   TabList,
@@ -23,8 +29,10 @@ import {Button} from '@chakra-ui/button';
 
 import {set} from 'lodash/fp';
 import {get} from 'lodash';
-import EditablePostagem from '../../components/EditablePostagem';
-import Feed from '../../components/Feed';
+import EditablePostagem from '../../components/elements/EditablePostagem';
+import Feed from '../../components/elements/Feed';
+
+import {Context as AuthContext} from '../../components/stores/Auth';
 
 import {Wrapper} from './styles';
 
@@ -32,6 +40,7 @@ function Home(props) {
   const [tabs, setTabs] = useState([]);
   const [tab, setTab] = useState(0);
   const {isOpen, onOpen, onClose} = useDisclosure();
+  const {user} = useContext(AuthContext);
 
   const [newPostagem, setNewPostagem] = useState({});
 
@@ -39,6 +48,8 @@ function Home(props) {
     if (tab === 0)
       return (
         <Feed
+          username={get(user, 'real_name', '???')}
+          avatar={get(user, 'avatar', null)}
           value={[
             {
               title: 'Postagem #1',
@@ -88,6 +99,8 @@ function Home(props) {
     if (tab === 1)
       return (
         <Feed
+          username={get(user, 'real_name', '???')}
+          avatar={get(user, 'avatar', null)}
           value={[
             {
               title: 'Postagem Recomendada #1',
@@ -136,7 +149,7 @@ function Home(props) {
       );
 
     return null;
-  }, [tab]);
+  }, [tab, user]);
 
   useEffect(() => {
     window.innerWidth >= 1024
@@ -193,7 +206,10 @@ function Home(props) {
           bgColor="white">
           <Flex flexDirection="row" align="center">
             <Box mr={4}>
-              <Avatar name="Usuário" src="https://bit.ly/dan-abramov" />
+              <Avatar
+                name={get(user, 'real_name', '???')}
+                src={get(user, 'avatar', 'https://bit.ly/dan-abramov')}
+              />
             </Box>
             <Button
               color="#606060"

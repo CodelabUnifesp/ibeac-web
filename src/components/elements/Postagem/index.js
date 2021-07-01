@@ -11,7 +11,7 @@ import Icon from '@chakra-ui/icon';
 
 import {get, isEmpty, isNull} from 'lodash';
 
-const Postagem = ({item} = {}) => {
+const Postagem = ({item, username, avatar} = {}) => {
   const [openComments, setOpenComments] = useState(false);
   const [newComment, setNewComment] = useState('');
 
@@ -65,7 +65,7 @@ const Postagem = ({item} = {}) => {
             <Box p={4} px={{base: 0, lg: 4}}>
               <Flex flexDirection="row" align="center" mb={8}>
                 <Box mr={{base: 2, lg: 4}}>
-                  <Avatar name="Usuário" src="https://bit.ly/dan-abramov" />
+                  <Avatar name={username} src={avatar} />
                 </Box>
 
                 <Input
@@ -126,6 +126,8 @@ const Postagem = ({item} = {}) => {
 Postagem.displayName = 'Postagem';
 Postagem.defaultProps = {
   item: {},
+  username: 'Unknown',
+  avatar: 'https://bit.ly/dan-abramov',
 };
 Postagem.propTypes = {
   item: PropTypes.shape({
@@ -138,6 +140,8 @@ Postagem.propTypes = {
     userName: PropTypes.string.isRequired,
     dateTime: PropTypes.string.isRequired,
   }),
+  username: PropTypes.string,
+  avatar: PropTypes.string,
 };
 
 export default Postagem;
