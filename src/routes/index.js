@@ -21,8 +21,8 @@ function Routes() {
         <PrivateRoute path="/form" component={Form} />
         <PrivateRoute path="/complemento-de-dados" component={AdditionalData} />
         <PrivateRoute path="/register" component={RegisterUser} />
-        <PrivateRoute path="/:category" />
         <PrivateRoute path="/logout" component={Logout} />
+        <PrivateRoute path="/:category" />
       </Switch>
     </BrowserRouter>
   );
