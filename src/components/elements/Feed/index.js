@@ -5,7 +5,7 @@ import {isNull} from 'lodash';
 import {Spinner, Box} from '@chakra-ui/react';
 import Postagem from '../Postagem/index.js';
 
-const Feed = ({value, username, avatar} = {}) => {
+const Feed = ({value, user, avatar} = {}) => {
   if (isNull(value)) {
     return (
       <Box w="100%" textAlign="center" mt={5}>
@@ -17,7 +17,7 @@ const Feed = ({value, username, avatar} = {}) => {
   return (
     <>
       {value.map((postagem) => (
-        <Postagem item={postagem} username={username} avatar={avatar} />
+        <Postagem item={postagem} user={user} avatar={avatar} />
       ))}
     </>
   );
@@ -26,7 +26,7 @@ const Feed = ({value, username, avatar} = {}) => {
 Feed.displayName = 'Feed';
 Feed.defaultProps = {
   value: [],
-  username: 'Unknown',
+  user: {},
   avatar: 'https://bit.ly/dan-abramov',
 };
 Feed.propTypes = {
@@ -38,11 +38,10 @@ Feed.propTypes = {
         id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
       },
-      userName: PropTypes.string.isRequired,
       dateTime: PropTypes.string.isRequired,
     }),
   ),
-  username: PropTypes.string,
+  user: PropTypes.string,
   avatar: PropTypes.string,
 };
 
