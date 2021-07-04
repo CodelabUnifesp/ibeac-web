@@ -10,6 +10,7 @@ import Home from '../screens/Home';
 import Form from '../screens/Form';
 import AdditionalData from '../screens/AdditionalData';
 import RegisterUser from '../screens/RegisterUser';
+import Logout from '../screens/Logout';
 
 function Routes() {
   return (
@@ -21,6 +22,7 @@ function Routes() {
         <PrivateRoute path="/complemento-de-dados" component={AdditionalData} />
         <PrivateRoute path="/register" component={RegisterUser} />
         <PrivateRoute path="/:category" />
+        <PrivateRoute path="/logout" component={Logout} />
       </Switch>
     </BrowserRouter>
   );
