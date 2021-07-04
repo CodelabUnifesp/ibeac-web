@@ -57,6 +57,7 @@ const Navigation = () => {
     {
       title: 'Sair',
       icon: mdiLogout,
+      to: '/logout',
     },
   ];
 
