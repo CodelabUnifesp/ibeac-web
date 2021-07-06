@@ -1,14 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {isNull} from 'lodash';
+
+import {Spinner, Box} from '@chakra-ui/react';
 import Postagem from '../Postagem/index.js';
 
-const Feed = ({value, username, avatar} = {}) => (
-  <>
-    {value.map((postagem) => (
-      <Postagem item={postagem} username={username} avatar={avatar} />
-    ))}
-  </>
-);
+const Feed = ({value, username, avatar} = {}) => {
+  if (isNull(value)) {
+    return (
+      <Box w="100%" textAlign="center" mt={5}>
+        <Spinner colorScheme="primary" />
+      </Box>
+    );
+  }
+
+  return (
+    <>
+      {value.map((postagem) => (
+        <Postagem item={postagem} username={username} avatar={avatar} />
+      ))}
+    </>
+  );
+};
 
 Feed.displayName = 'Feed';
 Feed.defaultProps = {
