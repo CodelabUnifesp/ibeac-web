@@ -7,6 +7,7 @@ import {
   mdiFormatListChecks,
   mdiAccountBoxMultipleOutline,
   mdiLogout,
+  mdiAccountPlus,
 } from '@mdi/js';
 import {Box} from '@chakra-ui/layout';
 import {useLocation} from 'react-router-dom';
@@ -50,6 +51,11 @@ const Navigation = () => {
       title: 'Formulário Socioeconômico',
       icon: mdiFormatListChecks,
       to: '/form',
+    },
+    {
+      title: 'Cadastrar Novo Usuário',
+      icon: mdiAccountPlus,
+      to: '/register',
     },
   ];
 
