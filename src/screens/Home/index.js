@@ -1,17 +1,8 @@
-import React, {
-  useRef,
-  useReducer,
-  useMemo,
-  useState,
-  useEffect,
-  useContext,
-} from 'react';
+import React, {useRef, useState, useEffect, useContext} from 'react';
 import {
   Tabs,
   TabList,
-  TabPanels,
   Tab,
-  TabPanel,
   Box,
   Modal,
   ModalOverlay,
@@ -199,11 +190,7 @@ function Home(props) {
           </Flex>
         </Box>
 
-        <Feed
-          username={get(user, 'real_name', '???')}
-          avatar={get(user, 'avatar', null)}
-          value={posts}
-        />
+        <Feed user={user} avatar={get(user, 'avatar', null)} value={posts} />
       </Wrapper>
 
       {/* Modal de Criar Postagem */}

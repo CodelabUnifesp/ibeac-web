@@ -1,21 +1,21 @@
-import React, {useMemo, useState, useCallback} from 'react';
+import React, {useMemo, useState} from 'react';
 import PropTypes from 'prop-types';
 
 import {Stack, Box, Text, Flex} from '@chakra-ui/layout';
 import {Avatar} from '@chakra-ui/avatar';
-import {Button} from '@chakra-ui/button';
 import {IconButton, Input} from '@chakra-ui/react';
-import {MdSend} from 'react-icons/md';
+import {MdSend, MdVerifiedUser} from 'react-icons/md';
 
 import Icon from '@chakra-ui/icon';
 
 import {get, isEmpty, isNull} from 'lodash';
 
-const Postagem = ({item, username, avatar} = {}) => {
+const Postagem = ({item, user, avatar} = {}) => {
   const [openComments, setOpenComments] = useState(false);
   const [newComment, setNewComment] = useState('');
 
   const numberOfComments = useMemo(() => item?.comments?.length ?? 0, [item]);
+  const isAdmin = user.verified;
 
   return (
     <Box
@@ -42,9 +42,25 @@ const Postagem = ({item, username, avatar} = {}) => {
           </Stack>
         </Flex>
         <Stack>
-          <Text mb={2} fontWeight="bold" size="md" color="black">
-            {item.title}
-          </Text>
+          <Flex mb={2} flexDirection="row" align="center">
+            <Text fontWeight="bold" size="md" color="black">
+              {item.title}
+            </Text>
+            {(item.verified || isAdmin) && (
+              <IconButton
+                aria-label="Verificar postagem"
+                variant="unstyled"
+                icon={
+                  <Icon
+                    color={!item.verified ? 'gray' : 'green'}
+                    boxSize="1em"
+                    as={MdVerifiedUser}
+                  />
+                }
+                onClick={() => isAdmin && alert(`VERIFICAR POSTAGEM`)}
+              />
+            )}
+          </Flex>
           <Text size="sm" color="black" align="justify">
             {item.description}
           </Text>
@@ -69,7 +85,7 @@ const Postagem = ({item, username, avatar} = {}) => {
                 align="center"
                 mb={numberOfComments > 0 ? 8 : 0}>
                 <Box mr={{base: 2, lg: 4}}>
-                  <Avatar name={username} src={avatar} />
+                  <Avatar name={user.name} src={avatar} />
                 </Box>
 
                 <Input
@@ -133,7 +149,7 @@ const Postagem = ({item, username, avatar} = {}) => {
 Postagem.displayName = 'Postagem';
 Postagem.defaultProps = {
   item: {},
-  username: 'Unknown',
+  user: {},
   avatar: 'https://bit.ly/dan-abramov',
 };
 Postagem.propTypes = {
@@ -144,10 +160,13 @@ Postagem.propTypes = {
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
     },
-    userName: PropTypes.string.isRequired,
     dateTime: PropTypes.string.isRequired,
+    comments: PropTypes.arrayOf(PropTypes.shape({})),
+    verified: PropTypes.bool,
   }),
-  username: PropTypes.string,
+  user: PropTypes.shape({
+    name: PropTypes.string,
+  }),
   avatar: PropTypes.string,
 };
 
