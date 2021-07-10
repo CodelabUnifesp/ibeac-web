@@ -29,12 +29,13 @@ import {Context as AuthContext} from '../../components/stores/Auth';
 
 import {Wrapper} from './styles';
 
-import {getAll} from '../../domain/postagens';
+import {getAll, create} from '../../domain/postagens';
 import * as Categorias from '../../domain/categorias';
 import * as Bairros from '../../domain/bairros';
 import * as Comentarios from '../../domain/comentarios';
 
-function Home(props) {
+function Home({location}) {
+  const [currentUserId, setCurrentUserId] = useState(location.state.id);
   const tabs = useBreakpointValue(
     {
       base: ['Feed', 'Recomendados'],
@@ -217,17 +218,7 @@ function Home(props) {
             <Button
               colorScheme="primary"
               mr={3}
-              onClick={() =>
-                alert(
-                  `Nova Postagem\ntitle: ${get(
-                    newPostagem,
-                    'title',
-                  )}\ndescription: ${get(
-                    newPostagem,
-                    'description',
-                  )}\ncategory: ${get(newPostagem, 'category')}`,
-                )
-              }>
+              onClick={() => create(newPostagem, currentUserId)}>
               Criar
             </Button>
             <Button onClick={onClose}>Cancelar</Button>
