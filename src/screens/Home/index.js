@@ -35,7 +35,7 @@ import * as Bairros from '../../domain/bairros';
 import * as Comentarios from '../../domain/comentarios';
 
 function Home({location}) {
-  const [currentUserId, setCurrentUserId] = useState(location.state.id);
+  const currentUserId = location.state ? location.state.id : null;
   const tabs = useBreakpointValue(
     {
       base: ['Feed', 'Recomendados'],
