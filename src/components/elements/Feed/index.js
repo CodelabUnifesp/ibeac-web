@@ -17,7 +17,12 @@ const Feed = ({value, user, avatar} = {}) => {
   return (
     <>
       {value.map((postagem) => (
-        <Postagem item={postagem} user={user} avatar={avatar} />
+        <Postagem
+          key={postagem?.id}
+          item={postagem}
+          user={user}
+          avatar={avatar}
+        />
       ))}
     </>
   );
@@ -41,7 +46,10 @@ Feed.propTypes = {
       dateTime: PropTypes.string.isRequired,
     }),
   ),
-  user: PropTypes.string,
+  user: PropTypes.shape({
+    user_type: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+  }),
   avatar: PropTypes.string,
 };
 
