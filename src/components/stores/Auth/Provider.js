@@ -22,15 +22,16 @@ const Provider = ({children} = {}) => {
   }, [token, setToken]);
 
   // TODO: refinar esse useLocalStorage para algo como useLocalStoredState
-  const user = useMemo(
-    () =>
-      JSON.parse(
-        isNil(_user) || _user === 'undefined' || _user === 'null'
-          ? '{}'
-          : _user,
-      ),
-    [_user],
-  );
+  const user = useMemo(() => {
+    const stringifiedUser =
+      isNil(_user) || _user === 'undefined' || _user === 'null' ? '{}' : _user;
+
+    try {
+      return JSON.parse(stringifiedUser);
+    } catch {
+      return {};
+    }
+  }, [_user]);
 
   const setUser = useCallback(
     (object) => _setUser(JSON.stringify(object)),
