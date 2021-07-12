@@ -3,7 +3,10 @@ import {Text} from '@chakra-ui/react';
 import * as S from './styles';
 import questions from './questions';
 import FormQuestions from '../../components/elements/FormQuestions';
-import {getById as userGetById} from '../../domain/usuarios';
+import {
+  getById as userGetById,
+  updateById as userUpdateById,
+} from '../../domain/usuarios';
 
 const Form = (...props) => {
   const [currentUser] = useState(JSON.parse(localStorage.getItem('userData')));
@@ -20,6 +23,10 @@ const Form = (...props) => {
     fetchData();
   }, [currentUser]);
 
+  const handleSubmmit = async (data) => {
+    await userUpdateById(currentUser.id, data);
+  };
+
   return (
     <S.Wrapper px={{base: 0, lg: 6}}>
       <Text color="#2f7384" fontSize="2xl" fontWeight={600} marginBottom={4}>
@@ -31,6 +38,7 @@ const Form = (...props) => {
           questions={questions}
           userAdicionalData={aditionalData}
           override={override}
+          submitFunction={handleSubmmit}
         />
       )}
     </S.Wrapper>
