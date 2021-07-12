@@ -3,7 +3,7 @@ import useLocalStorage from 'react-use-localstorage';
 
 import jwt from 'jsonwebtoken';
 
-import {get, isEmpty, isNull} from 'lodash';
+import {get, isEmpty, isNil, isNull} from 'lodash';
 import Context from './Context';
 
 const Provider = ({children} = {}) => {
@@ -22,7 +22,15 @@ const Provider = ({children} = {}) => {
   }, [token, setToken]);
 
   // TODO: refinar esse useLocalStorage para algo como useLocalStoredState
-  const user = useMemo(() => JSON.parse(_user), [_user]);
+  const user = useMemo(
+    () =>
+      JSON.parse(
+        isNil(_user) || _user === 'undefined' || _user === 'null'
+          ? '{}'
+          : _user,
+      ),
+    [_user],
+  );
 
   const setUser = useCallback(
     (object) => _setUser(JSON.stringify(object)),
