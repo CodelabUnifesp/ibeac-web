@@ -5,9 +5,14 @@ export const storage = 'localStorage';
 const get = (key, defaultValue = null) => {
   if (!canUseDOM) return defaultValue;
   if (window[storage].getItem(key) === 'undefined') return defaultValue;
-  return JSON.parse(
-    window[storage].getItem(key) || JSON.stringify(defaultValue),
-  );
+
+  try {
+    return JSON.parse(
+      window[storage].getItem(key) || JSON.stringify(defaultValue),
+    );
+  } catch {
+    return null;
+  }
 };
 
 const set = (key, value) => {
