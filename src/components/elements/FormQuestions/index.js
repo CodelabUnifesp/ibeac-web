@@ -20,6 +20,7 @@ const FormQuestions = ({
   questions,
   userAdicionalData,
   override,
+  submitFunction,
 }) => {
   const [inputValue, setInputValue] = useState({});
   const [isLoading, setisLoading] = useState(false);
@@ -50,6 +51,7 @@ const FormQuestions = ({
             value={inputValue[question.id]}
             onInput={(event) =>
               setInputValue({
+                ...inputValue,
                 [question.id]: question.forbiddenCharacters
                   ? event.target.value.replace(question.forbiddenCharacters, '')
                   : event.target.value,
@@ -62,28 +64,48 @@ const FormQuestions = ({
           <RadioGroup>
             <Stack color="#000" spacing={4} direction="row">
               {question.alternatives
-                ? question.alternatives.map((alternative) => (
-                    <Radio
-                      onChange={(event) => {
-                        console.log(event.target.value);
-                        setInputValue({
-                          [question.id]: event.target.value,
-                        });
-                      }}
-                      value={alternative.value}>
-                      {alternative.value}
-                    </Radio>
-                  ))
+                ? question.alternatives.map((alternative) => {
+                    return (
+                      <Radio
+                        checked={
+                          alternative.value.charAt(0) ===
+                          inputValue[question.id]
+                        }
+                        onChange={(event) => {
+                          console.log(event.target.value);
+                          setInputValue({
+                            ...inputValue,
+                            [question.id]: event.target.value,
+                          });
+                        }}
+                        value={alternative.value}>
+                        {alternative.value}
+                      </Radio>
+                    );
+                  })
                 : null}
             </Stack>
           </RadioGroup>
         );
       case 'select':
         return (
-          <Select color="#000" spacing={4} direction="row">
+          <Select
+            onChange={(event) =>
+              setInputValue({
+                ...inputValue,
+                [question.id]: event.target.value,
+              })
+            }
+            color="#000"
+            spacing={4}
+            direction="row">
             {question.alternatives
               ? question.alternatives.map((alternative) => (
-                  <option value={alternative.value}>{alternative.value}</option>
+                  <option
+                    selected={alternative.value === inputValue[question.id]}
+                    value={alternative.value}>
+                    {alternative.value}
+                  </option>
                 ))
               : null}
           </Select>
@@ -119,7 +141,11 @@ const FormQuestions = ({
         justify="center"
         direction="column">
         {questions && buildQuestions()}
-        <Button colorScheme="primary" isLoading={isLoading} type="submit">
+        <Button
+          colorScheme="primary"
+          isLoading={isLoading}
+          type="submit"
+          onClick={() => submitFunction(inputValue)}>
           {buttonName}
         </Button>
       </Stack>
