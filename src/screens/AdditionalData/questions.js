@@ -6,10 +6,12 @@ const questions = [
     type: 'date',
     mask: null,
     alternatives: null,
+    nameFromApi: 'nascimento',
   },
   {
     id: 2,
     name: 'Sexo?',
+    nameFromApi: 'sexo',
     placeholder: null,
     type: 'radio',
     mask: null,
@@ -21,6 +23,7 @@ const questions = [
   {
     id: 3,
     name: 'Telefone (De preferência Whatsapp)',
+    nameFromApi: 'telefone',
     placeholder: '(XX) XXXXX-XXXX',
     type: 'text',
     mask: '(99) 99999-9999',
@@ -30,6 +33,7 @@ const questions = [
   {
     id: 4,
     name: 'Cor',
+    nameFromApi: 'cor',
     placeholder: null,
     type: 'select',
     mask: null,
@@ -44,6 +48,7 @@ const questions = [
   {
     id: 5,
     name: 'Endereco da família (Informar apenas o nome da rua)',
+    nameFromApi: 'rua',
     placeholder: 'Nome da rua',
     type: 'text',
     mask: null,
@@ -52,6 +57,7 @@ const questions = [
   {
     id: 6,
     name: 'Número',
+    nameFromApi: 'numero_casa',
     placeholder: 'Número da casa',
     type: 'text',
     mask: null,
