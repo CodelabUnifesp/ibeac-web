@@ -1,42 +1,33 @@
 import React, {useEffect, useCallback, useMemo} from 'react';
-import useLocalStorage from 'react-use-localstorage';
 
 import jwt from 'jsonwebtoken';
 
 import {get, isEmpty, isNil, isNull} from 'lodash';
+import useLocalStorage from '../../../utils/react/storedState';
 import Context from './Context';
 
 const Provider = ({children} = {}) => {
-  const [token, setToken] = useLocalStorage('token');
-  const [_user, _setUser] = useLocalStorage('user');
+  const [token, setToken] = useLocalStorage('token', null);
+  const [user, setUser] = useLocalStorage('user', null);
 
   useEffect(() => {
-    if (!isNull(token)) {
+    if (!isNil(token)) {
       const decoded = jwt.decode(token);
 
       // verificar se o token expirou, se estiver, invalidar a sessão
       if (Date.now() > get(decoded, 'exp', 0) * 1000) {
-        setToken(null);
+        setToken(undefined);
+        setUser(undefined);
       }
     }
-  }, [token, setToken]);
+  }, [token, setToken, setUser]);
 
-  // TODO: refinar esse useLocalStorage para algo como useLocalStoredState
-  const user = useMemo(() => {
-    const stringifiedUser =
-      isNil(_user) || _user === 'undefined' || _user === 'null' ? '{}' : _user;
-
-    try {
-      return JSON.parse(stringifiedUser);
-    } catch {
-      return {};
+  useEffect(() => {
+    if (isEmpty(user) || isNil(user)) {
+      setToken(undefined);
+      setUser(undefined);
     }
-  }, [_user]);
-
-  const setUser = useCallback(
-    (object) => _setUser(JSON.stringify(object)),
-    [_setUser],
-  );
+  }, [user, setToken, setUser]);
 
   return (
     <Context.Provider value={{token, setToken, user, setUser}}>
