@@ -58,7 +58,7 @@ const logoutSection = [
   {
     title: 'Sair',
     icon: mdiLogout,
-      to: '/logout',
+    to: '/logout',
   },
 ];
 
