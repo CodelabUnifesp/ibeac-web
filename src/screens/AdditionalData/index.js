@@ -15,7 +15,6 @@ const Form = (...props) => {
 
   useEffect(() => {
     async function fetchData() {
-      debugger;
       const response = await userGetById(currentUser.id);
       await setAditionalData(response);
       await setOverride(false);

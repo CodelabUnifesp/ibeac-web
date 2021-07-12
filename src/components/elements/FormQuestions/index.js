@@ -26,7 +26,6 @@ const FormQuestions = ({
   const [isLoading, setisLoading] = useState(false);
 
   const buildInput = (question) => {
-    debugger;
     if (userAdicionalData && override) {
       if (userAdicionalData[question.nameFromApi]) {
         if (question.type === 'date') {
