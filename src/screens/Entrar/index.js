@@ -6,7 +6,7 @@ import {toast} from 'react-toastify';
 import {Box} from '@chakra-ui/layout';
 import {FormLabel, Button, Link} from '@chakra-ui/react';
 
-import {has} from 'lodash';
+import {conforms, has} from 'lodash';
 import {Container, Content, Logo, FormField} from './styles';
 import {Context as AuthContext} from '../../components/stores/Auth';
 
@@ -39,6 +39,8 @@ function Entrar({history} = {}) {
           setToken(
             'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwbGFzbWVkaXMtYXBpLWRldiIsImlhdCI6MTYyNDIyMDY5MiwiZXhwIjo3OTY3Nzk1MDkyLCJhdWQiOiIiLCJzdWIiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AcGxhc21lZGlzLmNvbSIsInJlYWxfbmFtZSI6IkpvaG4gRG9lIiwidXNlcl90eXBlIjoiMSIsImF2YXRhciI6Im51bGwifQ.SJZkk_13zZfX2v6AgZmCSd0hSjgNpbaoHfcAzwMEC6w',
           );
+
+          localStorage.setItem('userData', JSON.stringify(data));
 
           history.push({
             pathname: '/',
