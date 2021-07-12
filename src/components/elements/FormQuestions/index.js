@@ -13,75 +13,95 @@ import {
 } from '@chakra-ui/react';
 import InputMask from 'react-input-mask';
 import {isNil} from 'lodash';
+import decodeDate from '../../../utils/decodeDate';
 
-const FormQuestions = ({buttonName, questions}) => {
+const FormQuestions = ({
+  buttonName,
+  questions,
+  userAdicionalData,
+  override,
+}) => {
   const [inputValue, setInputValue] = useState({});
   const [isLoading, setisLoading] = useState(false);
 
-  const buildQuestions = () => {
-    const buildInput = (question) => {
-      switch (question.type) {
-        case 'text':
-        case 'date':
-          return (
-            <Input
-              color="black"
-              type={question.type}
-              as={!isNil(question.mask) ? InputMask : undefined}
-              mask={question.mask}
-              maskChar={null}
-              placeholder={question.placeholder && question.placeholder}
-              value={inputValue[question.id]}
-              onInput={(event) =>
-                setInputValue({
-                  [question.id]: question.forbiddenCharacters
-                    ? event.target.value.replace(
-                        question.forbiddenCharacters,
-                        '',
-                      )
-                    : event.target.value,
-                })
-              }
-            />
-          );
-        case 'radio':
-          return (
-            <RadioGroup>
-              <Stack color="#000" spacing={4} direction="row">
-                {question.alternatives
-                  ? question.alternatives.map((alternative) => (
-                      <Radio value={alternative.value}>
-                        {alternative.value}
-                      </Radio>
-                    ))
-                  : null}
-              </Stack>
-            </RadioGroup>
-          );
-        case 'select':
-          return (
-            <Select color="#000" spacing={4} direction="row">
+  const buildInput = (question) => {
+    debugger;
+    if (userAdicionalData && override) {
+      if (userAdicionalData[question.nameFromApi]) {
+        if (question.type === 'date') {
+          const dateDecoded = decodeDate(userAdicionalData.nascimento);
+          inputValue[question.id] = dateDecoded;
+        } else {
+          inputValue[question.id] = userAdicionalData[question.nameFromApi];
+        }
+      }
+    }
+    switch (question.type) {
+      case 'text':
+      case 'date':
+        return (
+          <Input
+            color="black"
+            type={question.type}
+            as={!isNil(question.mask) ? InputMask : undefined}
+            mask={question.mask}
+            maskChar={null}
+            placeholder={question.placeholder && question.placeholder}
+            value={inputValue[question.id]}
+            onInput={(event) =>
+              setInputValue({
+                [question.id]: question.forbiddenCharacters
+                  ? event.target.value.replace(question.forbiddenCharacters, '')
+                  : event.target.value,
+              })
+            }
+          />
+        );
+      case 'radio':
+        return (
+          <RadioGroup>
+            <Stack color="#000" spacing={4} direction="row">
               {question.alternatives
                 ? question.alternatives.map((alternative) => (
-                    <option value={alternative.value}>
+                    <Radio
+                      onChange={(event) => {
+                        console.log(event.target.value);
+                        setInputValue({
+                          [question.id]: event.target.value,
+                        });
+                      }}
+                      value={alternative.value}>
                       {alternative.value}
-                    </option>
+                    </Radio>
                   ))
                 : null}
-            </Select>
-          );
-        default:
-          return <></>;
-      }
-    };
+            </Stack>
+          </RadioGroup>
+        );
+      case 'select':
+        return (
+          <Select color="#000" spacing={4} direction="row">
+            {question.alternatives
+              ? question.alternatives.map((alternative) => (
+                  <option value={alternative.value}>{alternative.value}</option>
+                ))
+              : null}
+          </Select>
+        );
+      default:
+        return <></>;
+    }
+  };
 
-    const buildedQuestions = questions.map((question) => (
-      <FormControl id={question.name}>
-        <FormLabel color="#000">{question.name}</FormLabel>
-        {buildInput(question)}
-      </FormControl>
-    ));
-
+  const buildQuestions = () => {
+    const buildedQuestions = questions.map((question) => {
+      return (
+        <FormControl id={question.name}>
+          <FormLabel color="#000">{question.name}</FormLabel>
+          {buildInput(question)}
+        </FormControl>
+      );
+    });
     return buildedQuestions;
   };
 
@@ -98,7 +118,7 @@ const FormQuestions = ({buttonName, questions}) => {
         align="flex-start"
         justify="center"
         direction="column">
-        {questions ? buildQuestions() : null}
+        {questions && buildQuestions()}
         <Button colorScheme="primary" isLoading={isLoading} type="submit">
           {buttonName}
         </Button>
