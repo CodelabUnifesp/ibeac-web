@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {Text} from '@chakra-ui/react';
 import * as S from './styles';
 import questions from './questions';
@@ -7,23 +7,24 @@ import {
   getById as userGetById,
   updateById as userUpdateById,
 } from '../../domain/usuarios';
+import {Context as AuthContext} from '../../components/stores/Auth';
 
 const Form = (...props) => {
-  const [currentUser] = useState(JSON.parse(localStorage.getItem('userData')));
+  const {user} = useContext(AuthContext);
   const [aditionalData, setAditionalData] = useState(null);
   const [override, setOverride] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
-      const response = await userGetById(currentUser.id);
+      const response = await userGetById(user.id);
       await setAditionalData(response);
       await setOverride(false);
     }
     fetchData();
-  }, [currentUser]);
+  }, [user]);
 
   const handleSubmmit = async (data) => {
-    await userUpdateById(currentUser.id, data);
+    await userUpdateById(user.id, data);
   };
 
   return (
