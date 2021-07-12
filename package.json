@@ -31,6 +31,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "exenv": "^1.2.2",
     "framer-motion": "4",
     "history": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
