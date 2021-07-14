@@ -38,5 +38,8 @@ module.exports = {
     'jsx-a11y/control-has-associated-label': 'off',
     'react/no-array-index-key': 'off',
     'arrow-body-style': 'off',
+    'import/prefer-default-export': 'off',
+    'no-param-reassign': 'off',
+    'no-debugger': 'off',
   },
 };

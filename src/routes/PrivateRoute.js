@@ -7,9 +7,7 @@ import Default from '../components/layouts/default';
 import {Context as AuthContext} from '../components/stores/Auth';
 
 const PrivateRoute = ({component: Component, ...rest}) => {
-  const {
-    token: [token],
-  } = useContext(AuthContext);
+  const {token} = useContext(AuthContext);
 
   return (
     <Route

@@ -6,7 +6,7 @@ import {toast} from 'react-toastify';
 import {Box} from '@chakra-ui/layout';
 import {FormLabel, Button, Link} from '@chakra-ui/react';
 
-import {has} from 'lodash';
+import {conforms, has, omit} from 'lodash';
 import {Container, Content, Logo, FormField} from './styles';
 import {Context as AuthContext} from '../../components/stores/Auth';
 
@@ -21,9 +21,7 @@ const schema = Yup.object().shape({
 
 function Entrar({history} = {}) {
   const [loading, setLoading] = useState(false);
-  const {
-    token: [, setToken],
-  } = useContext(AuthContext);
+  const {setToken, setUser} = useContext(AuthContext);
 
   async function handleLogin(params) {
     try {
@@ -34,11 +32,21 @@ function Entrar({history} = {}) {
         if (has(data, 'token') || true) {
           // TODO: token ainda não foi implementado na API, então nao vai estar retornando aqui
           // token EXPIRADO: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwbGFzbWVkaXMtYXBpLWRldiIsImlhdCI6MTYyNDIyMDY5MiwiZXhwIjoxNjI0OTExODkyLCJhdWQiOiIiLCJzdWIiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AcGxhc21lZGlzLmNvbSIsInJlYWxfbmFtZSI6IkpvaG4gRG9lIiwidXNlcl90eXBlIjoxLCJhdmF0YXIiOm51bGx9.zp79IVQXHb_8SQe_Nc1GJmYzwOPXwo94rjpeW2rTS6M
-          // token valido até 2022 (para teste, tem id do usuario = 1): eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwbGFzbWVkaXMtYXBpLWRldiIsImlhdCI6MTYyNDIyMDY5MiwiZXhwIjo3OTY3Nzk1MDkyLCJhdWQiOiIiLCJzdWIiOiJhZG1pbiIsImlkIjoxLCJlbWFpbCI6ImFkbWluQHBsYXNtZWRpcy5jb20iLCJyZWFsX25hbWUiOiJKb2huIERvZSIsInVzZXJfdHlwZSI6IjEiLCJhdmF0YXIiOiJudWxsIn0.SWNNmcuP0WhfqVOvq2d1XjRa76zGYQw18MbZaEYtICY
+          // token valido até 2022 (para teste): eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwbGFzbWVkaXMtYXBpLWRldiIsImlhdCI6MTYyNDIyMDY5MiwiZXhwIjo3OTY3Nzk1MDkyLCJhdWQiOiIiLCJzdWIiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AcGxhc21lZGlzLmNvbSIsInJlYWxfbmFtZSI6IkpvaG4gRG9lIiwidXNlcl90eXBlIjoiMSIsImF2YXRhciI6Im51bGwifQ.SJZkk_13zZfX2v6AgZmCSd0hSjgNpbaoHfcAzwMEC6w
+          // token valido 2022, só tem o ID para validacao das requests: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwbGFzbWVkaXMtYXBpLWRldiIsImlhdCI6MTU5NDU4NDQ1NywiZXhwIjoxNjU3NjU2NDU3LCJhdWQiOiIiLCJzdWIiOiIxIn0.dR0D6dP16mgTBu9D4h_WnPnn-cAX_Ir1Wc-eEC1duL0
 
           setToken(
-            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwbGFzbWVkaXMtYXBpLWRldiIsImlhdCI6MTYyNDIyMDY5MiwiZXhwIjo3OTY3Nzk1MDkyLCJhdWQiOiIiLCJzdWIiOiJhZG1pbiIsImlkIjoxLCJlbWFpbCI6ImFkbWluQHBsYXNtZWRpcy5jb20iLCJyZWFsX25hbWUiOiJKb2huIERvZSIsInVzZXJfdHlwZSI6IjEiLCJhdmF0YXIiOiJudWxsIn0.SWNNmcuP0WhfqVOvq2d1XjRa76zGYQw18MbZaEYtICY',
+            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwbGFzbWVkaXMtYXBpLWRldiIsImlhdCI6MTU5NDU4NDQ1NywiZXhwIjoxNjU3NjU2NDU3LCJhdWQiOiIiLCJzdWIiOiIxIn0.dR0D6dP16mgTBu9D4h_WnPnn-cAX_Ir1Wc-eEC1duL0',
           );
+          // setUser(omit(data, ['token', 'status'])); // FIXME: assim que vai ficar quando a API tiver autenticacao, por enquanto ta hardcode
+          setUser({
+            id: 1,
+            email: 'admin@plasmedis.com',
+            real_name: 'John Doe',
+            avatar: null,
+            user_type: 1,
+            verificado: false,
+          });
 
           history.push({
             pathname: '/',

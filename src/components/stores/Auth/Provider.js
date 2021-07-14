@@ -1,29 +1,36 @@
-import React, {useEffect, useMemo} from 'react';
-import useLocalStorage from 'react-use-localstorage';
+import React, {useEffect, useCallback, useMemo} from 'react';
 
 import jwt from 'jsonwebtoken';
 
-import {get, isEmpty, isNull} from 'lodash';
+import {get, isEmpty, isNil, isNull} from 'lodash';
+import useLocalStorage from '../../../utils/react/storedState';
 import Context from './Context';
 
 const Provider = ({children} = {}) => {
-  const [token, setToken] = useLocalStorage('token');
-  const user = useMemo(
-    () => (isNull(token) || isEmpty(token) ? null : jwt.decode(token)),
-    [token],
-  );
+  const [token, setToken] = useLocalStorage('token', null);
+  const [user, setUser] = useLocalStorage('user', null);
 
   useEffect(() => {
-    if (!isNull(user)) {
+    if (!isNil(token)) {
+      const decoded = jwt.decode(token);
+
       // verificar se o token expirou, se estiver, invalidar a sessão
-      if (Date.now() > get(user, 'exp', 0) * 1000) {
-        setToken(null);
+      if (Date.now() > get(decoded, 'exp', 0) * 1000) {
+        setToken(undefined);
+        setUser(undefined);
       }
     }
-  }, [user, setToken]);
+  }, [token, setToken, setUser]);
+
+  useEffect(() => {
+    if (isEmpty(user) || isNil(user)) {
+      setToken(undefined);
+      setUser(undefined);
+    }
+  }, [user, setToken, setUser]);
 
   return (
-    <Context.Provider value={{token: [token, setToken], user}}>
+    <Context.Provider value={{token, setToken, user, setUser}}>
       {children}
     </Context.Provider>
   );
