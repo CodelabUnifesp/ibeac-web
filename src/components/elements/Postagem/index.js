@@ -9,8 +9,11 @@ import {MdSend, MdVerifiedUser} from 'react-icons/md';
 import Icon from '@chakra-ui/icon';
 
 import {get, isEmpty, isNull} from 'lodash';
+import {create} from '../../../domain/comentarios';
 
 const Postagem = ({item, user, avatar} = {}) => {
+  const currentUserId = user ? user.id : 0;
+
   const [openComments, setOpenComments] = useState(false);
   const [newComment, setNewComment] = useState('');
 
@@ -102,7 +105,7 @@ const Postagem = ({item, user, avatar} = {}) => {
                   colorScheme="primary"
                   icon={<Icon fontSize="2xl" as={MdSend} />}
                   isRound
-                  onClick={() => alert(`CRIAR NOVO COMENTÁRIO\n ${newComment}`)}
+                  onClick={() => create(newComment, currentUserId, item.id)}
                 />
               </Flex>
               <Stack spacing={4}>
@@ -154,6 +157,7 @@ Postagem.defaultProps = {
 };
 Postagem.propTypes = {
   item: PropTypes.shape({
+    id: PropTypes.number,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     category: {
@@ -165,6 +169,7 @@ Postagem.propTypes = {
     verified: PropTypes.bool,
   }),
   user: PropTypes.shape({
+    id: PropTypes.number,
     name: PropTypes.string,
   }),
   avatar: PropTypes.string,
