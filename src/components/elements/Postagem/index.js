@@ -16,6 +16,7 @@ const Postagem = ({item, user, avatar} = {}) => {
 
   const [openComments, setOpenComments] = useState(false);
   const [newComment, setNewComment] = useState('');
+  const [creatingComment, setCreatingComment] = useState(false);
 
   const numberOfComments = useMemo(() => item?.comments?.length ?? 0, [item]);
   const isAdmin = user.user_type === 1;
@@ -105,7 +106,11 @@ const Postagem = ({item, user, avatar} = {}) => {
                   colorScheme="primary"
                   icon={<Icon fontSize="2xl" as={MdSend} />}
                   isRound
-                  onClick={() => create(newComment, currentUserId, item.id)}
+                  isLoading={creatingComment}
+                  onClick={() => {
+                    setCreatingComment(true);
+                    create(newComment, currentUserId, item.id);
+                  }}
                 />
               </Flex>
               <Stack spacing={4}>
