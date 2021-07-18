@@ -363,6 +363,13 @@ const RegisterUser = (...props) => {
 
       schema
         .validate(inputs, {abortEarly: false})
+        .then((value) => {
+          debugger;
+          Usuario.create(value).then(() => {
+            setErrors({});
+            setInputs({});
+          });
+        })
         .catch((err) => {
           setErrors(
             err.inner.reduce(
@@ -370,12 +377,6 @@ const RegisterUser = (...props) => {
               {},
             ),
           );
-        })
-        .then((value) => {
-          Usuario.create(value).then(() => {
-            setErrors({});
-            setInputs({});
-          });
         });
     },
     [schema, inputs, setErrors, setInputs],
