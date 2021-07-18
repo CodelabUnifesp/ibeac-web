@@ -31,7 +31,7 @@ import {Icon} from '@mdi/react';
 import {mdiAlertCircle, mdiCheckBold} from '@mdi/js';
 
 import * as S from './styles';
-import {uniqueUsername} from '../../domain/usuarios';
+import * as Usuario from '../../domain/usuarios';
 
 const RegisterUser = (...props) => {
   const [loading, setLoading] = useState(false);
@@ -57,7 +57,7 @@ const RegisterUser = (...props) => {
 
             if (!isEmpty(value) && !isNil(value)) {
               try {
-                const {unique} = await uniqueUsername(value);
+                const {unique} = await Usuario.uniqueUsername(value);
 
                 setCheckingUsernameAvailability(false);
                 setUsernamedChecked(value);
@@ -372,10 +372,13 @@ const RegisterUser = (...props) => {
           );
         })
         .then((value) => {
-          console.log('SUBMIT', value);
+          Usuario.create(value).then(() => {
+            setErrors({});
+            setInputs({});
+          });
         });
     },
-    [schema, inputs, setErrors],
+    [schema, inputs, setErrors, setInputs],
   );
 
   return (
