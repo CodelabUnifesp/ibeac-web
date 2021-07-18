@@ -53,9 +53,6 @@ const RegisterUser = (...props) => {
             Esse nome de usuário <b>não</b> está disponível
           </span>,
           async (value) => {
-            if (value === usernameChecked)
-              return latestCheckUniqueUsername.current;
-
             setCheckingUsernameAvailability(true);
 
             if (!isEmpty(value) && !isNil(value)) {
@@ -85,8 +82,8 @@ const RegisterUser = (...props) => {
       email: Yup.string().email('Insira um e-mail válido'),
       name: Yup.string().required('O Nome é obrigatório'),
       password: Yup.string().required('A Senha é obrigatória'),
-      neighborhood: Yup.number().required('O Bairro é obrigatório'),
-      userType: Yup.number().required('O Tipo é obrigatório'),
+      neighborhood: Yup.string().required('O Bairro é obrigatório'),
+      userType: Yup.string().required('O Tipo é obrigatório'),
     });
   }, []);
 
@@ -116,23 +113,33 @@ const RegisterUser = (...props) => {
   );
 
   const register = useCallback(
-    (name) => {
-      return {
+    (name, {validateOn = 'onBlur'} = {}) => {
+      const handleValidation = debounce(async (event) => {
+        const {value} = event.target;
+
+        try {
+          const validation = await schema.validateAt(name, {[name]: value});
+          setError(name, null);
+        } catch (error) {
+          setError(name, error.message);
+        }
+      }, 500);
+
+      const inputProps = {
         value: inputs[name] ?? '',
         onChange: (event) => {
           setInput(name, event.target.value);
         },
-        onBlur: debounce(async (event) => {
-          const {value} = event.target;
-
-          try {
-            const validation = await schema.validateAt(name, {[name]: value});
-            setError(name, null);
-          } catch (error) {
-            setError(name, error.message);
-          }
-        }, 500),
       };
+
+      if (validateOn === 'onBlur') inputProps.onBlur = handleValidation;
+      else if (validateOn === 'onChange')
+        inputProps.onChange = (event) => {
+          setInput(name, event.target.value);
+          handleValidation(event);
+        };
+
+      return inputProps;
     },
     [schema, inputs, setInput, setError],
   );
@@ -278,17 +285,18 @@ const RegisterUser = (...props) => {
           </FormErrorMessage>
         </FormControl>
 
-        {/* 
-        <FormControl>
+        <FormControl
+          mb={4}
+          isInvalid={!!errors?.neighborhood}
+          errortext={errors?.neighborhood}>
           <FormLabel color="#000">Bairro</FormLabel>
           <Select
             defaultValue="DEFAULT"
             color="#000"
             spacing={4}
             direction="row"
-            value={neighborhood}
-            onChange={(e) => setNeighborhood(e.target.value)}>
-            <option value="DEFAULT" disabled>
+            {...register('neighborhood', {validateOn: 'onChange'})}>
+            <option value="DEFAULT" selected>
               Selecione uma opção
             </option>
             {neighborhoodData
@@ -299,17 +307,26 @@ const RegisterUser = (...props) => {
                 ))
               : null}
           </Select>
+
+          <FormErrorMessage>
+            <Alert status="error">
+              <AlertIcon />
+              <AlertDescription>{errors?.neighborhood}</AlertDescription>
+            </Alert>
+          </FormErrorMessage>
         </FormControl>
-        <FormControl>
+        <FormControl
+          mb={4}
+          isInvalid={!!errors?.userType}
+          errortext={errors?.userType}>
           <FormLabel color="#000">Tipo</FormLabel>
           <Select
             defaultValue="DEFAULT"
             color="#000"
             spacing={4}
             direction="row"
-            value={userType}
-            onChange={(e) => setUserType(e.target.value)}>
-            <option value="DEFAULT" disabled>
+            {...register('userType', {validateOn: 'onChange'})}>
+            <option value="DEFAULT" selected>
               Selecione uma opção
             </option>
             {userTypeData
@@ -320,10 +337,25 @@ const RegisterUser = (...props) => {
                 ))
               : null}
           </Select>
-        </FormControl> */}
+
+          <FormErrorMessage>
+            <Alert status="error">
+              <AlertIcon />
+              <AlertDescription>{errors?.userType}</AlertDescription>
+            </Alert>
+          </FormErrorMessage>
+        </FormControl>
       </>
     );
-  }, [register, inputs, errors, checkingUsernameAvailability, usernameChecked]);
+  }, [
+    register,
+    inputs,
+    errors,
+    checkingUsernameAvailability,
+    usernameChecked,
+    userTypeData,
+    neighborhoodData,
+  ]);
 
   const onSubmit = useCallback(
     (event) => {
@@ -332,14 +364,6 @@ const RegisterUser = (...props) => {
       schema
         .validate(inputs, {abortEarly: false})
         .catch((err) => {
-          console.log(
-            'ALL ERRORS',
-            err.inner.map((error) => [error.path, error.message]),
-            err.inner.reduce(
-              (obj, error) => ({...obj, [error.path]: error.message}),
-              {},
-            ),
-          );
           setErrors(
             err.inner.reduce(
               (obj, error) => ({...obj, [error.path]: error.message}),
@@ -354,7 +378,6 @@ const RegisterUser = (...props) => {
     [schema, inputs, setErrors],
   );
 
-  console.log('ASDASDASD', errors);
   return (
     <S.Wrapper px={{base: 0, lg: 6}}>
       <Text color="#2f7384" fontSize="2xl" fontWeight={600} marginBottom={4}>
@@ -382,15 +405,11 @@ const RegisterUser = (...props) => {
               <p>Ocorreu um erro ao buscar dados na api</p>
             )}
             <Tooltip
-              isDisabled={numberOfErrors === 0 && !checkingUsernameAvailability}
-              label={
-                numberOfErrors > 0
-                  ? 'Existem alguns problemas com os dados informados!'
-                  : 'Verificando a disponibilidade do nome de usuário...'
-              }>
+              isDisabled={!checkingUsernameAvailability}
+              label="Verificando a disponibilidade do nome de usuário...">
               <span>
                 <Button
-                  disabled={numberOfErrors > 0 || checkingUsernameAvailability}
+                  disabled={checkingUsernameAvailability}
                   colorScheme="primary"
                   type="submit"
                   isLoading={loading}>
