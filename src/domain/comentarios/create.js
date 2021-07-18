@@ -5,6 +5,7 @@ export default async function create(newComentario, currentUserId, postagemId) {
     texto: newComentario,
     criador: currentUserId,
     postagem: postagemId,
+    resposta: null,
   };
 
   try {
