@@ -29,31 +29,16 @@ function Entrar({history} = {}) {
       const {data} = await login(params);
 
       if (data.status === 1000) {
-        if (has(data, 'token') || true) {
-          // TODO: token ainda não foi implementado na API, então nao vai estar retornando aqui
-          // token EXPIRADO: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwbGFzbWVkaXMtYXBpLWRldiIsImlhdCI6MTYyNDIyMDY5MiwiZXhwIjoxNjI0OTExODkyLCJhdWQiOiIiLCJzdWIiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AcGxhc21lZGlzLmNvbSIsInJlYWxfbmFtZSI6IkpvaG4gRG9lIiwidXNlcl90eXBlIjoxLCJhdmF0YXIiOm51bGx9.zp79IVQXHb_8SQe_Nc1GJmYzwOPXwo94rjpeW2rTS6M
-          // token valido até 2022 (para teste): eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwbGFzbWVkaXMtYXBpLWRldiIsImlhdCI6MTYyNDIyMDY5MiwiZXhwIjo3OTY3Nzk1MDkyLCJhdWQiOiIiLCJzdWIiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AcGxhc21lZGlzLmNvbSIsInJlYWxfbmFtZSI6IkpvaG4gRG9lIiwidXNlcl90eXBlIjoiMSIsImF2YXRhciI6Im51bGwifQ.SJZkk_13zZfX2v6AgZmCSd0hSjgNpbaoHfcAzwMEC6w
-          // token valido 2022, só tem o ID para validacao das requests: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwbGFzbWVkaXMtYXBpLWRldiIsImlhdCI6MTU5NDU4NDQ1NywiZXhwIjoxNjU3NjU2NDU3LCJhdWQiOiIiLCJzdWIiOiIxIn0.dR0D6dP16mgTBu9D4h_WnPnn-cAX_Ir1Wc-eEC1duL0
-
-          setToken(
-            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwbGFzbWVkaXMtYXBpLWRldiIsImlhdCI6MTU5NDU4NDQ1NywiZXhwIjoxNjU3NjU2NDU3LCJhdWQiOiIiLCJzdWIiOiIxIn0.dR0D6dP16mgTBu9D4h_WnPnn-cAX_Ir1Wc-eEC1duL0',
-          );
-          // setUser(omit(data, ['token', 'status'])); // FIXME: assim que vai ficar quando a API tiver autenticacao, por enquanto ta hardcode
-          setUser({
-            id: 1,
-            email: 'admin@plasmedis.com',
-            real_name: 'John Doe',
-            avatar: null,
-            user_type: 1,
-            verificado: false,
-          });
+        if (has(data, 'token') && has(data, 'user')) {
+          setToken(data.token);
+          setUser(data.user);
 
           history.push({
             pathname: '/',
             state: data,
           });
         } else {
-          toast.error('Login não retornou token!');
+          toast.error('Login não retornou token ou usuário!');
         }
       } else {
         toast.error('Usuário ou senha incorretos!');
