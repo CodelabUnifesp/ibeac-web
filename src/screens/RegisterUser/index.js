@@ -11,6 +11,7 @@ import {
 } from '@chakra-ui/react';
 import {toInteger} from 'lodash';
 import * as S from './styles';
+import api from '../../services/api';
 
 const RegisterUser = (...props) => {
   const [neighborhoodData, setNeighborhoodData] = useState(null);
@@ -21,22 +22,10 @@ const RegisterUser = (...props) => {
   const [formUserType, setFormUserType] = useState(null);
   let formPassword = null;
 
-  useEffect(() => {
+  useEffect(async () => {
     // Constante deverá vir da Api
-    const neighborhoodDataObject = [
-      {
-        id: 1,
-        text: 'Satélite',
-      },
-      {
-        id: 2,
-        text: 'Santa Inês',
-      },
-      {
-        id: 3,
-        text: 'Centro',
-      },
-    ];
+    const neighborhoodDataObject = (await api.get('/bairros')).data.Bairros;
+
     // Constante deverá vir da Api
     const userTypeDataObject = [
       {
@@ -95,8 +84,8 @@ const RegisterUser = (...props) => {
             </option>
             {neighborhoodData
               ? neighborhoodData.map((item) => (
-                  <option key={item.id} value={item.text}>
-                    {item.text}
+                  <option key={item.id} value={item.nome}>
+                    {item.nome}
                   </option>
                 ))
               : null}
