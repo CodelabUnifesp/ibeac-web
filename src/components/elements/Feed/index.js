@@ -20,9 +20,9 @@ const Feed = ({value, user, avatar, canVerifyPost, onCreateComment} = {}) => {
         <Postagem
           key={postagem?.id}
           item={postagem}
-          user={user.name}
+          user={user}
           avatar={avatar}
-          verifiable={user.user_type === 1}
+          verifiable={canVerifyPost}
           onCreateComment={onCreateComment}
         />
       ))}
@@ -50,10 +50,7 @@ Feed.propTypes = {
       dateTime: PropTypes.string.isRequired,
     }),
   ),
-  user: PropTypes.shape({
-    user_type: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-  }),
+  user: PropTypes.string,
   avatar: PropTypes.string,
   canVerifyPost: PropTypes.bool,
   onCreateComment: PropTypes.func,

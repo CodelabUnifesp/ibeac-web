@@ -193,7 +193,7 @@ function Home() {
         <Feed
           user={user.name}
           avatar={get(user, 'avatar', null)}
-          canVerifyPost={user.user_type === 1}
+          canVerifyPost={user.userType === 1}
           onCreateComment={(newComment, itemId) => {
             Comentarios.create(token, newComment, user.id, itemId); // TODO: show error/success message
           }}
