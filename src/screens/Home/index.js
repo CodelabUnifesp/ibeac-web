@@ -34,8 +34,7 @@ import * as Categorias from '../../domain/categorias';
 import * as Bairros from '../../domain/bairros';
 import * as Comentarios from '../../domain/comentarios';
 
-function Home({location}) {
-  const currentUserId = location.state ? location.state.id : null;
+function Home() {
   const tabs = useBreakpointValue(
     {
       base: ['Feed', 'Recomendados'],
@@ -58,13 +57,13 @@ function Home({location}) {
   useEffect(() => {
     // recuperando lista de categorias para tabs
     categories.current = Categorias.getAll(token);
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     // HACK: a api nao envia nome de categoria/bairro, comentários vinculados à uma postagem OU avatar do autor, então isso é um workaround
     neighborhoods.current = Bairros.getAll(token);
     comments.current = Comentarios.getAll(token);
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     /**
@@ -217,6 +216,7 @@ function Home({location}) {
             <EditablePostagem
               value={newPostagem}
               onChange={(key, value) =>
+                // TODO: show success/message error
                 setNewPostagem(set(key, value, newPostagem))
               }
             />
@@ -226,7 +226,8 @@ function Home({location}) {
             <Button
               colorScheme="primary"
               mr={3}
-              onClick={() => create(token, newPostagem, currentUserId)}>
+              onClick={() => create(token, newPostagem, user.id)}>
+              {/* TODO: show success/message error */}
               Criar
             </Button>
             <Button onClick={onClose}>Cancelar</Button>
