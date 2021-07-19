@@ -1,11 +1,4 @@
-import React, {
-  useRef,
-  useState,
-  useEffect,
-  useCallback,
-  useMemo,
-  useReducer,
-} from 'react';
+import React, {useRef, useState, useEffect, useCallback, useMemo} from 'react';
 import {
   Text,
   Box,
@@ -19,19 +12,16 @@ import {
   Button,
   Alert,
   AlertIcon,
-  AlertTitle,
   AlertDescription,
   Spinner,
   Tooltip,
 } from '@chakra-ui/react';
-import {debounce, isEmpty, isNil, toInteger} from 'lodash';
+import {debounce, isEmpty, isNil} from 'lodash';
 import * as Yup from 'yup';
-
-import {Icon} from '@mdi/react';
-import {mdiAlertCircle, mdiCheckBold} from '@mdi/js';
 
 import * as S from './styles';
 import * as Usuario from '../../domain/usuarios';
+import * as Bairro from '../../domain/bairros';
 
 const RegisterUser = (...props) => {
   const [loading, setLoading] = useState(false);
@@ -82,8 +72,8 @@ const RegisterUser = (...props) => {
       email: Yup.string().email('Insira um e-mail válido'),
       name: Yup.string().required('O Nome é obrigatório'),
       password: Yup.string().required('A Senha é obrigatória'),
-      neighborhood: Yup.string().required('O Bairro é obrigatório'),
-      userType: Yup.string().required('O Tipo é obrigatório'),
+      neighborhood: Yup.number().required('O Bairro é obrigatório'),
+      userType: Yup.number().required('O Tipo é obrigatório'),
     });
   }, []);
 
@@ -96,12 +86,6 @@ const RegisterUser = (...props) => {
       setErrors({...errors, [name]: value});
     },
     [setErrors, errors],
-  );
-  const numberOfErrors = useMemo(
-    () =>
-      Object.values(errors).filter((error) => !isEmpty(error) && !isNil(error))
-        .length,
-    [errors],
   );
 
   const [inputs, setInputs] = useState({});
@@ -118,7 +102,7 @@ const RegisterUser = (...props) => {
         const {value} = event.target;
 
         try {
-          const validation = await schema.validateAt(name, {[name]: value});
+          await schema.validateAt(name, {[name]: value});
           setError(name, null);
         } catch (error) {
           setError(name, error.message);
@@ -144,23 +128,12 @@ const RegisterUser = (...props) => {
     [schema, inputs, setInput, setError],
   );
 
-  useEffect(() => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(async () => {
     setLoading(true);
-    // Constante deverá vir da Api
-    const neighborhoodDataObject = [
-      {
-        id: 1,
-        text: 'Satélite',
-      },
-      {
-        id: 2,
-        text: 'Santa Inês',
-      },
-      {
-        id: 3,
-        text: 'Centro',
-      },
-    ];
+
+    const neighborhoodDataObject = await Bairro.getAll();
+
     // Constante deverá vir da Api
     const userTypeDataObject = [
       {
@@ -176,6 +149,7 @@ const RegisterUser = (...props) => {
         type: 'Comum',
       },
     ];
+
     setNeighborhoodData(neighborhoodDataObject);
     setUserTypeData(userTypeDataObject);
 
@@ -301,8 +275,8 @@ const RegisterUser = (...props) => {
             </option>
             {neighborhoodData
               ? neighborhoodData.map((item) => (
-                  <option key={item.id} value={item.text}>
-                    {item.text}
+                  <option key={item.id} value={item.id}>
+                    {item.name}
                   </option>
                 ))
               : null}
@@ -331,7 +305,7 @@ const RegisterUser = (...props) => {
             </option>
             {userTypeData
               ? userTypeData.map((item) => (
-                  <option key={item.id} value={item.type}>
+                  <option key={item.id} value={item.id}>
                     {item.type}
                   </option>
                 ))

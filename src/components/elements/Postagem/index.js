@@ -9,10 +9,14 @@ import {MdSend, MdVerifiedUser} from 'react-icons/md';
 import Icon from '@chakra-ui/icon';
 
 import {get, isEmpty, isNull} from 'lodash';
+import {create} from '../../../domain/comentarios';
 
 const Postagem = ({item, user, avatar} = {}) => {
+  const currentUserId = user ? user.id : 0;
+
   const [openComments, setOpenComments] = useState(false);
   const [newComment, setNewComment] = useState('');
+  const [creatingComment, setCreatingComment] = useState(false);
 
   const numberOfComments = useMemo(() => item?.comments?.length ?? 0, [item]);
   const isAdmin = useMemo(() => user?.user_type === 1, [user]);
@@ -102,7 +106,11 @@ const Postagem = ({item, user, avatar} = {}) => {
                   colorScheme="primary"
                   icon={<Icon fontSize="2xl" as={MdSend} />}
                   isRound
-                  onClick={() => alert(`CRIAR NOVO COMENTÁRIO\n ${newComment}`)}
+                  isLoading={creatingComment}
+                  onClick={() => {
+                    setCreatingComment(true);
+                    create(newComment, currentUserId, item.id);
+                  }}
                 />
               </Flex>
               <Stack spacing={4}>
@@ -154,6 +162,7 @@ Postagem.defaultProps = {
 };
 Postagem.propTypes = {
   item: PropTypes.shape({
+    id: PropTypes.number,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     category: {
@@ -165,6 +174,7 @@ Postagem.propTypes = {
     verified: PropTypes.bool,
   }),
   user: PropTypes.shape({
+    id: PropTypes.number,
     name: PropTypes.string,
   }),
   avatar: PropTypes.string,
