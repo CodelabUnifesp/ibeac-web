@@ -31,7 +31,7 @@ function Entrar({history} = {}) {
       if (data.status === 1000) {
         if (has(data, 'token') && has(data, 'user')) {
           setToken(data.token);
-          setUser(data.user);
+          setUser({...data.user, avatar: data.user.avatar ?? null});
 
           history.push({
             pathname: '/',
