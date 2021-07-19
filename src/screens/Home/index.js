@@ -117,7 +117,7 @@ function Home() {
     };
 
     fetchPosts();
-  }, [tab, token, tabs]);
+  }, [tab, token]);
 
   return (
     <>
