@@ -35,8 +35,9 @@ function Entrar({history} = {}) {
           // token valido até 2022 (para teste): eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwbGFzbWVkaXMtYXBpLWRldiIsImlhdCI6MTYyNDIyMDY5MiwiZXhwIjo3OTY3Nzk1MDkyLCJhdWQiOiIiLCJzdWIiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AcGxhc21lZGlzLmNvbSIsInJlYWxfbmFtZSI6IkpvaG4gRG9lIiwidXNlcl90eXBlIjoiMSIsImF2YXRhciI6Im51bGwifQ.SJZkk_13zZfX2v6AgZmCSd0hSjgNpbaoHfcAzwMEC6w
           // token valido 2022, só tem o ID para validacao das requests: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwbGFzbWVkaXMtYXBpLWRldiIsImlhdCI6MTU5NDU4NDQ1NywiZXhwIjoxNjU3NjU2NDU3LCJhdWQiOiIiLCJzdWIiOiIxIn0.dR0D6dP16mgTBu9D4h_WnPnn-cAX_Ir1Wc-eEC1duL0
 
+          // HACK: troquei o token para acomodar a atualizacao da API, vai ser removido com o merge do pr #96
           setToken(
-            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwbGFzbWVkaXMtYXBpLWRldiIsImlhdCI6MTU5NDU4NDQ1NywiZXhwIjoxNjU3NjU2NDU3LCJhdWQiOiIiLCJzdWIiOiIxIn0.dR0D6dP16mgTBu9D4h_WnPnn-cAX_Ir1Wc-eEC1duL0',
+            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdXRoIjowLjIsImV4cCI6MTY1ODIxNzAzNywiaWF0IjoxNjI2NjgxMDM3LCJzdWIiOjEsImlzcyI6InBsYXNtZWRpcy1hcGktbG9jYWwiLCJhdWQiOiJwb3N0bWFuIn0.HbwiBP6AexzaOJ-eN7PVymSuWM6HOr_iB56D7Pcgzvw',
           );
           // setUser(omit(data, ['token', 'status'])); // FIXME: assim que vai ficar quando a API tiver autenticacao, por enquanto ta hardcode
           setUser({

@@ -1,4 +1,11 @@
-import React, {useRef, useState, useEffect, useCallback, useMemo} from 'react';
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  useContext,
+} from 'react';
 import {
   Text,
   Box,
@@ -23,7 +30,10 @@ import * as S from './styles';
 import * as Usuario from '../../domain/usuarios';
 import * as Bairro from '../../domain/bairros';
 
+import {Context as AuthContext} from '../../components/stores/Auth';
+
 const RegisterUser = (...props) => {
+  const {token} = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [neighborhoodData, setNeighborhoodData] = useState(null);
   const [userTypeData, setUserTypeData] = useState(null);
@@ -47,7 +57,11 @@ const RegisterUser = (...props) => {
 
             if (!isEmpty(value) && !isNil(value)) {
               try {
-                const {unique} = await Usuario.uniqueUsername(value);
+                // HACK: esse fixo é para acomodar a atualizacao da API, depois do merge do pr #96 faço ele usar o token real
+                const unique = await Usuario.verifyUsername(
+                  'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdXRoIjowLjIsImV4cCI6MTY1ODIxNzAzNywiaWF0IjoxNjI2NjgxMDM3LCJzdWIiOjEsImlzcyI6InBsYXNtZWRpcy1hcGktbG9jYWwiLCJhdWQiOiJwb3N0bWFuIn0.HbwiBP6AexzaOJ-eN7PVymSuWM6HOr_iB56D7Pcgzvw',
+                  value,
+                );
 
                 setCheckingUsernameAvailability(false);
                 setUsernamedChecked(value);
@@ -75,7 +89,7 @@ const RegisterUser = (...props) => {
       neighborhood: Yup.number().required('O Bairro é obrigatório'),
       userType: Yup.number().required('O Tipo é obrigatório'),
     });
-  }, []);
+  }, [token]);
 
   // FORM UPKEEPING
   const [errors, setErrors] = useState({});
@@ -97,7 +111,7 @@ const RegisterUser = (...props) => {
   );
 
   const register = useCallback(
-    (name, {validateOn = 'onBlur'} = {}) => {
+    (name, {validateOn = 'onBlur', defaultValue = ''} = {}) => {
       const handleValidation = debounce(async (event) => {
         const {value} = event.target;
 
@@ -110,7 +124,7 @@ const RegisterUser = (...props) => {
       }, 500);
 
       const inputProps = {
-        value: inputs[name] ?? '',
+        value: inputs[name] ?? defaultValue,
         onChange: (event) => {
           setInput(name, event.target.value);
         },
@@ -265,12 +279,14 @@ const RegisterUser = (...props) => {
           errortext={errors?.neighborhood}>
           <FormLabel color="#000">Bairro</FormLabel>
           <Select
-            defaultValue="DEFAULT"
             color="#000"
             spacing={4}
             direction="row"
-            {...register('neighborhood', {validateOn: 'onChange'})}>
-            <option value="DEFAULT" selected>
+            {...register('neighborhood', {
+              validateOn: 'onChange',
+              defaultValue: 'DEFAULT',
+            })}>
+            <option value="DEFAULT" disabled>
               Selecione uma opção
             </option>
             {neighborhoodData
@@ -295,12 +311,14 @@ const RegisterUser = (...props) => {
           errortext={errors?.userType}>
           <FormLabel color="#000">Tipo</FormLabel>
           <Select
-            defaultValue="DEFAULT"
             color="#000"
             spacing={4}
             direction="row"
-            {...register('userType', {validateOn: 'onChange'})}>
-            <option value="DEFAULT" selected>
+            {...register('userType', {
+              validateOn: 'onChange',
+              defaultValue: 'DEFAULT',
+            })}>
+            <option value="DEFAULT" disabled>
               Selecione uma opção
             </option>
             {userTypeData
@@ -339,10 +357,18 @@ const RegisterUser = (...props) => {
         .validate(inputs, {abortEarly: false})
         .then((value) => {
           debugger;
-          Usuario.create(value).then(() => {
-            setErrors({});
-            setInputs({});
-          });
+          // HACK: esse fixo é para acomodar a atualizacao da API, depois do merge do pr #96 faço ele usar o token real
+          Usuario.create(
+            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdXRoIjowLjIsImV4cCI6MTY1ODIxNzAzNywiaWF0IjoxNjI2NjgxMDM3LCJzdWIiOjEsImlzcyI6InBsYXNtZWRpcy1hcGktbG9jYWwiLCJhdWQiOiJwb3N0bWFuIn0.HbwiBP6AexzaOJ-eN7PVymSuWM6HOr_iB56D7Pcgzvw',
+            value,
+          )
+            .then(() => {
+              setErrors({});
+              setInputs({});
+            })
+            .catch(() => {
+              alert('Não foi possível criar o usuário.'); // TODO: alert mais amigável com melhor descricao do erro
+            });
         })
         .catch((err) => {
           setErrors(
@@ -353,7 +379,7 @@ const RegisterUser = (...props) => {
           );
         });
     },
-    [schema, inputs, setErrors, setInputs],
+    [token, schema, inputs, setErrors, setInputs],
   );
 
   return (
