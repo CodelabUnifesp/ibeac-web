@@ -77,8 +77,12 @@ function Entrar({history} = {}) {
         <Content>
           <Form schema={schema} onSubmit={handleLogin} autoComplete="off">
             <FormField>
-              <FormLabel>E-mail</FormLabel>
-              <Input name="email" type="email" placeholder="Seu e-mail" />
+              <FormLabel>Nome de Usuário</FormLabel>
+              <Input
+                name="username"
+                type="text"
+                placeholder="Seu nome de usuário"
+              />
             </FormField>
 
             <FormField>

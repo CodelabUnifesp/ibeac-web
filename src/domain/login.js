@@ -1,9 +1,9 @@
 import api from '../services/api';
 
-export default function login({email, password} = {}) {
+export default function login({username, password} = {}) {
   return api.post(
     `login?aud=${process.env.REACT_APP_ME ?? 'plasmedis-web-local'}`,
-    {email, password},
+    {username, password},
   );
 }
 
