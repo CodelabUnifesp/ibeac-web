@@ -13,9 +13,7 @@ import {Context as AuthContext} from '../../components/stores/Auth';
 import login from '../../domain/login';
 
 const schema = Yup.object().shape({
-  email: Yup.string()
-    .email('Insira um e-mail válido')
-    .required('O e-mail é obrigatório'),
+  username: Yup.string().required('O nome de usuário é obrigatório'),
   password: Yup.string().required('A senha é obrigatória'),
 });
 
