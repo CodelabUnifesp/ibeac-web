@@ -226,7 +226,12 @@ const RegisterUser = (...props) => {
             placeholder="E-mail"
             type="email"
           />
-          <FormErrorMessage>{errors?.email}</FormErrorMessage>
+          <FormErrorMessage>
+            <Alert status="error">
+              <AlertIcon />
+              <AlertDescription>{errors.email}</AlertDescription>
+            </Alert>
+          </FormErrorMessage>
           {(isEmpty(inputs.email) || isNil(inputs.email)) && (
             <FormHelperText color="yellow.700">
               <Alert status="warning">
