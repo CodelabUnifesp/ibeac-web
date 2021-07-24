@@ -29,24 +29,17 @@ function Entrar({history} = {}) {
       const {data} = await login(params);
 
       if (data.status === 1000) {
-        if (has(data, 'token') || true) {
-          // TODO: token ainda não foi implementado na API, então nao vai estar retornando aqui
-          // token EXPIRADO: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwbGFzbWVkaXMtYXBpLWRldiIsImlhdCI6MTYyNDIyMDY5MiwiZXhwIjoxNjI0OTExODkyLCJhdWQiOiIiLCJzdWIiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AcGxhc21lZGlzLmNvbSIsInJlYWxfbmFtZSI6IkpvaG4gRG9lIiwidXNlcl90eXBlIjoxLCJhdmF0YXIiOm51bGx9.zp79IVQXHb_8SQe_Nc1GJmYzwOPXwo94rjpeW2rTS6M
-          // token valido até 2022 (para teste): eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwbGFzbWVkaXMtYXBpLWRldiIsImlhdCI6MTYyNDIyMDY5MiwiZXhwIjo3OTY3Nzk1MDkyLCJhdWQiOiIiLCJzdWIiOiJhZG1pbiIsImVtYWlsIjoiYWRtaW5AcGxhc21lZGlzLmNvbSIsInJlYWxfbmFtZSI6IkpvaG4gRG9lIiwidXNlcl90eXBlIjoiMSIsImF2YXRhciI6Im51bGwifQ.SJZkk_13zZfX2v6AgZmCSd0hSjgNpbaoHfcAzwMEC6w
-          // token valido 2022, só tem o ID para validacao das requests: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwbGFzbWVkaXMtYXBpLWRldiIsImlhdCI6MTU5NDU4NDQ1NywiZXhwIjoxNjU3NjU2NDU3LCJhdWQiOiIiLCJzdWIiOiIxIn0.dR0D6dP16mgTBu9D4h_WnPnn-cAX_Ir1Wc-eEC1duL0
+        if (has(data, 'token') && has(data, 'user')) {
+          setToken(data.token);
 
-          // HACK: troquei o token para acomodar a atualizacao da API, vai ser removido com o merge do pr #96
-          setToken(
-            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdXRoIjowLjIsImV4cCI6MTY1ODIxNzAzNywiaWF0IjoxNjI2NjgxMDM3LCJzdWIiOjEsImlzcyI6InBsYXNtZWRpcy1hcGktbG9jYWwiLCJhdWQiOiJwb3N0bWFuIn0.HbwiBP6AexzaOJ-eN7PVymSuWM6HOr_iB56D7Pcgzvw',
-          );
-          // setUser(omit(data, ['token', 'status'])); // FIXME: assim que vai ficar quando a API tiver autenticacao, por enquanto ta hardcode
           setUser({
-            id: 1,
-            email: 'admin@plasmedis.com',
-            real_name: 'John Doe',
-            avatar: null,
-            user_type: 1,
-            verificado: false,
+            id: data.user.id,
+            username: data.user.user_name,
+            email: data.user.email,
+            name: data.user.real_name,
+            avatar: data.user.avatar ?? null,
+            userType: data.user.user_type ?? 3,
+            verified: data.user.verificado ?? false,
           });
 
           history.push({
@@ -54,7 +47,7 @@ function Entrar({history} = {}) {
             state: data,
           });
         } else {
-          toast.error('Login não retornou token!');
+          toast.error('Login não retornou token ou usuário!');
         }
       } else {
         toast.error('Usuário ou senha incorretos!');
