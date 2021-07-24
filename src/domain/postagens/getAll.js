@@ -24,7 +24,7 @@ export default async function getAll(
 
   if (!has(posts, 'data')) return null;
 
-  return get(posts, 'data.post').map((post) => ({
+  return get(posts, 'data.post', []).map((post) => ({
     id: get(post, 'id'),
     title: get(post, 'titulo'),
     description: get(post, 'texto'),

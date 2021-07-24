@@ -14,7 +14,7 @@ export default async function getAll(token) {
 
   if (!has(comentarios, 'data')) return null;
 
-  return get(comentarios, 'data.comments').map((comentario) => ({
+  return get(comentarios, 'data.comments', []).map((comentario) => ({
     id: '<API NÃO ESTÁ ENVIANDO>',
     author: {
       id: get(comentario, 'criador'),
