@@ -57,11 +57,7 @@ const RegisterUser = (...props) => {
 
             if (!isEmpty(value) && !isNil(value)) {
               try {
-                // HACK: esse fixo é para acomodar a atualizacao da API, depois do merge do pr #96 faço ele usar o token real
-                const unique = await Usuario.verifyUsername(
-                  'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdXRoIjowLjIsImV4cCI6MTY1ODIxNzAzNywiaWF0IjoxNjI2NjgxMDM3LCJzdWIiOjEsImlzcyI6InBsYXNtZWRpcy1hcGktbG9jYWwiLCJhdWQiOiJwb3N0bWFuIn0.HbwiBP6AexzaOJ-eN7PVymSuWM6HOr_iB56D7Pcgzvw',
-                  value,
-                );
+                const unique = await Usuario.verifyUsername(token, value);
 
                 setCheckingUsernameAvailability(false);
                 setUsernamedChecked(value);
@@ -144,9 +140,10 @@ const RegisterUser = (...props) => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(async () => {
+    if (isNil(token) || isEmpty(token)) return;
     setLoading(true);
 
-    const neighborhoodDataObject = await Bairro.getAll();
+    const neighborhoodDataObject = await Bairro.getAll(token);
 
     // Constante deverá vir da Api
     const userTypeDataObject = [
@@ -168,7 +165,7 @@ const RegisterUser = (...props) => {
     setUserTypeData(userTypeDataObject);
 
     setLoading(false);
-  }, [setLoading]);
+  }, [token, setLoading]);
 
   const buildForm = useCallback(() => {
     return (
@@ -356,12 +353,7 @@ const RegisterUser = (...props) => {
       schema
         .validate(inputs, {abortEarly: false})
         .then((value) => {
-          debugger;
-          // HACK: esse fixo é para acomodar a atualizacao da API, depois do merge do pr #96 faço ele usar o token real
-          Usuario.create(
-            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdXRoIjowLjIsImV4cCI6MTY1ODIxNzAzNywiaWF0IjoxNjI2NjgxMDM3LCJzdWIiOjEsImlzcyI6InBsYXNtZWRpcy1hcGktbG9jYWwiLCJhdWQiOiJwb3N0bWFuIn0.HbwiBP6AexzaOJ-eN7PVymSuWM6HOr_iB56D7Pcgzvw',
-            value,
-          )
+          Usuario.create(token, value)
             .then(() => {
               setErrors({});
               setInputs({});
