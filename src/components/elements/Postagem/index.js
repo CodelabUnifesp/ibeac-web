@@ -10,12 +10,13 @@ import Icon from '@chakra-ui/icon';
 
 import {get, isEmpty, isNull} from 'lodash';
 
-const Postagem = ({item, user, avatar} = {}) => {
+const Postagem = ({item, user, avatar, verifiable, onCreateComment} = {}) => {
   const [openComments, setOpenComments] = useState(false);
   const [newComment, setNewComment] = useState('');
+  const [creatingComment, setCreatingComment] = useState(false);
 
   const numberOfComments = useMemo(() => item?.comments?.length ?? 0, [item]);
-  const isAdmin = user.user_type === 1;
+  const isAdmin = useMemo(() => user?.user_type === 1, [user]);
 
   return (
     <Box
@@ -46,7 +47,7 @@ const Postagem = ({item, user, avatar} = {}) => {
             <Text fontWeight="bold" size="md" color="black">
               {item.title}
             </Text>
-            {(item.verified || isAdmin) && (
+            {(item.verified || verifiable) && (
               <IconButton
                 aria-label="Verificar postagem"
                 variant="unstyled"
@@ -57,7 +58,7 @@ const Postagem = ({item, user, avatar} = {}) => {
                     as={MdVerifiedUser}
                   />
                 }
-                onClick={() => isAdmin && alert(`VERIFICAR POSTAGEM`)}
+                onClick={() => verifiable && alert(`VERIFICAR POSTAGEM`)}
               />
             )}
           </Flex>
@@ -102,7 +103,11 @@ const Postagem = ({item, user, avatar} = {}) => {
                   colorScheme="primary"
                   icon={<Icon fontSize="2xl" as={MdSend} />}
                   isRound
-                  onClick={() => alert(`CRIAR NOVO COMENTÁRIO\n ${newComment}`)}
+                  isLoading={creatingComment}
+                  onClick={(event) => {
+                    setCreatingComment(true);
+                    onCreateComment && onCreateComment(newComment, item.id);
+                  }}
                 />
               </Flex>
               <Stack spacing={4}>
@@ -149,11 +154,14 @@ const Postagem = ({item, user, avatar} = {}) => {
 Postagem.displayName = 'Postagem';
 Postagem.defaultProps = {
   item: {},
-  user: {},
+  user: '????',
   avatar: 'https://bit.ly/dan-abramov',
+  verifiable: false,
+  onCreateComment: () => {},
 };
 Postagem.propTypes = {
   item: PropTypes.shape({
+    id: PropTypes.number,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     category: {
@@ -164,10 +172,10 @@ Postagem.propTypes = {
     comments: PropTypes.arrayOf(PropTypes.shape({})),
     verified: PropTypes.bool,
   }),
-  user: PropTypes.shape({
-    name: PropTypes.string,
-  }),
+  user: PropTypes.string,
   avatar: PropTypes.string,
+  verifiable: PropTypes.bool,
+  onCreateComment: PropTypes.func,
 };
 
 export default Postagem;

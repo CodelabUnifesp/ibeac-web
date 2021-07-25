@@ -34,8 +34,7 @@ import * as Categorias from '../../domain/categorias';
 import * as Bairros from '../../domain/bairros';
 import * as Comentarios from '../../domain/comentarios';
 
-function Home({location}) {
-  const currentUserId = location.state ? location.state.id : null;
+function Home() {
   const tabs = useBreakpointValue(
     {
       base: ['Feed', 'Recomendados'],
@@ -46,7 +45,7 @@ function Home({location}) {
 
   const [tab, setTab] = useState(0);
   const {isOpen, onOpen, onClose} = useDisclosure();
-  const {user} = useContext(AuthContext);
+  const {user, token} = useContext(AuthContext);
 
   const categories = useRef(null);
   const neighborhoods = useRef(null);
@@ -57,14 +56,14 @@ function Home({location}) {
 
   useEffect(() => {
     // recuperando lista de categorias para tabs
-    categories.current = Categorias.getAll();
-  }, []);
+    categories.current = Categorias.getAll(token);
+  }, [token]);
 
   useEffect(() => {
     // HACK: a api nao envia nome de categoria/bairro, comentários vinculados à uma postagem OU avatar do autor, então isso é um workaround
-    neighborhoods.current = Bairros.getAll();
-    comments.current = Comentarios.getAll();
-  }, []);
+    neighborhoods.current = Bairros.getAll(token);
+    comments.current = Comentarios.getAll(token);
+  }, [token]);
 
   useEffect(() => {
     /**
@@ -76,10 +75,10 @@ function Home({location}) {
       setPosts(null);
       let result = [];
       if (tab === 0 || tab === 1)
-        result = await getAll({recommended: tab === 1});
+        result = await getAll(token, {recommended: tab === 1});
       else {
         // FUTURE: como qualquer discussão de adição de novas categorias é pra próxima "sprint", no momento vai ficar meio hardcoded assim
-        result = await getAll({
+        result = await getAll(token, {
           category:
             (await categories.current).find((c) => c.name === tabs[tab])?.id ??
             null,
@@ -118,7 +117,7 @@ function Home({location}) {
     };
 
     fetchPosts();
-  }, [tab]);
+  }, [tab, token]);
 
   return (
     <>
@@ -170,7 +169,7 @@ function Home({location}) {
           <Flex flexDirection="row" align="center">
             <Box mr={4}>
               <Avatar
-                name={get(user, 'real_name', '???')}
+                name={get(user, 'name', '???')}
                 src={get(user, 'avatar', 'https://bit.ly/dan-abramov')}
               />
             </Box>
@@ -191,7 +190,15 @@ function Home({location}) {
           </Flex>
         </Box>
 
-        <Feed user={user} avatar={get(user, 'avatar', null)} value={posts} />
+        <Feed
+          user={user.name}
+          avatar={get(user, 'avatar', null)}
+          canVerifyPost={user.userType === 1}
+          onCreateComment={(newComment, itemId) => {
+            Comentarios.create(token, newComment, user.id, itemId); // TODO: show error/success message
+          }}
+          value={posts}
+        />
       </Wrapper>
 
       {/* Modal de Criar Postagem */}
@@ -209,6 +216,7 @@ function Home({location}) {
             <EditablePostagem
               value={newPostagem}
               onChange={(key, value) =>
+                // TODO: show success/message error
                 setNewPostagem(set(key, value, newPostagem))
               }
             />
@@ -218,7 +226,8 @@ function Home({location}) {
             <Button
               colorScheme="primary"
               mr={3}
-              onClick={() => create(newPostagem, currentUserId)}>
+              onClick={() => create(token, newPostagem, user.id)}>
+              {/* TODO: show success/message error */}
               Criar
             </Button>
             <Button onClick={onClose}>Cancelar</Button>

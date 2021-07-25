@@ -1,22 +1,25 @@
 import {isEmpty, isNil} from 'lodash';
 import api from '../../services/api';
 
-export default async function create(token, newPostagem, currentUserId) {
+export default async function create(
+  token,
+  newComentario,
+  currentUserId,
+  postagemId,
+) {
   if (isNil(token) || isEmpty(token))
     throw new Error('Token não foi informado');
 
-  const {title, category, description} = newPostagem;
-
   const objToSend = {
-    texto: description,
+    texto: newComentario,
     criador: currentUserId,
-    titulo: title,
-    categoria: category,
+    postagem: postagemId,
+    resposta: null,
   };
 
   try {
     await api
-      .post('postagens', objToSend, {
+      .post('comentarios', objToSend, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -25,6 +28,8 @@ export default async function create(token, newPostagem, currentUserId) {
         window.location.reload();
       });
   } catch (e) {
-    alert('Ocorreu um erro ao criar a postagem. Verifique com o administrador');
+    alert(
+      'Ocorreu um erro ao adicionar o comentário. Verifique com o administrador',
+    );
   }
 }

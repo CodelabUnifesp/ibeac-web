@@ -8,6 +8,7 @@ import {
   mdiFormatListChecks,
   mdiAccountBoxMultipleOutline,
   mdiLogout,
+  mdiAccountPlus,
 } from '@mdi/js';
 import {Box} from '@chakra-ui/layout';
 import {useLocation} from 'react-router-dom';
@@ -23,24 +24,6 @@ const essentialsSection = [
   },
 ];
 
-const categoriesSection = [
-  {
-    title: 'Saúde',
-    icon: mdiHeart,
-    to: '/saude',
-  },
-  {
-    title: 'Trocas',
-    icon: mdiAutorenew,
-    to: '/trocas',
-  },
-  {
-    title: 'Cultura e lazer',
-    icon: mdiDramaMasks,
-    to: '/cultura-e-lazer',
-  },
-];
-
 const informationSection = [
   {
     title: 'Complemento de Dados',
@@ -51,6 +34,11 @@ const informationSection = [
     title: 'Formulário Socioeconômico',
     icon: mdiFormatListChecks,
     to: '/form',
+  },
+  {
+    title: 'Cadastrar Novo Usuário',
+    icon: mdiAccountPlus,
+    to: '/register',
   },
 ];
 
@@ -68,7 +56,7 @@ const Navigation = () => {
     {
       base: [
         essentialsSection,
-        categoriesSection,
+        // categoriesSection,
         informationSection,
         logoutSection,
       ],
