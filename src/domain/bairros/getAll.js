@@ -11,7 +11,7 @@ export default async function getAll(token) {
 
   if (!has(bairros, 'data')) return null;
 
-  return get(bairros, 'data.Bairros').map((bairro) => ({
+  return get(bairros, 'data.Bairros', []).map((bairro) => ({
     id: get(bairro, 'id'),
     name: get(bairro, 'nome'),
   }));

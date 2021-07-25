@@ -1,5 +1,7 @@
 import React, {useEffect, useState, useContext} from 'react';
+
 import {Text} from '@chakra-ui/react';
+
 import * as S from './styles';
 import questions from './questions';
 import FormQuestions from '../../components/elements/FormQuestions';

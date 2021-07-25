@@ -169,7 +169,7 @@ function Home() {
           <Flex flexDirection="row" align="center">
             <Box mr={4}>
               <Avatar
-                name={get(user, 'real_name', '???')}
+                name={get(user, 'name', '???')}
                 src={get(user, 'avatar', 'https://bit.ly/dan-abramov')}
               />
             </Box>

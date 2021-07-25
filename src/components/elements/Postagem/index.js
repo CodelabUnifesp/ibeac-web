@@ -16,6 +16,7 @@ const Postagem = ({item, user, avatar, verifiable, onCreateComment} = {}) => {
   const [creatingComment, setCreatingComment] = useState(false);
 
   const numberOfComments = useMemo(() => item?.comments?.length ?? 0, [item]);
+  const isAdmin = useMemo(() => user?.user_type === 1, [user]);
 
   return (
     <Box

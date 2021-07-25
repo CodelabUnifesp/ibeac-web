@@ -42,7 +42,7 @@ const Default = ({children} = {}) => {
         <Content mt={{base: 0, lg: 2}} p={{base: 0, lg: 4}}>
           <Box width="100%" display={{base: 'none', lg: 'flex'}}>
             <Sidebar
-              name={get(user, 'real_name', '???')}
+              name={get(user, 'name', '???')}
               avatar={get(user, 'avatar', 'https://bit.ly/dan-abramov')}>
               <Navigation />
             </Sidebar>

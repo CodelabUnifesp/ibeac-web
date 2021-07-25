@@ -13,9 +13,7 @@ import {Context as AuthContext} from '../../components/stores/Auth';
 import login from '../../domain/login';
 
 const schema = Yup.object().shape({
-  email: Yup.string()
-    .email('Insira um e-mail válido')
-    .required('O e-mail é obrigatório'),
+  username: Yup.string().required('O nome de usuário é obrigatório'),
   password: Yup.string().required('A senha é obrigatória'),
 });
 
@@ -31,6 +29,7 @@ function Entrar({history} = {}) {
       if (data.status === 1000) {
         if (has(data, 'token') && has(data, 'user')) {
           setToken(data.token);
+
           setUser({
             id: data.user.id,
             username: data.user.user_name,
@@ -76,8 +75,12 @@ function Entrar({history} = {}) {
         <Content>
           <Form schema={schema} onSubmit={handleLogin} autoComplete="off">
             <FormField>
-              <FormLabel>E-mail</FormLabel>
-              <Input name="email" type="email" placeholder="Seu e-mail" />
+              <FormLabel>Nome de Usuário</FormLabel>
+              <Input
+                name="username"
+                type="text"
+                placeholder="Seu nome de usuário"
+              />
             </FormField>
 
             <FormField>

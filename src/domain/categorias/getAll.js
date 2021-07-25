@@ -14,7 +14,7 @@ export default async function getAll(token) {
 
   if (!has(categorias, 'data')) return null;
 
-  return get(categorias, 'data.Categorias').map((categoria) => ({
+  return get(categorias, 'data.Categorias', []).map((categoria) => ({
     id: get(categoria, 'id'),
     name: get(categoria, 'nome'),
   }));
