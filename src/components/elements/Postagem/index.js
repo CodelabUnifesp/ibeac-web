@@ -10,13 +10,19 @@ import Icon from '@chakra-ui/icon';
 
 import {get, isEmpty, isNull} from 'lodash';
 
-const Postagem = ({item, user, avatar, verifiable, onCreateComment} = {}) => {
+const Postagem = ({
+  item,
+  user,
+  avatar,
+  verifiable,
+  onCreateComment,
+  onAddSelo,
+} = {}) => {
   const [openComments, setOpenComments] = useState(false);
   const [newComment, setNewComment] = useState('');
   const [creatingComment, setCreatingComment] = useState(false);
 
   const numberOfComments = useMemo(() => item?.comments?.length ?? 0, [item]);
-  const isAdmin = useMemo(() => user?.user_type === 1, [user]);
 
   return (
     <Box
@@ -49,7 +55,11 @@ const Postagem = ({item, user, avatar, verifiable, onCreateComment} = {}) => {
             </Text>
             {(item.verified || verifiable) && (
               <IconButton
-                aria-label="Verificar postagem"
+                aria-label={
+                  item.verified
+                    ? 'Postagem verificada'
+                    : 'Clique aqui para verificar postagem'
+                }
                 variant="unstyled"
                 icon={
                   <Icon
@@ -58,7 +68,7 @@ const Postagem = ({item, user, avatar, verifiable, onCreateComment} = {}) => {
                     as={MdVerifiedUser}
                   />
                 }
-                onClick={() => verifiable && alert(`VERIFICAR POSTAGEM`)}
+                onClick={() => verifiable && onAddSelo && onAddSelo(item.id)}
               />
             )}
           </Flex>
@@ -158,6 +168,7 @@ Postagem.defaultProps = {
   avatar: 'https://bit.ly/dan-abramov',
   verifiable: false,
   onCreateComment: () => {},
+  onAddSelo: () => {},
 };
 Postagem.propTypes = {
   item: PropTypes.shape({
@@ -176,6 +187,7 @@ Postagem.propTypes = {
   avatar: PropTypes.string,
   verifiable: PropTypes.bool,
   onCreateComment: PropTypes.func,
+  onAddSelo: PropTypes.func,
 };
 
 export default Postagem;
