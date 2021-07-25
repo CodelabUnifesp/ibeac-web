@@ -29,7 +29,7 @@ import {Context as AuthContext} from '../../components/stores/Auth';
 
 import {Wrapper} from './styles';
 
-import {getAll, create} from '../../domain/postagens';
+import {getAll, create, addSelo} from '../../domain/postagens';
 import * as Categorias from '../../domain/categorias';
 import * as Bairros from '../../domain/bairros';
 import * as Comentarios from '../../domain/comentarios';
@@ -196,6 +196,9 @@ function Home() {
           canVerifyPost={user.userType === 1}
           onCreateComment={(newComment, itemId) => {
             Comentarios.create(token, newComment, user.id, itemId); // TODO: show error/success message
+          }}
+          onAddSelo={(itemId) => {
+            addSelo(token, itemId); // TODO: show error/success message
           }}
           value={posts}
         />

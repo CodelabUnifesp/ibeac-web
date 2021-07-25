@@ -5,7 +5,14 @@ import {isNull} from 'lodash';
 import {Spinner, Box} from '@chakra-ui/react';
 import Postagem from '../Postagem';
 
-const Feed = ({value, user, avatar, canVerifyPost, onCreateComment} = {}) => {
+const Feed = ({
+  value,
+  user,
+  avatar,
+  canVerifyPost,
+  onCreateComment,
+  onAddSelo,
+} = {}) => {
   if (isNull(value)) {
     return (
       <Box w="100%" textAlign="center" mt={5}>
@@ -24,6 +31,7 @@ const Feed = ({value, user, avatar, canVerifyPost, onCreateComment} = {}) => {
           avatar={avatar}
           verifiable={canVerifyPost}
           onCreateComment={onCreateComment}
+          onAddSelo={onAddSelo}
         />
       ))}
     </>
@@ -37,6 +45,7 @@ Feed.defaultProps = {
   avatar: 'https://bit.ly/dan-abramov',
   canVerifyPost: false,
   onCreateComment: () => {},
+  onAddSelo: () => {},
 };
 Feed.propTypes = {
   value: PropTypes.arrayOf(
@@ -54,6 +63,7 @@ Feed.propTypes = {
   avatar: PropTypes.string,
   canVerifyPost: PropTypes.bool,
   onCreateComment: PropTypes.func,
+  onAddSelo: PropTypes.func,
 };
 
 export default Feed;
