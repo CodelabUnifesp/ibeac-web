@@ -6,6 +6,7 @@ const questions = [
     type: 'text',
     mask: null,
     alternatives: null,
+    nameFromApi: 'nome_rep',
   },
   {
     id: 2,
@@ -15,6 +16,7 @@ const questions = [
     mask: null,
     forbiddenCharacters: /\D/,
     alternatives: null,
+    nameFromApi: 'qtd_pessoas',
   },
   {
     id: 3,
@@ -24,6 +26,7 @@ const questions = [
     mask: null,
     forbiddenCharacters: /\D/,
     alternatives: null,
+    nameFromApi: 'qtd_criancas',
   },
   {
     id: 4,
@@ -33,6 +36,7 @@ const questions = [
     mask: null,
     forbiddenCharacters: /\D/,
     alternatives: null,
+    nameFromApi: 'qtd_gestantes',
   },
   {
     id: 5,
@@ -44,6 +48,7 @@ const questions = [
       {id: 1, value: 'Sim'},
       {id: 2, value: 'Não'},
     ],
+    nameFromApi: 'pessoa_amamenta',
   },
   {
     id: 6,
@@ -55,6 +60,7 @@ const questions = [
       {id: 1, value: 'Sim'},
       {id: 2, value: 'Não'},
     ],
+    nameFromApi: 'gestante',
   },
   {
     id: 7,
@@ -64,6 +70,7 @@ const questions = [
     mask: null,
     forbiddenCharacters: /\D/,
     alternatives: null,
+    nameFromApi: 'qtd_amamentando',
   },
   {
     id: 8,
@@ -73,6 +80,7 @@ const questions = [
     mask: null,
     forbiddenCharacters: /\D/,
     alternatives: null,
+    nameFromApi: 'qtd_criancas_deficiencia',
   },
 ];
 
