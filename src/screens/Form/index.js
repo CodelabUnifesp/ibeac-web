@@ -10,14 +10,14 @@ import {
 import {Context as AuthContext} from '../../components/stores/Auth';
 
 const Form = (...props) => {
-  const {user} = useContext(AuthContext);
+  const {user, token} = useContext(AuthContext);
   const [aditionalData, setAditionalData] = useState(null);
   const [override, setOverride] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
       debugger;
-      const response = await getFormDataByUserId(user.id);
+      const response = await getFormDataByUserId(user.id, token);
       await setAditionalData(response);
       await setOverride(false);
     }
@@ -25,7 +25,7 @@ const Form = (...props) => {
   }, [user]);
 
   const handleSubmmit = async (data) => {
-    await updateFormByUserId(user.id, data);
+    await updateFormByUserId(user.id, token, data);
   };
 
   return (
