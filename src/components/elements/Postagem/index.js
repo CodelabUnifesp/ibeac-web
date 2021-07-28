@@ -1,9 +1,9 @@
-import React, {useMemo, useState} from 'react';
+import React, {useMemo, useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 
 import {Stack, Box, Text, Flex} from '@chakra-ui/layout';
 import {Avatar} from '@chakra-ui/avatar';
-import {IconButton, Input} from '@chakra-ui/react';
+import {IconButton, Input, Spinner} from '@chakra-ui/react';
 import {MdSend, MdVerifiedUser} from 'react-icons/md';
 
 import Icon from '@chakra-ui/icon';
@@ -15,6 +15,7 @@ const Postagem = ({
   user,
   avatar,
   verifiable,
+  fetchComments,
   onCreateComment,
   onAddSelo,
 } = {}) => {
@@ -22,7 +23,19 @@ const Postagem = ({
   const [newComment, setNewComment] = useState('');
   const [creatingComment, setCreatingComment] = useState(false);
 
-  const numberOfComments = useMemo(() => item?.comments?.length ?? 0, [item]);
+  const [comments, setComments] = useState([]);
+  const [loadingComments, setLoadingComments] = useState(false);
+
+  useEffect(() => {
+    if (openComments && item?.id) {
+      if (item?.comments > 0) setLoadingComments(true);
+
+      fetchComments(item?.id).then((list) => {
+        setComments(list);
+        setLoadingComments(false);
+      });
+    }
+  }, [openComments, item]);
 
   return (
     <Box
@@ -44,7 +57,7 @@ const Postagem = ({
               {get(item, 'author.name')}
             </Text>
             <Text fontSize="xs" color="gray">
-              {item.dateTime}
+              {item.dateTime.fromNow()}
             </Text>
           </Stack>
         </Flex>
@@ -85,16 +98,14 @@ const Postagem = ({
             borderTop="1px solid #eee"
             borderBottom={openComments ? '1px solid #eee' : ''}
             onClick={() => setOpenComments(!openComments)}>
-            {numberOfComments > 0
-              ? `${numberOfComments} Comentários`
-              : 'Comentar'}
+            {item?.comments > 0 ? `${item?.comments} Comentários` : 'Comentar'}
           </Text>
           {openComments > 0 && (
             <Box p={4} px={{base: 0, lg: 4}}>
               <Flex
                 flexDirection="row"
                 align="center"
-                mb={numberOfComments > 0 ? 8 : 0}>
+                mb={item?.comments > 0 ? 8 : 0}>
                 <Box mr={{base: 2, lg: 4}}>
                   <Avatar name={user.name} src={avatar} />
                 </Box>
@@ -121,7 +132,12 @@ const Postagem = ({
                 />
               </Flex>
               <Stack spacing={4}>
-                {get(item, 'comments', []).map((comment, index) => (
+                {loadingComments && (
+                  <Box w="100%" textAlign="center">
+                    <Spinner colorScheme="primary.main" />
+                  </Box>
+                )}
+                {(comments ?? []).map((comment, index) => (
                   <Flex key={index} flexDirection="row" align="flex-start">
                     <Box mr={{base: 2, lg: 4}}>
                       <Avatar
@@ -142,7 +158,7 @@ const Postagem = ({
                           {comment.author?.name}
                         </Text>
                         <Text fontSize="xs" color="gray">
-                          {comment.dateTime}
+                          {comment.dateTime.fromNow()}
                         </Text>
                       </Stack>
 
@@ -167,6 +183,7 @@ Postagem.defaultProps = {
   user: '????',
   avatar: 'https://bit.ly/dan-abramov',
   verifiable: false,
+  fetchComments: async () => [],
   onCreateComment: () => {},
   onAddSelo: () => {},
 };
@@ -179,13 +196,14 @@ Postagem.propTypes = {
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
     },
-    dateTime: PropTypes.string.isRequired,
+    dateTime: PropTypes.object.isRequired, // TODO: invoke moment object type
     comments: PropTypes.arrayOf(PropTypes.shape({})),
     verified: PropTypes.bool,
   }),
   user: PropTypes.string,
   avatar: PropTypes.string,
   verifiable: PropTypes.bool,
+  fetchComments: PropTypes.func,
   onCreateComment: PropTypes.func,
   onAddSelo: PropTypes.func,
 };

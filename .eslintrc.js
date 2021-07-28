@@ -42,5 +42,6 @@ module.exports = {
     'no-param-reassign': 'off',
     'no-debugger': 'off',
     'no-nested-ternary': 'off',
+    'react/forbid-prop-types': 'warn',
   },
 };
