@@ -29,7 +29,7 @@ import {Context as AuthContext} from '../../components/stores/Auth';
 
 import {Wrapper} from './styles';
 
-import {getAll, create, addSelo} from '../../domain/postagens';
+import * as Postagens from '../../domain/postagens';
 import * as Categorias from '../../domain/categorias';
 import * as Bairros from '../../domain/bairros';
 import * as Comentarios from '../../domain/comentarios';
@@ -49,7 +49,6 @@ function Home() {
 
   const categories = useRef(null);
   const neighborhoods = useRef(null);
-  const comments = useRef(null);
 
   const [posts, setPosts] = useState(null);
   const [newPostagem, setNewPostagem] = useState({});
@@ -62,7 +61,6 @@ function Home() {
   useEffect(() => {
     // HACK: a api nao envia nome de categoria/bairro, comentários vinculados à uma postagem OU avatar do autor, então isso é um workaround
     neighborhoods.current = Bairros.getAll(token);
-    comments.current = Comentarios.getAll(token);
   }, [token]);
 
   useEffect(() => {
@@ -75,10 +73,10 @@ function Home() {
       setPosts(null);
       let result = [];
       if (tab === 0 || tab === 1)
-        result = await getAll(token, {recommended: tab === 1});
+        result = await Postagens.getAll(token, {recommended: tab === 1});
       else {
         // FUTURE: como qualquer discussão de adição de novas categorias é pra próxima "sprint", no momento vai ficar meio hardcoded assim
-        result = await getAll(token, {
+        result = await Postagens.getAll(token, {
           category:
             (await categories.current).find((c) => c.name === tabs[tab])?.id ??
             null,
@@ -90,14 +88,11 @@ function Home() {
       const [allCategories, allNeighborhoods, allComments] = await Promise.all([
         categories.current,
         neighborhoods.current,
-        comments.current,
       ]);
 
       setPosts(
         result.map((post) => {
-          // HACK: a api nao envia nome de categoria/bairro, avatar ou id do autor, então isso é um workaround
-          // BUGFIX: a api também não envia o dateTime de postagens OU comentarios
-          // BUGFIX: o endpoint da api (/users), que poderia ser usado no workaround, não funciona
+          // HACK: a api nao envia nome de categoria/bairro, então isso é um workaround
 
           const category = allCategories.find((c) => c.id === post.category.id);
           post.category.name = get(category, 'name', '—');
@@ -106,8 +101,6 @@ function Home() {
             (b) => b.id === post.neighborhood.id,
           );
           post.neighborhood.name = get(neighborhood, 'name', '—');
-
-          post.comments = allComments.filter((c) => c.post === post.id);
 
           post.author.avatar = null;
 
@@ -194,11 +187,15 @@ function Home() {
           user={user.name}
           avatar={get(user, 'avatar', null)}
           canVerifyPost={user.userType === 1}
+          fetchComments={async (id) => {
+            const post = await Postagens.get(token, id);
+            return post?.comments ?? [];
+          }}
           onCreateComment={(newComment, itemId) => {
             Comentarios.create(token, newComment, user.id, itemId); // TODO: show error/success message
           }}
           onAddSelo={(itemId) => {
-            addSelo(token, itemId); // TODO: show error/success message
+            Postagens.addSelo(token, itemId); // TODO: show error/success message
           }}
           value={posts}
         />
@@ -229,7 +226,7 @@ function Home() {
             <Button
               colorScheme="primary"
               mr={3}
-              onClick={() => create(token, newPostagem, user.id)}>
+              onClick={() => Postagens.create(token, newPostagem, user.id)}>
               {/* TODO: show success/message error */}
               Criar
             </Button>

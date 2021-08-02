@@ -10,6 +10,7 @@ const Feed = ({
   user,
   avatar,
   canVerifyPost,
+  fetchComments,
   onCreateComment,
   onAddSelo,
 } = {}) => {
@@ -30,6 +31,7 @@ const Feed = ({
           user={user}
           avatar={avatar}
           verifiable={canVerifyPost}
+          fetchComments={fetchComments}
           onCreateComment={onCreateComment}
           onAddSelo={onAddSelo}
         />
@@ -44,6 +46,7 @@ Feed.defaultProps = {
   user: '????',
   avatar: 'https://bit.ly/dan-abramov',
   canVerifyPost: false,
+  fetchComments: async () => [],
   onCreateComment: () => {},
   onAddSelo: () => {},
 };
@@ -56,12 +59,13 @@ Feed.propTypes = {
         id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
       },
-      dateTime: PropTypes.string.isRequired,
+      dateTime: PropTypes.object.isRequired, // TODO: invoke moment object type
     }),
   ),
   user: PropTypes.string,
   avatar: PropTypes.string,
   canVerifyPost: PropTypes.bool,
+  fetchComments: PropTypes.func,
   onCreateComment: PropTypes.func,
   onAddSelo: PropTypes.func,
 };

@@ -1,4 +1,5 @@
 import {get, has, isEmpty, isNil} from 'lodash';
+import moment from 'moment';
 
 import api from '../../services/api';
 
@@ -22,7 +23,7 @@ export default async function getAll(token) {
       avatar: '<API NÃO ESTÁ ENVIANDO>',
     },
     post: get(comentario, 'postagem'),
-    dateTime: '<API NÃO ESTÁ ENVIANDO>',
+    dateTime: moment(get(comentario, 'data')),
     body: get(comentario, 'texto'),
   }));
 }
