@@ -1,4 +1,4 @@
-import {flatten, get, has, isEmpty, isNil} from 'lodash';
+import {get, has, isEmpty, isNil} from 'lodash';
 import moment from 'moment';
 import stringify from '../../utils/stringify';
 
@@ -11,9 +11,14 @@ export default async function getAll(
   if (isNil(token) || isEmpty(token))
     throw new Error('Token não foi informado');
 
+  let endpoint = `/${recommended ? 'recomendados' : 'postagens'}`;
+
+  if (category) {
+    endpoint += `/categorias/${category}`;
+  }
+
   const posts = await api.get(
-    `${recommended ? '/recomendados' : '/postagens'}${stringify({
-      categoria: category,
+    `${endpoint}${stringify({
       bairro: neighborhood,
     })}`,
     {
