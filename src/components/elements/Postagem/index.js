@@ -27,15 +27,16 @@ const Postagem = ({
   const [loadingComments, setLoadingComments] = useState(false);
 
   useEffect(() => {
-    if (openComments && item?.id) {
+    if ((openComments || creatingComment) && item?.id) {
       if (item?.comments > 0) setLoadingComments(true);
 
       fetchComments(item?.id).then((list) => {
         setComments(list);
         setLoadingComments(false);
+        setCreatingComment(false);
       });
     }
-  }, [openComments, item]);
+  }, [openComments, creatingComment, item]);
 
   return (
     <Box
