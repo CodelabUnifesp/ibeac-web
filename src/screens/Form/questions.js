@@ -51,12 +51,9 @@ const questions = [
     id: 6,
     name: 'Gestante?',
     placeholder: null,
-    type: 'radio',
+    type: 'checkbox',
     mask: null,
-    alternatives: [
-      {id: 1, value: 'Sim'},
-      {id: 2, value: 'Não'},
-    ],
+    alternatives: null,
     nameFromApi: 'gestante',
   },
   {
