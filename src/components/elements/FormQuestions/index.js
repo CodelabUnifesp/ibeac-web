@@ -10,6 +10,7 @@ import {
   RadioGroup,
   Select,
   Button,
+  Checkbox,
 } from '@chakra-ui/react';
 import InputMask from 'react-input-mask';
 import {isNil} from 'lodash';
@@ -66,10 +67,6 @@ const FormQuestions = ({
                 ? question.alternatives.map((alternative) => {
                     return (
                       <Radio
-                        checked={
-                          alternative.value.charAt(0) ===
-                          inputValue[question.id]
-                        }
                         onChange={(event) => {
                           console.log(event.target.value);
                           setInputValue({
@@ -108,6 +105,22 @@ const FormQuestions = ({
                 ))
               : null}
           </Select>
+        );
+      case 'checkbox':
+        return (
+          <Checkbox
+            isChecked={inputValue[question.id]}
+            onChange={async (event) => {
+              await setInputValue({
+                ...inputValue,
+                [question.id]: event.target.checked,
+              });
+              console.log(inputValue);
+            }}
+            color="#000"
+            spacing={4}
+            direction="row"
+          />
         );
       default:
         return <></>;
