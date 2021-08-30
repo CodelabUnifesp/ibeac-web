@@ -109,15 +109,18 @@ const FormQuestions = ({
       case 'checkbox':
         return (
           <Checkbox
-            onChange={(event) =>
-              setInputValue({
+            isChecked={inputValue[question.id]}
+            onChange={async (event) => {
+              await setInputValue({
                 ...inputValue,
-                [question.id]: event.target.value,
-              })
-            }
+                [question.id]: event.target.checked,
+              });
+              console.log(inputValue);
+            }}
             color="#000"
             spacing={4}
-            direction="row"></Checkbox>
+            direction="row"
+          />
         );
       default:
         return <></>;
