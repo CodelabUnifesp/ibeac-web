@@ -8,7 +8,7 @@ import {MdSend, MdVerifiedUser} from 'react-icons/md';
 
 import Icon from '@chakra-ui/icon';
 
-import {get, isEmpty, isNull} from 'lodash';
+import {get} from 'lodash';
 
 const Postagem = ({
   item,
@@ -26,9 +26,15 @@ const Postagem = ({
   const [comments, setComments] = useState([]);
   const [loadingComments, setLoadingComments] = useState(false);
 
+  const [numberOfComments, setNumberOfComments] = useState(item?.comments);
+
   useEffect(() => {
+    if (creatingComment) {
+      setNewComment('');
+      setNumberOfComments(numberOfComments + 1);
+    }
     if ((openComments || creatingComment) && item?.id) {
-      if (item?.comments > 0) setLoadingComments(true);
+      if (numberOfComments > 0) setLoadingComments(true);
 
       fetchComments(item?.id).then((list) => {
         setComments(list);
@@ -99,14 +105,16 @@ const Postagem = ({
             borderTop="1px solid #eee"
             borderBottom={openComments ? '1px solid #eee' : ''}
             onClick={() => setOpenComments(!openComments)}>
-            {item?.comments > 0 ? `${item?.comments} Comentários` : 'Comentar'}
+            {numberOfComments > 0
+              ? `${numberOfComments} Comentários`
+              : 'Comentar'}
           </Text>
           {openComments > 0 && (
             <Box p={4} px={{base: 0, lg: 4}}>
               <Flex
                 flexDirection="row"
                 align="center"
-                mb={item?.comments > 0 ? 8 : 0}>
+                mb={numberOfComments > 0 ? 8 : 0}>
                 <Box mr={{base: 2, lg: 4}}>
                   <Avatar name={user.name} src={avatar} />
                 </Box>
@@ -120,7 +128,7 @@ const Postagem = ({
                 />
                 <mdiSend />
                 <IconButton
-                  disabled={isEmpty(newComment) || isNull(newComment)}
+                  disable={creatingComment}
                   ml={4}
                   colorScheme="primary"
                   icon={<Icon fontSize="2xl" as={MdSend} />}
