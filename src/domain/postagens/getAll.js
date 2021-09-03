@@ -47,7 +47,7 @@ export default async function getAll(
       name: get(post, 'criador'),
       avatar: '<API NÃO ESTÁ ENVIANDO>',
     },
-    dateTime: moment(get(post, 'data')),
+    dateTime: moment(`${get(post, 'data')}Z`),
     verified: get(post, 'selo'),
     comments: get(post, 'comentarios', 0),
   }));
