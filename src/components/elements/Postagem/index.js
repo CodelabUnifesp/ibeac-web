@@ -1,4 +1,4 @@
-import React, {useMemo, useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 
 import {Stack, Box, Text, Flex} from '@chakra-ui/layout';
@@ -26,6 +26,8 @@ const Postagem = ({
   const [comments, setComments] = useState([]);
   const [loadingComments, setLoadingComments] = useState(false);
 
+  const [verifyingPost, setVerifyingPost] = useState(false);
+
   useEffect(() => {
     if (openComments && item?.id) {
       if (item?.comments > 0) setLoadingComments(true);
@@ -35,7 +37,24 @@ const Postagem = ({
         setLoadingComments(false);
       });
     }
-  }, [openComments, item]);
+  }, [openComments, item, fetchComments]);
+
+  useEffect(() => {
+    if (verifyingPost && item?.id && onAddSelo) {
+      onAddSelo(item.id).then((success) => {
+        if (success) {
+          alert('A postagem foi verificada com sucesso!');
+          item.verified = true;
+        } else {
+          alert(
+            'Ocorreu um erro ao verificar a postagem. Verifique com o administrador',
+          );
+        }
+
+        setVerifyingPost(false);
+      });
+    }
+  }, [verifyingPost, item, onAddSelo]);
 
   return (
     <Box
@@ -73,7 +92,8 @@ const Postagem = ({
                     ? 'Postagem verificada'
                     : 'Clique aqui para verificar postagem'
                 }
-                variant="unstyled"
+                cursor={item.verified ? 'auto' : 'pointer'}
+                display="flex"
                 icon={
                   <Icon
                     color={!item.verified ? 'gray' : 'green'}
@@ -81,7 +101,12 @@ const Postagem = ({
                     as={MdVerifiedUser}
                   />
                 }
-                onClick={() => verifiable && onAddSelo && onAddSelo(item.id)}
+                isDisabled={!verifiable}
+                isLoading={verifyingPost}
+                onClick={() =>
+                  verifiable && !item.verified && setVerifyingPost(true)
+                }
+                variant="unstyled"
               />
             )}
           </Flex>
