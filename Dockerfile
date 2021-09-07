@@ -11,7 +11,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json ./
 RUN yarn install
 RUN yarn global add eslint
-RUN yarn add react-scripts@4.0.3 -g
+RUN yarn global add react-scripts@4.0.3
 
 # add app
 COPY . ./
