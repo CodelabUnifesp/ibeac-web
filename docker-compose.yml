@@ -1,8 +1,8 @@
 version: '3.7'
 
 services:
-  front:
-    container_name: ibeac-front
+  ibeac-front:
+    container_name: ibeac-front-container
     build:
       context: .
       dockerfile: Dockerfile
