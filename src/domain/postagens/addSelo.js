@@ -6,18 +6,16 @@ export default async function addSelo(token, postagemId) {
     throw new Error('Token não foi informado');
 
   try {
-    await api
+    return api
       .put(`selo/${postagemId}`, null, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => {
-        window.location.reload();
+        return true;
       });
   } catch (e) {
-    alert(
-      'Ocorreu um erro ao verificar a postagem. Verifique com o administrador',
-    );
+    return false;
   }
 }

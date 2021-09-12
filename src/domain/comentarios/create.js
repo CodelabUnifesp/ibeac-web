@@ -18,15 +18,11 @@ export default async function create(
   };
 
   try {
-    await api
-      .post('comentarios', objToSend, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        window.location.reload();
-      });
+    await api.post('comentarios', objToSend, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   } catch (e) {
     alert(
       'Ocorreu um erro ao adicionar o comentário. Verifique com o administrador',
