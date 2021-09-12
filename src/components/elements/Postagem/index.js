@@ -21,7 +21,7 @@ import {MdSend, MdVerifiedUser} from 'react-icons/md';
 import {Button} from '@chakra-ui/button';
 import Icon from '@chakra-ui/icon';
 
-import {get, isEmpty, isNull} from 'lodash';
+import {get} from 'lodash';
 
 const Postagem = ({
   item,
@@ -39,6 +39,8 @@ const Postagem = ({
   const [comments, setComments] = useState([]);
   const [loadingComments, setLoadingComments] = useState(false);
 
+  const [numberOfComments, setNumberOfComments] = useState(item?.comments);
+
   const [verifyingPost, setVerifyingPost] = useState(false);
 
   const {isOpen, onOpen, onClose} = useDisclosure();
@@ -47,15 +49,20 @@ const Postagem = ({
   const [messageBody, setMessageBody] = useState('');
 
   useEffect(() => {
-    if (openComments && item?.id) {
-      if (item?.comments > 0) setLoadingComments(true);
+    if (creatingComment) {
+      setNewComment('');
+      setNumberOfComments(numberOfComments + 1);
+    }
+    if ((openComments || creatingComment) && item?.id) {
+      if (numberOfComments > 0) setLoadingComments(true);
 
       fetchComments(item?.id).then((list) => {
         setComments(list);
         setLoadingComments(false);
+        setCreatingComment(false);
       });
     }
-  }, [openComments, item, fetchComments]);
+  }, [openComments, creatingComment, item, fetchComments]);
 
   useEffect(() => {
     if (verifyingPost && item?.id && onAddSelo) {
@@ -145,8 +152,8 @@ const Postagem = ({
               borderTop="1px solid #eee"
               borderBottom={openComments ? '1px solid #eee' : ''}
               onClick={() => setOpenComments(!openComments)}>
-              {item?.comments > 0
-                ? `${item?.comments} Comentários`
+              {numberOfComments > 0
+                ? `${numberOfComments} Comentários`
                 : 'Comentar'}
             </Text>
             {openComments > 0 && (
@@ -154,7 +161,7 @@ const Postagem = ({
                 <Flex
                   flexDirection="row"
                   align="center"
-                  mb={item?.comments > 0 ? 8 : 0}>
+                  mb={numberOfComments > 0 ? 8 : 0}>
                   <Box mr={{base: 2, lg: 4}}>
                     <Avatar name={user.name} src={avatar} />
                   </Box>
@@ -168,7 +175,7 @@ const Postagem = ({
                   />
                   <mdiSend />
                   <IconButton
-                    disabled={isEmpty(newComment) || isNull(newComment)}
+                    disable={creatingComment}
                     ml={4}
                     colorScheme="primary"
                     icon={<Icon fontSize="2xl" as={MdSend} />}
