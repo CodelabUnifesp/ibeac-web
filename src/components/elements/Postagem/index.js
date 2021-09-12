@@ -23,6 +23,8 @@ import Icon from '@chakra-ui/icon';
 
 import {get} from 'lodash';
 
+import Comentario from '../Comentario';
+
 const Postagem = ({
   item,
   user,
@@ -62,7 +64,7 @@ const Postagem = ({
         setCreatingComment(false);
       });
     }
-  }, [openComments, creatingComment, item, fetchComments]);
+  }, [openComments, creatingComment, item, fetchComments, numberOfComments]);
 
   useEffect(() => {
     if (verifyingPost && item?.id && onAddSelo) {
@@ -194,35 +196,7 @@ const Postagem = ({
                     </Box>
                   )}
                   {(comments ?? []).map((comment, index) => (
-                    <Flex key={index} flexDirection="row" align="flex-start">
-                      <Box mr={{base: 2, lg: 4}}>
-                        <Avatar
-                          name={comment.author?.name}
-                          src={comment.author?.avatar}
-                        />
-                      </Box>
-                      <Box
-                        p={{base: 3, lg: 4}}
-                        background="#ddd"
-                        borderRadius="10px">
-                        <Stack direction="row" justifyContent="space-between">
-                          <Text
-                            mb={4}
-                            fontWeight="bold"
-                            fontSize="xs"
-                            color="black">
-                            {comment.author?.name}
-                          </Text>
-                          <Text fontSize="xs" color="gray">
-                            {comment.dateTime.fromNow()}
-                          </Text>
-                        </Stack>
-
-                        <Text fontSize="sm" color="black" align="justify">
-                          {comment.body}
-                        </Text>
-                      </Box>
-                    </Flex>
+                    <Comentario key={index} item={comment} />
                   ))}
                 </Stack>
               </Box>
