@@ -140,3 +140,11 @@ Diagramas-sugestão para algumas funcionalidades, não necessáriamente reflete 
 
 ![Esqueci minha Senha](/docs/diagram_esqueci_minha_senha.png)
 Esqueci minha Senha
+
+
+## Rodando com Docker
+* Para construir o container ```docker-compose build```
+
+* Para iniciar o serviço ```docker-compose up```
+
+* [Opcional] Para rodar algum comando dentro do container ```docker-compose exec ibeac-front bash```

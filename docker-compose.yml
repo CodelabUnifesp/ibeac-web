@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  ibeac-front:
+    container_name: ibeac-front-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./src:/app/src
+    ports:
+      - 3000:3000
+    env_file:
+      - .env

@@ -35,6 +35,14 @@ module.exports = {
         exceptions: [''],
       },
     ],
+    'react/jsx-no-bind': [
+      1,
+      {
+        ignoreRefs: true,
+        allowArrowFunctions: true,
+        allowBind: false,
+      },
+    ],
     'jsx-a11y/control-has-associated-label': 'off',
     'react/no-array-index-key': 'off',
     'arrow-body-style': 'off',
