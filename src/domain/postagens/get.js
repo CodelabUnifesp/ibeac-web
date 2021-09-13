@@ -1,6 +1,5 @@
-import {flatten, get, has, isEmpty, isNil, isString} from 'lodash';
+import {get, has, isEmpty, isNil, isString} from 'lodash';
 import moment from 'moment';
-import stringify from '../../utils/stringify';
 
 import api from '../../services/api';
 
@@ -37,7 +36,7 @@ export default async function (token, id) {
       name: get(post, 'data.criador.name'),
       avatar: '<API NÃO ESTÁ ENVIANDO>',
     },
-    dateTime: moment(get(post, 'data.data')),
+    dateTime: moment(`${get(post, 'data.data')}Z`),
     verified: get(post, 'data.selo'),
     comments: get(post, 'data.comentarios', []).map((comentario) => ({
       id: '<API NÃO ESTÁ ENVIANDO>',
@@ -47,7 +46,7 @@ export default async function (token, id) {
         avatar: '<API NÃO ESTÁ ENVIANDO>',
       },
       post: get(comentario, 'postagem'),
-      dateTime: moment(get(comentario, 'data')),
+      dateTime: moment(`${get(comentario, 'data')}Z`),
       body: get(comentario, 'texto'),
     })),
   };

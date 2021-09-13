@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import PropTypes from 'prop-types';
 
 import {Stack, Box, Text, Flex} from '@chakra-ui/layout';
@@ -23,6 +23,8 @@ import Icon from '@chakra-ui/icon';
 
 import {get} from 'lodash';
 
+import Comentario from '../Comentario';
+
 const Postagem = ({
   item,
   user,
@@ -36,7 +38,7 @@ const Postagem = ({
   const [newComment, setNewComment] = useState('');
   const [creatingComment, setCreatingComment] = useState(false);
 
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState(null);
   const [loadingComments, setLoadingComments] = useState(false);
 
   const [numberOfComments, setNumberOfComments] = useState(item?.comments);
@@ -48,21 +50,25 @@ const Postagem = ({
   const [messageHeader, setMessageHeader] = useState('');
   const [messageBody, setMessageBody] = useState('');
 
-  useEffect(() => {
-    if (creatingComment) {
-      setNewComment('');
-      setNumberOfComments(numberOfComments + 1);
-    }
-    if ((openComments || creatingComment) && item?.id) {
+  const fetchAndUpdateComments = useCallback(
+    (id) => {
       if (numberOfComments > 0) setLoadingComments(true);
 
-      fetchComments(item?.id).then((list) => {
+      fetchComments(id).then((list) => {
         setComments(list);
+        setNumberOfComments(list.length);
         setLoadingComments(false);
         setCreatingComment(false);
       });
-    }
-  }, [openComments, creatingComment, item, fetchComments]);
+    },
+    [fetchComments, numberOfComments],
+  );
+
+  // se comments está nulo (ainda não houve um fetch com sucesso da api)
+  useEffect(() => {
+    if (openComments && item?.id && comments === null)
+      fetchAndUpdateComments(item?.id);
+  }, [openComments, item, comments, fetchAndUpdateComments]);
 
   useEffect(() => {
     if (verifyingPost && item?.id && onAddSelo) {
@@ -182,8 +188,12 @@ const Postagem = ({
                     isRound
                     isLoading={creatingComment}
                     onClick={(event) => {
-                      setCreatingComment(true);
-                      onCreateComment && onCreateComment(newComment, item.id);
+                      if (onCreateComment) {
+                        onCreateComment(newComment, item.id).then(() => {
+                          setNumberOfComments(numberOfComments + 1);
+                          fetchAndUpdateComments(item.id);
+                        });
+                      }
                     }}
                   />
                 </Flex>
@@ -194,35 +204,7 @@ const Postagem = ({
                     </Box>
                   )}
                   {(comments ?? []).map((comment, index) => (
-                    <Flex key={index} flexDirection="row" align="flex-start">
-                      <Box mr={{base: 2, lg: 4}}>
-                        <Avatar
-                          name={comment.author?.name}
-                          src={comment.author?.avatar}
-                        />
-                      </Box>
-                      <Box
-                        p={{base: 3, lg: 4}}
-                        background="#ddd"
-                        borderRadius="10px">
-                        <Stack direction="row" justifyContent="space-between">
-                          <Text
-                            mb={4}
-                            fontWeight="bold"
-                            fontSize="xs"
-                            color="black">
-                            {comment.author?.name}
-                          </Text>
-                          <Text fontSize="xs" color="gray">
-                            {comment.dateTime.fromNow()}
-                          </Text>
-                        </Stack>
-
-                        <Text fontSize="sm" color="black" align="justify">
-                          {comment.body}
-                        </Text>
-                      </Box>
-                    </Flex>
+                    <Comentario key={index} item={comment} />
                   ))}
                 </Stack>
               </Box>

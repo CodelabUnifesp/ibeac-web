@@ -192,7 +192,7 @@ function Home() {
             return post?.comments ?? [];
           }}
           onCreateComment={(newComment, itemId) => {
-            Comentarios.create(token, newComment, user.id, itemId); // TODO: show error/success message
+            return Comentarios.create(token, newComment, user.id, itemId); // TODO: show error/success message
           }}
           onAddSelo={(itemId) => {
             return Postagens.addSelo(token, itemId);
