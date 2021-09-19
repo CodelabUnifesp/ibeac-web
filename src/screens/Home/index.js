@@ -228,7 +228,6 @@ function Home() {
               colorScheme="primary"
               mr={3}
               onClick={() => {
-                console.log(newPostagem);
                 Postagens.create(token, newPostagem, user.id);
               }}>
               {/* TODO: show success/message error */}
