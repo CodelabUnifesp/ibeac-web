@@ -25,7 +25,6 @@ const EditablePostagem = ({value} = {}) => {
             value={value.title}
             onChange={(event) => {
               value.title = event.target.value;
-              console.log(value.title);
             }}
           />
           {/* <FormHelperText>Título da sua postagem.</FormHelperText> */}
@@ -37,7 +36,6 @@ const EditablePostagem = ({value} = {}) => {
             value={value.description}
             onChange={(event) => {
               value.description = event.target.value;
-              console.log(value.description);
             }}
           />
           {/* <FormHelperText>Título da sua postagem.</FormHelperText> */}
@@ -50,7 +48,6 @@ const EditablePostagem = ({value} = {}) => {
             value={value.category}
             onChange={(event) => {
               value.category = event.target.value;
-              console.log(value.category);
             }}>
             <option hidden selected />
             <option value={1}>Saúde</option>
