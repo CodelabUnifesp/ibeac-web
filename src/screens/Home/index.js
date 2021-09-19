@@ -1,4 +1,11 @@
-import React, {useRef, useState, useEffect, useContext} from 'react';
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+  useMemo,
+} from 'react';
 import {
   Tabs,
   TabList,
@@ -112,6 +119,13 @@ function Home() {
     fetchPosts();
   }, [tab, token]);
 
+  const onChangeCallback = useCallback(
+    (key, value) =>
+      // TODO: show success/message error
+      setNewPostagem(set(key, value, newPostagem)),
+    [newPostagem],
+  );
+
   return (
     <>
       <Wrapper px={{base: 0, lg: 6}}>
@@ -213,20 +227,17 @@ function Home() {
           <ModalHeader>Criar Postagem</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <EditablePostagem
-              value={newPostagem}
-              onChange={(key, value) =>
-                // TODO: show success/message error
-                setNewPostagem(set(key, value, newPostagem))
-              }
-            />
+            <EditablePostagem value={newPostagem} onChange={onChangeCallback} />
           </ModalBody>
 
           <ModalFooter>
             <Button
               colorScheme="primary"
               mr={3}
-              onClick={() => Postagens.create(token, newPostagem, user.id)}>
+              onClick={() => {
+                console.log(newPostagem);
+                Postagens.create(token, newPostagem, user.id);
+              }}>
               {/* TODO: show success/message error */}
               Criar
             </Button>
