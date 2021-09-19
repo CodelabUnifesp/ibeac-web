@@ -1,16 +1,8 @@
 import React, {useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-  Input,
-  Select,
-} from '@chakra-ui/react';
+import {FormControl, FormLabel, Input, Select} from '@chakra-ui/react';
 
-import {get} from 'lodash';
 import Textarea from '../Textarea';
 
 const EditablePostagem = ({value} = {}) => {
