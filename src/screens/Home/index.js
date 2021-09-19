@@ -1,11 +1,4 @@
-import React, {
-  useRef,
-  useState,
-  useEffect,
-  useContext,
-  useCallback,
-  useMemo,
-} from 'react';
+import React, {useRef, useState, useEffect, useContext} from 'react';
 import {
   Tabs,
   TabList,
@@ -27,7 +20,6 @@ import {Avatar} from '@chakra-ui/avatar';
 
 import {Button} from '@chakra-ui/button';
 
-import {set} from 'lodash/fp';
 import {get, isNull} from 'lodash';
 import EditablePostagem from '../../components/elements/EditablePostagem';
 import Feed from '../../components/elements/Feed';
