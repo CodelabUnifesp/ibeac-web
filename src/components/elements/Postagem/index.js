@@ -36,6 +36,7 @@ const Postagem = ({
 } = {}) => {
   const [openComments, setOpenComments] = useState(false);
   const [newComment, setNewComment] = useState('');
+  const [newCommentInvalid, setNewCommentInvalid] = useState(false);
   const [creatingComment, setCreatingComment] = useState(false);
 
   const [comments, setComments] = useState(null);
@@ -178,6 +179,7 @@ const Postagem = ({
                     borderRadius="50px"
                     placeholder="Envie um comentário"
                     size="md"
+                    isInvalid={newCommentInvalid}
                   />
                   <mdiSend />
                   <IconButton
@@ -188,11 +190,15 @@ const Postagem = ({
                     isRound
                     isLoading={creatingComment}
                     onClick={(event) => {
-                      if (onCreateComment) {
+                      if (onCreateComment && newComment) {
+                        setNewCommentInvalid(false);
                         onCreateComment(newComment, item.id).then(() => {
                           setNumberOfComments(numberOfComments + 1);
                           fetchAndUpdateComments(item.id);
                         });
+                        setNewComment('');
+                      } else {
+                        setNewCommentInvalid(true);
                       }
                     }}
                   />
