@@ -20,7 +20,6 @@ import {Avatar} from '@chakra-ui/avatar';
 
 import {Button} from '@chakra-ui/button';
 
-import {set} from 'lodash/fp';
 import {get, isNull} from 'lodash';
 import EditablePostagem from '../../components/elements/EditablePostagem';
 import Feed from '../../components/elements/Feed';
@@ -213,20 +212,16 @@ function Home() {
           <ModalHeader>Criar Postagem</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <EditablePostagem
-              value={newPostagem}
-              onChange={(key, value) =>
-                // TODO: show success/message error
-                setNewPostagem(set(key, value, newPostagem))
-              }
-            />
+            <EditablePostagem value={newPostagem} />
           </ModalBody>
 
           <ModalFooter>
             <Button
               colorScheme="primary"
               mr={3}
-              onClick={() => Postagens.create(token, newPostagem, user.id)}>
+              onClick={() => {
+                Postagens.create(token, newPostagem, user.id);
+              }}>
               {/* TODO: show success/message error */}
               Criar
             </Button>
