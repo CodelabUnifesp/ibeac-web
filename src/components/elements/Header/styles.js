@@ -1,9 +1,16 @@
 import {Box} from '@chakra-ui/layout';
 import styled from 'styled-components';
+import media from '../../../media';
 
 export const Wrapper = styled(Box)`
   width: 100%;
   box-shadow: 0px 0px 0.5rem 0px rgba(0, 0, 0, 0.5);
+  ${media.mobile` 
+    position: sticky;
+    top: 0px;
+    z-index: 2;
+    boxshadow: ${(props) => (props.open ? 'none' : {})};
+  `};
 `;
 
 export const Container = styled(Box)`
@@ -17,6 +24,13 @@ export const Container = styled(Box)`
   margin: 0 auto;
 `;
 
+export const ChildrenWrapper = styled(Box)`
+  position: sticky;
+  top: 60px;
+  z-index: 2;
+`;
+
 export default {
   Container,
+  ChildrenWrapper,
 };
