@@ -1,10 +1,7 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 
 import {
   mdiHome,
-  mdiHeart,
-  mdiAutorenew,
-  mdiDramaMasks,
   mdiFormatListChecks,
   mdiAccountBoxMultipleOutline,
   mdiLogout,
