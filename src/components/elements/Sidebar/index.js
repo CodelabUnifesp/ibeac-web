@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {Stack, Box, Button, Text, Flex} from '@chakra-ui/layout';
+import {Box, Text, Flex} from '@chakra-ui/layout';
 import {Avatar} from '@chakra-ui/avatar';
 
-import {get} from 'lodash';
 import Container from '../Container';
 import {StackAside} from './styles';
 
