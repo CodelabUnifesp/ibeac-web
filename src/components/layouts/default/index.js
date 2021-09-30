@@ -40,7 +40,6 @@ const Default = ({children} = {}) => {
           </Collapse>
         </Header>
         <Content mt={{base: 0, lg: 2}} p={{base: 0, lg: 4}}>
-          {/* display={{base: 'none', lg: 'flex'}} */}
           <BoxAside width="100%">
             <Sidebar
               name={get(user, 'name', '???')}
