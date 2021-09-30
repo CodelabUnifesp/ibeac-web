@@ -6,7 +6,7 @@ import {Box, Collapse, Stack} from '@chakra-ui/react';
 import {get} from 'lodash';
 import Header from '../../elements/Header';
 
-import {Container, Content} from './styles.js';
+import {Container, Content, BoxAside} from './styles.js';
 import Navigation from '../../elements/Navigation';
 import Sidebar from '../../elements/Sidebar';
 
@@ -40,13 +40,14 @@ const Default = ({children} = {}) => {
           </Collapse>
         </Header>
         <Content mt={{base: 0, lg: 2}} p={{base: 0, lg: 4}}>
-          <Box width="100%" display={{base: 'none', lg: 'flex'}}>
+          {/* display={{base: 'none', lg: 'flex'}} */}
+          <BoxAside width="100%">
             <Sidebar
               name={get(user, 'name', '???')}
               avatar={get(user, 'avatar', 'https://bit.ly/dan-abramov')}>
               <Navigation />
             </Sidebar>
-          </Box>
+          </BoxAside>
           <Box width="100%">{children}</Box>
         </Content>
       </Container>
