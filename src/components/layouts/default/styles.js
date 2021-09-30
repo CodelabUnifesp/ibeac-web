@@ -1,5 +1,6 @@
 import {Box} from '@chakra-ui/layout';
 import styled from 'styled-components';
+import media from '../../../media';
 
 export const Container = styled(Box)`
   position: relative;
@@ -23,6 +24,10 @@ export const BoxAside = styled(Box)`
   background: unset;
   grid-area: aside;
   padding-bottom: unset;
+  ${media.mobile` 
+    display: none;
+    lg: flex;
+  `};
 `;
 
 export default {
