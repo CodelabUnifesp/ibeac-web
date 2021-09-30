@@ -6,10 +6,11 @@ import {Avatar} from '@chakra-ui/avatar';
 
 import {get} from 'lodash';
 import Container from '../Container';
+import {StackAside} from './styles';
 
 const Sidebar = ({children, name, avatar} = {}) => {
   return (
-    <Stack width="100%">
+    <StackAside width="100%">
       <Flex
         flexDirection="row"
         align="center"
@@ -28,7 +29,7 @@ const Sidebar = ({children, name, avatar} = {}) => {
       <Container pt={4} pb={4}>
         {children}
       </Container>
-    </Stack>
+    </StackAside>
   );
 };
 
