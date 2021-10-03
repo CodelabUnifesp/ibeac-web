@@ -11,21 +11,6 @@ export default async function updateById(userId, token, objectToSend) {
     // qtd_amamentando=data['qtd_amamentando'],
     // qtd_criancas_deficiencia=data['qtd_criancas_deficiencia'],
     // qtd_gestantes=data['qtd_gestantes']
-    debugger;
-
-    if (objectToSend) {
-      if (objectToSend[5] == 'Sim') {
-        objectToSend[5] = true;
-      } else if (objectToSend[5] == 'Não') {
-        objectToSend[5] = false;
-      }
-
-      if (objectToSend[6] == 'Sim') {
-        objectToSend[6] = true;
-      } else if (objectToSend[6] == 'Não') {
-        objectToSend[6] = false;
-      }
-    }
 
     const obj = {
       nome_rep_familia: objectToSend[1],
