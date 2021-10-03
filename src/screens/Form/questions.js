@@ -5,6 +5,7 @@ const questions = [
     placeholder: 'Nome Completo',
     type: 'text',
     mask: null,
+    forbiddenCharacters: /[^A-Za-zÀ-ÖØ-öø-ÿ\s]/,
     alternatives: null,
     nameFromApi: 'nome_rep',
   },
