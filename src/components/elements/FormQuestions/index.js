@@ -27,6 +27,46 @@ const FormQuestions = ({
   const [inputValue, setInputValue] = useState({});
   const [isLoading] = useState(false);
 
+  const getQuestionIndexByName = (nameFromApi) => {
+    const question = questions.find((q) => q.nameFromApi === nameFromApi);
+    return question ? question.id : -1;
+  };
+
+  const totalIndex = getQuestionIndexByName('qtd_pessoas');
+  const kidsIndex = getQuestionIndexByName('qtd_criancas');
+  const pregnantIndex = getQuestionIndexByName('qtd_gestantes');
+  const breastfeedingIndex = getQuestionIndexByName('qtd_amamentando');
+  const deficiencyIndex = getQuestionIndexByName('qtd_criancas_deficiencia');
+
+  const validateQuantity = (questionId, value) => {
+    const values = inputValue;
+    values[questionId] = value;
+
+    const total = parseInt(values[totalIndex] || 0, 10);
+    const kids = parseInt(values[kidsIndex] || 0, 10);
+    const pregnant = parseInt(values[pregnantIndex] || 0, 10);
+    const breastfeeding = parseInt(values[breastfeedingIndex] || 0, 10);
+    const deficiency = parseInt(values[deficiencyIndex] || 0, 10);
+
+    if (
+      kids >= total ||
+      pregnant >= total ||
+      breastfeeding >= total ||
+      deficiency >= total
+    )
+      return false;
+
+    if (
+      kids + pregnant > total ||
+      kids + breastfeeding > total ||
+      deficiency + pregnant > total ||
+      deficiency + breastfeeding > total
+    )
+      return false;
+
+    return true;
+  };
+
   const buildInput = (question) => {
     if (userAdditionalData && override) {
       if (userAdditionalData[question.nameFromApi]) {
@@ -50,14 +90,26 @@ const FormQuestions = ({
             maskChar={null}
             placeholder={question.placeholder && question.placeholder}
             value={inputValue[question.id]}
-            onInput={(event) =>
-              setInputValue({
-                ...inputValue,
-                [question.id]: question.forbiddenCharacters
-                  ? event.target.value.replace(question.forbiddenCharacters, '')
-                  : event.target.value,
-              })
-            }
+            onInput={(event) => {
+              const formattedValue = question.forbiddenCharacters
+                ? event.target.value.replace(question.forbiddenCharacters, '')
+                : event.target.value;
+
+              if (validateQuantity(question.id, formattedValue)) {
+                setInputValue({
+                  ...inputValue,
+                  [question.id]: formattedValue,
+                });
+              } else {
+                setInputValue({
+                  ...inputValue,
+                  [question.id]: 0,
+                });
+                alert(
+                  'A quantidade informada não está de acordo com o total informado',
+                );
+              }
+            }}
           />
         );
       case 'radio':
@@ -129,7 +181,7 @@ const FormQuestions = ({
   const buildQuestions = () => {
     const buildedQuestions = questions.map((question) => {
       return (
-        <FormControl id={question.name}>
+        <FormControl id={question.name} key={question.id}>
           <FormLabel color="#000" display="flex" style={{gap: '5px'}}>
             {question.name}
             <Text color="red">*</Text>
