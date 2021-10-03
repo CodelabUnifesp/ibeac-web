@@ -9,19 +9,19 @@ import {
 } from '../../domain/formSocio';
 import {Context as AuthContext} from '../../components/stores/Auth';
 
-const Form = (...props) => {
+const Form = () => {
   const {user, token} = useContext(AuthContext);
-  const [aditionalData, setAditionalData] = useState(null);
+  const [additionalData, setAdditionalData] = useState(null);
   const [override, setOverride] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
       const response = await getFormDataByUserId(user.id, token);
-      await setAditionalData(response);
-      await setOverride(false);
+      setAdditionalData(response);
+      setOverride(false);
     }
     fetchData();
-  }, [user]);
+  }, [token, user]);
 
   const handleSubmmit = async (data) => {
     await updateFormByUserId(user.id, token, data);
@@ -35,7 +35,7 @@ const Form = (...props) => {
       <FormQuestions
         buttonName="Salvar"
         questions={questions}
-        userAdicionalData={aditionalData}
+        userAdditionalData={additionalData}
         override={override}
         submitFunction={handleSubmmit}
       />
