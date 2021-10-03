@@ -6,7 +6,7 @@ import {MdMenu, MdClose} from 'react-icons/md';
 
 import Icon from '@chakra-ui/icon';
 import {IconButton} from '@chakra-ui/button';
-import {Wrapper, Container} from './styles';
+import {Wrapper, Container, ChildrenWrapper} from './styles';
 
 const Header = ({children, open, onMenu} = {}) => (
   <>
@@ -14,7 +14,7 @@ const Header = ({children, open, onMenu} = {}) => (
       bg={{base: 'primary.600', lg: 'white'}}
       color={{base: 'white', lg: 'primary.600'}}
       style={open ? {boxShadow: 'none'} : {}}>
-      <Container py={4} px={{base: 6, lg: 4}}>
+      <Container className="TETSEEEE" py={4} px={{base: 6, lg: 4}}>
         <Text fontWeight="bold" fontSize="xl">
           IBEApp
         </Text>
@@ -29,7 +29,7 @@ const Header = ({children, open, onMenu} = {}) => (
         </Box>
       </Container>
     </Wrapper>
-    {children}
+    <ChildrenWrapper>{children}</ChildrenWrapper>
   </>
 );
 

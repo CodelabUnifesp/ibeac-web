@@ -1,10 +1,7 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 
 import {
   mdiHome,
-  mdiHeart,
-  mdiAutorenew,
-  mdiDramaMasks,
   mdiFormatListChecks,
   mdiAccountBoxMultipleOutline,
   mdiLogout,
@@ -71,7 +68,12 @@ const Navigation = () => {
   );
 
   const sidebarList = sidebarSections.map((sectionItems, index) => (
-    <Box width="100%" key={index}>
+    <Box
+      width="100%"
+      key={index}
+      onClick={() => {
+        window.scrollTo(0, 0);
+      }}>
       {sectionItems.map((item) => (
         <SidebarItem
           key={item.title}
