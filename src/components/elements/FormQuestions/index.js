@@ -184,7 +184,7 @@ const FormQuestions = ({
         <FormControl id={question.name} key={question.id}>
           <FormLabel color="#000" display="flex" style={{gap: '5px'}}>
             {question.name}
-            <Text color="red">*</Text>
+            {question.type === 'checkbox' ? null : <Text color="red">*</Text>}
           </FormLabel>
           {buildInput(question)}
         </FormControl>
