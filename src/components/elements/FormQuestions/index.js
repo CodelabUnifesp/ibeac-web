@@ -85,7 +85,7 @@ const FormQuestions = ({
 
   const buildInput = (question) => {
     if (userAdditionalData && override) {
-      if (userAdditionalData[question.nameFromApi]) {
+      if (userAdditionalData[question.nameFromApi] !== undefined) {
         if (question.type === 'date') {
           const dateDecoded = decodeDate(userAdditionalData.nascimento);
           inputValue[question.id] = dateDecoded;
