@@ -165,11 +165,7 @@ const FormQuestions = ({
             direction="row">
             {question.alternatives
               ? question.alternatives.map((alternative) => (
-                  <option
-                    selected={alternative.value === inputValue[question.id]}
-                    value={alternative.value}>
-                    {alternative.value}
-                  </option>
+                  <option value={alternative.value}>{alternative.value}</option>
                 ))
               : null}
           </Select>
