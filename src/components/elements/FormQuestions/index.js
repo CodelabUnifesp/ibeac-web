@@ -162,7 +162,8 @@ const FormQuestions = ({
             }
             color="#000"
             spacing={4}
-            direction="row">
+            direction="row"
+            value={inputValue[question.id]}>
             {question.alternatives
               ? question.alternatives.map((alternative) => (
                   <option value={alternative.value}>{alternative.value}</option>
