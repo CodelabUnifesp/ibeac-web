@@ -52,6 +52,10 @@ function Home() {
   const [posts, setPosts] = useState(null);
   const [newPostagem, setNewPostagem] = useState({});
 
+  // 1 = Admin
+  // 2 = Moderador
+  const canVerifyPostTypeIds = [1, 2];
+
   useEffect(() => {
     // recuperando lista de categorias para tabs
     categories.current = Categorias.getAll(token);
@@ -185,7 +189,7 @@ function Home() {
         <Feed
           user={user.name}
           avatar={get(user, 'avatar', null)}
-          canVerifyPost={user.userType === 1}
+          canVerifyPost={canVerifyPostTypeIds.includes(user.userType)}
           fetchComments={async (id) => {
             const post = await Postagens.get(token, id);
             return post?.comments ?? [];
