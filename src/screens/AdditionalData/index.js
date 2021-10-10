@@ -13,14 +13,14 @@ import {Context as AuthContext} from '../../components/stores/Auth';
 
 const Form = (...props) => {
   const {user, token} = useContext(AuthContext);
-  const [aditionalData, setAditionalData] = useState(null);
+  const [additionalData, setAdditionalData] = useState(null);
   const [override, setOverride] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
       const response = await userGetById(token, user.id);
-      await setAditionalData(response);
-      await setOverride(false);
+      setAdditionalData(response);
+      setOverride(false);
     }
     fetchData();
   }, [user, token]);
@@ -34,11 +34,11 @@ const Form = (...props) => {
       <Text color="#2f7384" fontSize="2xl" fontWeight={600} marginBottom={4}>
         Complemento de Dados
       </Text>
-      {aditionalData && (
+      {additionalData && (
         <FormQuestions
           buttonName="Salvar"
           questions={questions}
-          userAdicionalData={aditionalData}
+          userAdditionalData={additionalData}
           override={override}
           submitFunction={handleSubmmit}
         />

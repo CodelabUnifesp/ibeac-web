@@ -32,15 +32,31 @@ const FormQuestions = ({
     return question ? question.id : -1;
   };
 
-  const totalIndex = getQuestionIndexByName('qtd_pessoas');
-  const kidsIndex = getQuestionIndexByName('qtd_criancas');
-  const pregnantIndex = getQuestionIndexByName('qtd_gestantes');
-  const breastfeedingIndex = getQuestionIndexByName('qtd_amamentando');
-  const deficiencyIndex = getQuestionIndexByName('qtd_criancas_deficiencia');
+  const questionsToValidateQuantity = [
+    'qtd_pessoas',
+    'qtd_criancas',
+    'qtd_gestantes',
+    'qtd_amamentando',
+    'qtd_criancas_deficiencia',
+  ];
 
-  const validateQuantity = (questionId, value) => {
+  const totalIndex = getQuestionIndexByName(questionsToValidateQuantity[0]);
+  const kidsIndex = getQuestionIndexByName(questionsToValidateQuantity[1]);
+  const pregnantIndex = getQuestionIndexByName(questionsToValidateQuantity[2]);
+  const breastfeedingIndex = getQuestionIndexByName(
+    questionsToValidateQuantity[3],
+  );
+  const deficiencyIndex = getQuestionIndexByName(
+    questionsToValidateQuantity[4],
+  );
+
+  const validateQuantity = (question, value) => {
+    if (!questionsToValidateQuantity.includes(question.nameFromApi)) {
+      return true;
+    }
+
     const values = inputValue;
-    values[questionId] = value;
+    values[question.id] = value;
 
     const total = parseInt(values[totalIndex] || 0, 10);
     const kids = parseInt(values[kidsIndex] || 0, 10);
@@ -69,7 +85,7 @@ const FormQuestions = ({
 
   const buildInput = (question) => {
     if (userAdditionalData && override) {
-      if (userAdditionalData[question.nameFromApi]) {
+      if (userAdditionalData[question.nameFromApi] !== undefined) {
         if (question.type === 'date') {
           const dateDecoded = decodeDate(userAdditionalData.nascimento);
           inputValue[question.id] = dateDecoded;
@@ -95,7 +111,7 @@ const FormQuestions = ({
                 ? event.target.value.replace(question.forbiddenCharacters, '')
                 : event.target.value;
 
-              if (validateQuantity(question.id, formattedValue)) {
+              if (validateQuantity(question, formattedValue)) {
                 setInputValue({
                   ...inputValue,
                   [question.id]: formattedValue,
@@ -103,10 +119,10 @@ const FormQuestions = ({
               } else {
                 setInputValue({
                   ...inputValue,
-                  [question.id]: 0,
+                  [question.id]: null,
                 });
                 alert(
-                  'A quantidade informada não está de acordo com o total informado',
+                  'A quantidade informada não está de acordo com o total informado de pessoas na família',
                 );
               }
             }}
@@ -149,11 +165,7 @@ const FormQuestions = ({
             direction="row">
             {question.alternatives
               ? question.alternatives.map((alternative) => (
-                  <option
-                    selected={alternative.value === inputValue[question.id]}
-                    value={alternative.value}>
-                    {alternative.value}
-                  </option>
+                  <option value={alternative.value}>{alternative.value}</option>
                 ))
               : null}
           </Select>
@@ -184,7 +196,7 @@ const FormQuestions = ({
         <FormControl id={question.name} key={question.id}>
           <FormLabel color="#000" display="flex" style={{gap: '5px'}}>
             {question.name}
-            <Text color="red">*</Text>
+            {question.type === 'checkbox' ? null : <Text color="red">*</Text>}
           </FormLabel>
           {buildInput(question)}
         </FormControl>
