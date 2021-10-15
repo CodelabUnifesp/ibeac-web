@@ -19,19 +19,6 @@ https://plasmedis-web-dev.herokuapp.com/
 **API**
 http://plasmedis-api-dev.herokuapp.com/
 
-**BANCO DE DADOS**
-
-*Host* ec2-52-45-179-101.compute-1.amazonaws.com
-
-*Port* 5432
-
-*Database* d5bi00ifg35edj
-
-*Username* jkpaprazxcpojo
-
-*Password* 2a135108dda110cdf26d9ef31fff1c6b9f94cd92993f25a90c3df353c685626d
-
-*URI* postgres://jkpaprazxcpojo:2a135108dda110cdf26d9ef31fff1c6b9f94cd92993f25a90c3df353c685626d@ec2-52-45-179-101.compute-1.amazonaws.com:5432/d5bi00ifg35edj
 
 ## Configuração para Desenvolvimento
 
