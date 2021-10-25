@@ -26,7 +26,8 @@ const Default = ({children} = {}) => {
               bg={{base: 'primary.600', lg: 'white'}}
               color={{base: 'white', lg: 'primary.600'}}
               zIndex={9}
-              boxShadow="0px 0.25rem 0.25rem 0px rgba(0, 0, 0, 0.25)">
+              // boxShadow="0px 0.25rem 0.25rem 0px rgba(0, 0, 0, 0.25)"
+            >
               <Box pb={6} flexBasis={{base: '100%', lg: 'none'}}>
                 <Stack
                   spacing={1}

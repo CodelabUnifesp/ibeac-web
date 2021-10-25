@@ -9,7 +9,7 @@ export const Wrapper = styled(Box)`
     position: sticky;
     top: 0px;
     z-index: 2;
-    boxshadow: ${(props) => (props.open ? 'none' : {})};
+    box-shadow: none;
   `};
 `;
 
