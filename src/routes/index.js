@@ -11,12 +11,14 @@ import Form from '../screens/Form';
 import AdditionalData from '../screens/AdditionalData';
 import RegisterUser from '../screens/RegisterUser';
 import Logout from '../screens/Logout';
+import RecoverPassword from '../screens/RecoverPassword';
 
 function Routes() {
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/entrar" component={Entrar} />
+        <Route path="/esqueci-minha-senha" component={RecoverPassword} />
         <PrivateRoute exact path="/" component={Home} />
         <PrivateRoute path="/form" component={Form} />
         <PrivateRoute path="/complemento-de-dados" component={AdditionalData} />

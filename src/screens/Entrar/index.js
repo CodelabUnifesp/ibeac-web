@@ -93,7 +93,7 @@ function Entrar({history} = {}) {
                 fontSize="18px"
                 textAlign="right"
                 mt="10px"
-                href="/recover">
+                href="/esqueci-minha-senha">
                 Esqueceu a senha?
               </Link>
             </FormField>
