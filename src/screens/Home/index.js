@@ -36,7 +36,7 @@ import * as Comentarios from '../../domain/comentarios';
 function Home() {
   const tabs = useBreakpointValue(
     {
-      base: ['Feed', 'Recomendados'],
+      base: ['Feed', 'Recomendados', 'Saúde', 'Trocas', 'Cultura e Lazer'],
       lg: ['Feed', 'Recomendados', 'Saúde', 'Trocas', 'Cultura e Lazer'],
     },
     'base',
@@ -128,7 +128,12 @@ function Home() {
           my={{base: 0, lg: 4}}>
           <TabList
             color={{base: 'light.300', lg: '#333'}}
-            bg={{base: 'primary.600', lg: 'transparent'}}>
+            bg={{base: 'primary.600', lg: 'transparent'}}
+            maxWidth="100vw"
+            overflowX="scroll"
+            style={{
+              scrollbarWidth: 'thin',
+            }}>
             {tabs.map((tabName, index) => (
               <Tab
                 key={index}

@@ -10,7 +10,7 @@ function App() {
   return (
     <ChakraProvider theme={theme}>
       <AuthProvider>
-        <Box className="appContainer" bg={{base: 'white', lg: 'light.50'}}>
+        <Box className="appContainer" bg={{base: '#F0F6F8', lg: 'light.50'}}>
           <Routes />
         </Box>
       </AuthProvider>
