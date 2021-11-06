@@ -87,7 +87,9 @@ const FormQuestions = ({
     if (userAdditionalData && override) {
       if (userAdditionalData[question.nameFromApi] !== undefined) {
         if (question.type === 'date') {
-          const dateDecoded = decodeDate(userAdditionalData.nascimento);
+          const dateDecoded = userAdditionalData.nascimento
+            ? decodeDate(userAdditionalData.nascimento)
+            : null;
           inputValue[question.id] = dateDecoded;
         } else {
           inputValue[question.id] = userAdditionalData[question.nameFromApi];
